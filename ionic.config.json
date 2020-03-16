@@ -1,5 +1,7 @@
 {
-  "name": "PatPatMe",
-  "integrations": {},
+  "name": "projet",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
