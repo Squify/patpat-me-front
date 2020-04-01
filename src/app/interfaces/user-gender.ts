@@ -1,4 +1,4 @@
 
 export interface UserGender {
-    nom: string;
+    name: string;
 }

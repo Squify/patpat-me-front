@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CreateAccount} from '../../interfaces/create-account';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../../services/user/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {UserGender} from '../../interfaces/user-gender';
+import {GenderService} from '../../services/gender/gender.service';
 
 @Component({
     selector: 'app-account-create',
@@ -13,6 +15,7 @@ export class AccountCreatePage implements OnInit {
 
     createAccountInterface: CreateAccount;
     createPersonForm: FormGroup;
+    genders: UserGender[] = [];
 
     // Errors
     mailInputError: boolean;
@@ -25,6 +28,7 @@ export class AccountCreatePage implements OnInit {
 
     constructor(
         private userService: UserService,
+        private genderService: GenderService,
     ) {
 
         this.buildForm();
@@ -34,6 +38,8 @@ export class AccountCreatePage implements OnInit {
     }
 
     buildForm(): void {
+
+        this.getGenders();
 
         // Create account form
         this.createPersonForm = new FormGroup({
@@ -85,9 +91,20 @@ export class AccountCreatePage implements OnInit {
 
             display_real_name: new FormControl(false),
 
-            fk_id_gender: new FormControl(false),
+            fk_id_gender: new FormControl(''),
         });
+    }
 
+    getGenders(): void {
+        this.genderService.getUserGender().subscribe(
+            val => {
+                val.forEach((gender) => {
+                        const genderToAdd: UserGender = {name: gender.name};
+                        this.genders.push(genderToAdd);
+                    }
+                );
+            }
+        );
     }
 
     setAllErrorsToFalse(): void {
@@ -121,6 +138,7 @@ export class AccountCreatePage implements OnInit {
             push_notification: this.createPersonForm.value.push_notification,
             active_localisation: this.createPersonForm.value.active_localisation,
             display_real_name: this.createPersonForm.value.display_real_name,
+            fk_id_gender: this.createPersonForm.value.fk_id_gender,
         };
 
         this.userService.createUser(this.createAccountInterface).subscribe(
