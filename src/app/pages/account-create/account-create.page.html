@@ -19,10 +19,11 @@
 
             <ion-list>
                 <ion-item mode="md">
-                    <ion-label position="floating">Adresse e-mail</ion-label>
-                    <ion-input type="text" formControlName="mail">
+                    <ion-label position="floating">Pseudo</ion-label>
+                    <ion-input type="text" formControlName="pseudo">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
+                    <ion-icon mode="md" slot="start" name="person"
+                              class="ion-align-self-end input-icon-margin"></ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
@@ -31,17 +32,16 @@
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="key"
                               class="ion-align-self-end input-icon-margin"></ion-icon>
-                    <ion-button slot="end"  class="ion-align-self-end"
+                    <ion-button slot="end" class="ion-align-self-end"
                                 color="medium" fill="clear">
                     </ion-button>
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-label position="floating">Pseudo</ion-label>
-                    <ion-input type="text" formControlName="pseudo">
+                    <ion-label position="floating">Adresse e-mail</ion-label>
+                    <ion-input type="text" formControlName="mail">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="person"
-                              class="ion-align-self-end input-icon-margin"></ion-icon>
+                    <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
                 </ion-item>
 
                 <ion-row>
@@ -64,6 +64,17 @@
                 </ion-row>
 
                 <ion-item mode="md">
+                    <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
+                                placeholder="Sélectionnez un genre">
+                        <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
+                            {{ gender.name }}
+                        </ion-select-option>
+                    </ion-select>
+                    <ion-icon mode="md" slot="start" name="male-female-outline"
+                              class="ion-align-self-end input-icon-margin"></ion-icon>
+                </ion-item>
+
+                <ion-item mode="md">
                     <ion-label position="floating">Numéro de téléphone</ion-label>
                     <ion-input type="tel" formControlName="phone">
                     </ion-input>
@@ -83,22 +94,23 @@
 
             </ion-list>
 
-            <div class="cgu-input">
+            <div class="checkbox">
                 <ion-checkbox formControlName="push_notification" checked="false"></ion-checkbox>
                 <ion-label>Notifications push</ion-label>
             </div>
 
-            <div class="cgu-input">
+            <div class="checkbox">
                 <ion-checkbox formControlName="active_localisation" checked="false"></ion-checkbox>
                 <ion-label>Activer la géolocalisation</ion-label>
             </div>
 
-            <div class="cgu-input">
+            <div class="checkbox">
                 <ion-checkbox formControlName="display_real_name" checked="false"></ion-checkbox>
                 <ion-label>Afficher le nom réel</ion-label>
             </div>
 
-            <ion-button (click)="submit()">Valider le formulaire</ion-button>
+            <ion-button slot="end" class="submit-button" (click)="submit()">Valider le formulaire</ion-button>
+
         </form>
     </div>
 </ion-content>
