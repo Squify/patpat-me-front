@@ -1,0 +1,104 @@
+<ion-content>
+
+    <div id="logo-container">
+        <img src="/assets/images/logo-text.png">
+    </div>
+
+    <div class="form-container">
+        <h2>Inscription sur l'application</h2>
+
+        <div *ngIf="mailInputError">mailInputError</div>
+        <div *ngIf="passwordInputError">passwordInputError</div>
+        <div *ngIf="passwordSecurityError">passwordSecurityError</div>
+        <div *ngIf="pseudoInputError">pseudoInputError</div>
+        <div *ngIf="lastnameInputError">lastnameInputError</div>
+        <div *ngIf="firstnameInputError">firstnameInputError</div>
+        <div *ngIf="phoneInputError">phoneInputError</div>
+
+        <form *ngIf="createPersonForm" [formGroup]="createPersonForm" (keyup.enter)="submit()">
+
+            <ion-list>
+                <ion-item mode="md">
+                    <ion-label position="floating">Adresse e-mail</ion-label>
+                    <ion-input type="text" formControlName="mail">
+                    </ion-input>
+                    <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
+                </ion-item>
+
+                <ion-item mode="md">
+                    <ion-label position="floating">Mot de passe</ion-label>
+                    <ion-input [type]="'password'" formControlName="password" maxlength="32">
+                    </ion-input>
+                    <ion-icon mode="md" slot="start" name="key"
+                              class="ion-align-self-end input-icon-margin"></ion-icon>
+                    <ion-button slot="end"  class="ion-align-self-end"
+                                color="medium" fill="clear">
+                    </ion-button>
+                </ion-item>
+
+                <ion-item mode="md">
+                    <ion-label position="floating">Pseudo</ion-label>
+                    <ion-input type="text" formControlName="pseudo">
+                    </ion-input>
+                    <ion-icon mode="md" slot="start" name="person"
+                              class="ion-align-self-end input-icon-margin"></ion-icon>
+                </ion-item>
+
+                <ion-row>
+                    <ion-col col-6>
+                        <ion-item mode="md">
+                            <ion-label position="floating">Nom</ion-label>
+                            <ion-input type="text" formControlName="lastname">
+                            </ion-input>
+                            <ion-icon mode="md" slot="start" name="finger-print-outline"
+                                      class="ion-align-self-end input-icon-margin"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-6>
+                        <ion-item mode="md">
+                            <ion-label position="floating">Prénom</ion-label>
+                            <ion-input type="text" formControlName="firstname">
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-item mode="md">
+                    <ion-label position="floating">Numéro de téléphone</ion-label>
+                    <ion-input type="tel" formControlName="phone">
+                    </ion-input>
+                    <ion-icon mode="md" slot="start" name="call"
+                              class="ion-align-self-end input-icon-margin"></ion-icon>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="floating">Date d'anniversaire</ion-label>
+                    <ion-datetime formControlName="birthday"
+                                  display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
+                                  placeholder="Veuillez sélectionner une date">
+                    </ion-datetime>
+                    <ion-icon mode="md" slot="start" name="gift"
+                              class="ion-align-self-end input-icon-margin"></ion-icon>
+                </ion-item>
+
+            </ion-list>
+
+            <div class="cgu-input">
+                <ion-checkbox formControlName="push_notification" checked="false"></ion-checkbox>
+                <ion-label>Notifications push</ion-label>
+            </div>
+
+            <div class="cgu-input">
+                <ion-checkbox formControlName="active_localisation" checked="false"></ion-checkbox>
+                <ion-label>Activer la géolocalisation</ion-label>
+            </div>
+
+            <div class="cgu-input">
+                <ion-checkbox formControlName="display_real_name" checked="false"></ion-checkbox>
+                <ion-label>Afficher le nom réel</ion-label>
+            </div>
+
+            <ion-button (click)="submit()">Valider le formulaire</ion-button>
+        </form>
+    </div>
+</ion-content>
