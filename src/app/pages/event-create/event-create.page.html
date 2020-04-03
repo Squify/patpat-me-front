@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Création d'évènement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-container">
+    <form *ngIf="createEventForm" [formGroup]="createEventForm" (keyup.enter)="submit()">
+
+      <ion-list>
+        <ion-item mode="md">
+          <ion-label position="floating">Nom</ion-label>
+          <ion-input type="text" formControlName="name">
+          </ion-input>
+          <ion-icon mode="md" slot="start" name="information-circle-outline" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" *ngIf="nameError" slot="end" name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('name')"></ion-icon>
+        </ion-item>
+
+        <ion-item mode="md">
+          <ion-label position="floating">Description</ion-label>
+          <ion-input type="text" formControlName="description">
+          </ion-input>
+          <ion-icon mode="md" slot="start" name="menu-outline" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" *ngIf="descriptionError" slot="end" name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('description')"></ion-icon>
+        </ion-item>
+
+        <ion-item mode="md">
+          <ion-label position="floating">Localisation</ion-label>
+          <ion-input type="text" formControlName="localisation">
+          </ion-input>
+          <ion-icon mode="md" slot="start" name="golf-outline" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" *ngIf="localisationError" slot="end" name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('localisation')"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Date</ion-label>
+          <ion-datetime formControlName="date"
+                        display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
+                        placeholder="Veuillez sélectionner une date">
+          </ion-datetime>
+          <ion-icon mode="md" slot="start" name="calendar-outline" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" *ngIf="dateError" slot="end" name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('date')"></ion-icon>
+        </ion-item>
+
+        <ion-item mode="md">
+          <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
+                      placeholder="Sélectionnez un type">
+            <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
+              {{ type.name }}
+            </ion-select-option>
+          </ion-select>
+          <ion-icon mode="md" slot="start" name="bookmarks-outline"
+                    class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" *ngIf="typeError" slot="end" name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_type')"></ion-icon>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-button slot="end" class="submit-button" (click)="submit()">Valider le formulaire</ion-button>
+
+    </form>
+  </div>
+</ion-content>

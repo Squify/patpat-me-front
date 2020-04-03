@@ -1,5 +1,3 @@
-import {UserGender} from './user-gender';
-
 export interface CreateAccount {
     mail: string;
     password: string;
