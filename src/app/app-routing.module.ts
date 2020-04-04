@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'account-create',
     loadChildren: () => import('./pages/account-create/account-create.module').then( m => m.AccountCreatePageModule)
+  },
+  {
+    path: 'profil',
+    loadChildren: () => import('./pages/profil/profil.module').then( m => m.ProfilPageModule)
   }
 ];
 @NgModule({
