@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Subscription } from 'rxjs';
+import { AppComponent } from 'src/app/app.component';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/interfaces/user';
+
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.page.html',
@@ -7,9 +12,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilPage implements OnInit {
 
-  constructor() { }
+  user: User;
+  subscriptionUser: Subscription;
+
+  constructor(
+    private userService: UserService,
+    readonly appComponent: AppComponent
+  ) {
+  }
 
   ngOnInit() {
+
+    this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
   }
 
 }
