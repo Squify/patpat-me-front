@@ -15,6 +15,6 @@ export class UserService {
     }
 
     createUser(createAccount: CreateAccount): Observable<any> {
-      return this.http.post<any>(environment.BACKEND_URL + '/api/user/create', createAccount);
+        return this.http.post<any>(environment.BACKEND_URL + '/api/user/create', createAccount);
     }
 }
