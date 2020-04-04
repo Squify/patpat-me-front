@@ -6,6 +6,7 @@ import {CreateEvent} from '../../interfaces/create-event';
 import {EventService} from '../../services/event/event.service';
 import {UserGender} from '../../interfaces/user-gender';
 import {EventType} from '../../interfaces/event-type';
+import {log} from 'util';
 
 @Component({
     selector: 'app-event-create',
@@ -23,6 +24,7 @@ export class EventCreatePage implements OnInit {
     serverError: boolean;
     inputsError: boolean;
     nameError: boolean;
+    nameExistError: boolean;
     descriptionError: boolean;
     localisationError: boolean;
     dateError: boolean;
@@ -96,6 +98,7 @@ export class EventCreatePage implements OnInit {
         this.unknownError = false;
         this.inputsError = false;
         this.nameError = false;
+        this.nameExistError = false;
         this.descriptionError = false;
         this.localisationError = false;
         this.dateError = false;
@@ -107,7 +110,6 @@ export class EventCreatePage implements OnInit {
             this.createEvent();
         } else {
             this.presentToast('general');
-            console.log('ça marche po');
         }
     }
 
@@ -121,7 +123,7 @@ export class EventCreatePage implements OnInit {
         };
 
         this.eventService.createEvent(this.createEventInterface).subscribe(
-            // _ => this.redirect(),
+            _ => console.log('redirect ici'),
             error => this.processError(error))
         ;
     }
@@ -153,10 +155,15 @@ export class EventCreatePage implements OnInit {
 
     processError(error: HttpErrorResponse) {
         if (error) {
+            console.log(error);
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
                     this.presentToast('back_input');
+                    break;
+                case 417:
+                    this.nameExistError = true;
+                    this.presentToast('name_exist');
                     break;
                 case 500:
                     this.serverError = true;
@@ -178,31 +185,37 @@ export class EventCreatePage implements OnInit {
         switch (error) {
             case 'name':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un mot de passe valide et sécurisé.',
+                    message: 'Veuillez renseigner un nom pour l\'évènement.',
+                    duration: 2000
+                });
+                break;
+            case 'name_exist':
+                toast = await this.toastController.create({
+                    message: 'Le nom saisi est déjà utilisé.',
                     duration: 2000
                 });
                 break;
             case 'description':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner une adresse email valide.',
+                    message: 'Veuillez renseigner une description valide.',
                     duration: 2000
                 });
                 break;
             case 'localisation':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un nom valide.',
+                    message: 'Veuillez renseigner une localisation valide.',
                     duration: 2000
                 });
                 break;
             case 'date':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un prénom valide.',
+                    message: 'Veuillez renseigner une date.',
                     duration: 2000
                 });
                 break;
             case 'fk_id_type':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un numéro de téléphone valide.',
+                    message: 'Veuillez renseigner un type pour l\'évènement.',
                     duration: 2000
                 });
                 break;
