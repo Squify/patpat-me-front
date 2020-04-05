@@ -1,7 +1,7 @@
-<ion-content>
+<ion-content class="create-account-content">
 
     <div id="logo-container">
-        <img src="/assets/images/logo-text.png">
+        <img class="create-account-img" src="/assets/images/logo-text.png">
     </div>
 
     <div class="form-container">
@@ -106,9 +106,10 @@
                 <ion-checkbox formControlName="display_real_name" checked="false"></ion-checkbox>
                 <ion-label>Afficher le nom réel</ion-label>
             </div>
-
-            <ion-button slot="end" class="submit-button" (click)="submit()">Valider le formulaire</ion-button>
-
         </form>
+
+        <div class="button-center">
+            <ion-button slot="end" class="validation-button" (click)="submit()">Valider le formulaire</ion-button>
+        </div>
     </div>
 </ion-content>
