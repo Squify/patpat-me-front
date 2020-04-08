@@ -25,47 +25,47 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-ion-header {
-  --ion-background-color: #f5e1c2;
-}
-
-ion-content {
-  --ion-background-color: #f6f6f6;
-}
-
-.button-center {
-  display: flex;
-  justify-content: space-around;
-}
-
-.validation-button {
-  --background: #e3a851;
-}
-
-.warning-card {
-  --background: #fbf2e5;
-}
-
-.topbar {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-}
-
-// Quand l'écran fait plus de 820px (tablettes / grands téléphones / pc)
-@media (min-width: 820px) {
-  .create-account-img {
-    width: 20%!important;
-    margin-top: 8px;
-  }
-
-  .form-container {
-    padding-left: 15%;
-    padding-right: 15%;
-  }
-
-  .warning-card {
-    margin-left: 10%;
-    margin-right: 10%;
-  }
-}
+//ion-header {
+//  --ion-background-color: #f5e1c2;
+//}
+//
+//ion-content {
+//  --ion-background-color: #f6f6f6;
+//}
+//
+//.button-center {
+//  display: flex;
+//  justify-content: space-around;
+//}
+//
+//.validation-button {
+//  --background: #e3a851;
+//}
+//
+//.warning-card {
+//  --background: #fbf2e5;
+//}
+//
+//.topbar {
+//  display: flex;
+//  flex-direction: row;
+//  text-align: center;
+//}
+//
+//// Quand l'écran fait plus de 820px (tablettes / grands téléphones / pc)
+//@media (min-width: 820px) {
+//  .create-account-img {
+//    width: 20%!important;
+//    margin-top: 8px;
+//  }
+//
+//  .form-container {
+//    padding-left: 15%;
+//    padding-right: 15%;
+//  }
+//
+//  .warning-card {
+//    margin-left: 10%;
+//    margin-right: 10%;
+//  }
+//}
