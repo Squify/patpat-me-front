@@ -21,9 +21,13 @@ export class ProfilPage implements OnInit {
   ) {
   }
 
+  segmentChanged(ev: any) {
+      console.log('Segment changed', ev);
+  }
+
   ngOnInit() {
 
-    this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
+    //this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
   }
 
 }
