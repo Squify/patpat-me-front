@@ -1,69 +1,69 @@
-//#logo-container {
-//  display: flex;
-//  flex-direction: column;
-//  align-items: center;
-//
-//  .create-account-img {
-//    width: 45%;
-//    margin-top: 16px;
-//  }
-//}
-//
-//ion-content {
-//  --ion-background-color: #f5e1c2!important;
-//}
-//
-//form {
-//  border-radius: 25px;
-//  background-color: #fbf2e5;
-//  --ion-item-background: #fbf2e5;
-//}
-//
-//.error-message {
-//  color: darkred;
-//}
-//
-//.form-container {
-//  h2 {
-//    text-align: center;
-//  }
-//
-//  ion-list {
-//    border-radius: 25px;
-//    padding-bottom: 0 !important;
-//    padding-top: 0 !important;
-//    margin-bottom: 16px;
-//    margin-top: 16px;
-//  }
-//
-//  .checkbox {
-//    padding-top: 8px;
-//    padding-bottom: 8px;
-//    margin-left: 16px;
-//    letter-spacing: 0.1px;
-//    display: flex;
-//
-//    ion-label {
-//      margin-left: 10px;
-//    }
-//  }
-//}
-//
-//@media (min-width: 820px) {
-//  #login-flex {
-//    display: flex;
-//    flex-direction: column;
-//    align-items: center;
-//    justify-content: center;
-//    height: 100%;
-//
-//    #cesam-login-container {
-//      width: 500px;
-//      max-width: 500px;
-//      height: 600px;
-//      margin: 0 auto;
-//      border: 1px solid var(--ion-color-light-shade);
-//      border-radius: 16px;
-//    }
-//  }
-//}
+#logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .create-account-img {
+    width: 45%;
+    margin-top: 16px;
+  }
+}
+
+ion-content {
+  --ion-background-color: #f5e1c2!important;
+}
+
+form {
+  border-radius: 25px;
+  background-color: #fbf2e5;
+  --ion-item-background: #fbf2e5;
+}
+
+.error-message {
+  color: darkred;
+}
+
+.form-container {
+  h2 {
+    text-align: center;
+  }
+
+  ion-list {
+    border-radius: 25px;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 16px;
+    margin-top: 16px;
+  }
+
+  .checkbox {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-left: 16px;
+    letter-spacing: 0.1px;
+    display: flex;
+
+    ion-label {
+      margin-left: 10px;
+    }
+  }
+}
+
+@media (min-width: 820px) {
+  #login-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    #cesam-login-container {
+      width: 500px;
+      max-width: 500px;
+      height: 600px;
+      margin: 0 auto;
+      border: 1px solid var(--ion-color-light-shade);
+      border-radius: 16px;
+    }
+  }
+}
