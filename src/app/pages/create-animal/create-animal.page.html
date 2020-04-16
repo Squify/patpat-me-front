@@ -25,22 +25,35 @@
           <ion-icon mode="md" slot="start" name="heart-half-outline"></ion-icon>
         </ion-item>
         -->
-        
+
         <ion-item>
           <ion-label position="floating">Anniversaire</ion-label>
-          <ion-datetime formControlName="birthday"
-                        display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
-                        placeholder="Veuillez sélectionner une date">
+          <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
+            placeholder="Veuillez sélectionner une date">
           </ion-datetime>
-          <ion-icon mode="md" slot="start" name="gift"
-                    class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin"></ion-icon>
         </ion-item>
 
         <ion-item mode="md">
-          <ion-label position="floating">Type d'animal</ion-label>
-          <ion-input type="text" formControlName="fk_id_type">
-          </ion-input>
-          <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
+          <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
+            placeholder="Sélectionnez le type d'animal">
+            <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
+              {{ type.name }}
+            </ion-select-option>
+          </ion-select>
+          <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end input-icon-margin">
+          </ion-icon>
+        </ion-item>
+
+        <ion-item mode="md">
+          <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
+            placeholder="Sélectionnez le genre">
+            <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
+              {{ gender.name }}
+            </ion-select-option>
+          </ion-select>
+          <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end input-icon-margin">
+          </ion-icon>
         </ion-item>
 
         <ion-item mode="md">
@@ -48,13 +61,6 @@
           <ion-input type="text" formControlName="fk_id_race">
           </ion-input>
           <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
-        </ion-item>
-
-        <ion-item mode="md">
-          <ion-label position="floating">Genre</ion-label>
-          <ion-input type="text" formControlName="fk_id_gender">
-          </ion-input>
-          <ion-icon mode="md" slot="start" name="male-female-outline"></ion-icon>
         </ion-item>
 
       </ion-list>
