@@ -36,8 +36,6 @@ export class CreateAnimalPage implements OnInit {
 
       birthday: new FormControl(''),
 
-      fk_id_owner:  new FormControl(''),
-
       fk_id_gender:  new FormControl(''),
 
       fk_id_type: new FormControl(''),
@@ -51,12 +49,10 @@ export class CreateAnimalPage implements OnInit {
     //
   }
 
-  
   createAccount(): void { 
     this.createAnimalInterface = {
       name: this.createAnimalForm.value.name,
       birthday: this.createAnimalForm.value.birthday,
-      fk_id_owner: this.createAnimalForm.value.fk_id_owner,
       fk_id_gender: this.createAnimalForm.value.fk_id_gender,
       fk_id_type: this.createAnimalForm.value.fk_id_type,
       fk_id_race: this.createAnimalForm.value. fk_id_race,
