@@ -1,0 +1,85 @@
+<ion-header>
+    <ion-toolbar>
+        <div class="topbar">
+            <ion-back-button></ion-back-button>
+            <ion-title>Profil</ion-title>
+            <div style=float:right;>
+                <ion-button fill="clear">
+                    <ion-icon name="pencil-outline" slot="end"></ion-icon>
+                </ion-button>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="userContainer" *ngIf="userInterface">
+        <h3>
+            {{ userInterface.firstname }}
+            {{ userInterface.lastname | uppercase }}
+        </h3>
+        <p>
+            {{ userInterface.pseudo }}
+        </p>
+        <ion-segment (ionChange)="segmentChanged($event)">
+
+            <ion-segment-button value="informationSegment">
+                Information
+            </ion-segment-button>
+            <ion-segment-button value="animalSegment">
+                Animaux
+            </ion-segment-button>
+        </ion-segment>
+
+
+        <div [ngSwitch]="selectedSegment">
+
+            <ion-card *ngSwitchCase="'informationSegment'">
+                <ion-list>
+                    <ion-item>
+                        <ion-icon mode="md" name="at" color="medium"></ion-icon>
+                        <ion-label>{{ userInterface.email | lowercase }} </ion-label>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-icon mode="md" name="call" color="medium"></ion-icon>
+                        <ion-label>{{ userInterface.phone }}</ion-label>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
+                        <ion-label>Notifications
+                            <p>{{ userInterface.push_notification ? 'oui' : 'non' }}</p>
+                        </ion-label>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
+                        <ion-label>Géolocalisation
+                            <p>{{ userInterface.active_localisation ? 'oui' : 'non' }}</p>
+                        </ion-label>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-icon mode="md" name="at" color="medium"></ion-icon>
+                        <ion-label>{{ userInterface.birthday }}</ion-label>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-icon mode="md" name="male-female-outline" color="medium"></ion-icon>
+                        <ion-label>{{ userInterface.fk_id_gender }}</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+
+            <ion-card *ngSwitchCase="'animalSegment'">
+                <ion-button mode="md" fill="clear" size="small" id="cgu-button"> <!-- [routerLink]="'/createAnimal'"-->
+                    Ajouter un animal
+                </ion-button>
+            </ion-card>
+        </div>
+    </div>
+    <div *ngIf="!userInterface">
+        Aucune information a afficher.
+    </div>
+</ion-content>

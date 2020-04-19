@@ -4,10 +4,12 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 
+
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
+
 
     constructor(
         private http: HttpClient,
@@ -17,4 +19,9 @@ export class UserService {
     createUser(createAccount: CreateAccount): Observable<any> {
         return this.http.post<any>(environment.BACKEND_URL + '/api/user/create', createAccount);
     }
+
+    getUser(): Observable<any> {
+        return this.http.get<any>(environment.BACKEND_URL + '/api/user/get');
+    }
+
 }
