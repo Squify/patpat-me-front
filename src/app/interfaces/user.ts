@@ -1,6 +1,7 @@
-export interface CreateAccount {
-    mail: string;
-    password: string;
+import { UserGender } from './user-gender';
+
+export interface User {
+    email: string;
     pseudo: string;
     firstname: string;
     lastname: string;

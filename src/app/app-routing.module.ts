@@ -5,15 +5,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  },
-  {
-    path: 'account-create',
-    loadChildren: () => import('./pages/account-create/account-create.module').then( m => m.AccountCreatePageModule)
-  },
-  {
-    path: 'create-animal',
-    loadChildren: () => import('./pages/create-animal/create-animal.module').then( m => m.CreateAnimalPageModule)
-  }
+  } 
 ];
 @NgModule({
   imports: [
