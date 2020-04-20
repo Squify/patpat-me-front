@@ -118,10 +118,10 @@ export class CreateAnimalPage implements OnInit {
   }
 
   submit(): void {
-    //
+    this.createAnimal();
   }
 
-  createAccount(): void {
+  createAnimal(): void {
     this.createAnimalInterface = {
       name: this.createAnimalForm.value.name,
       birthday: this.createAnimalForm.value.birthday,
@@ -131,5 +131,9 @@ export class CreateAnimalPage implements OnInit {
       fk_id_race: this.createAnimalForm.value.fk_id_race,
     };
 
+    this.animalService.createAnimal(this.createAnimalInterface).subscribe(
+      _ => console.log("animal creer"),
+      error => console.log("sa marche po"))
+    ;
   }
 }
