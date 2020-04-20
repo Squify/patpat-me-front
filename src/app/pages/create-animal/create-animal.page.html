@@ -10,21 +10,13 @@
     <form [formGroup]="createAnimalForm" (keyup.enter)="submit()">
 
       <ion-list>
+        
         <ion-item mode="md">
           <ion-label position="floating">Nom</ion-label>
           <ion-input type="text" formControlName="name">
           </ion-input>
           <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
         </ion-item>
-
-        <!--
-           <ion-item mode="md">
-          <ion-label position="floating">Tempérament</ion-label>
-          <ion-input type="text" formControlName="name">
-          </ion-input>
-          <ion-icon mode="md" slot="start" name="heart-half-outline"></ion-icon>
-        </ion-item>
-        -->
 
         <ion-item>
           <ion-label position="floating">Anniversaire</ion-label>
@@ -57,10 +49,25 @@
         </ion-item>
 
         <ion-item mode="md">
-          <ion-label position="floating">Race</ion-label>
-          <ion-input type="text" formControlName="fk_id_race">
-          </ion-input>
-          <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
+          <ion-select interface="popover" id="select-race" formControlName="fk_id_race"
+            placeholder="Sélectionnez la race">
+            <ion-select-option *ngFor="let race of races" value="{{ race.name }}">
+              {{ race.name }}
+            </ion-select-option>
+          </ion-select>
+          <ion-icon mode="md" slot="start"  name="paw-outline" class="ion-align-self-end input-icon-margin">
+          </ion-icon>
+        </ion-item>
+
+        <ion-item mode="md">
+          <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
+            placeholder="Sélectionnez le temperament">
+            <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
+              {{ temper.name }}
+            </ion-select-option>
+          </ion-select>
+          <ion-icon mode="md" slot="start"  name="paw-outline" class="ion-align-self-end input-icon-margin">
+          </ion-icon>
         </ion-item>
 
       </ion-list>

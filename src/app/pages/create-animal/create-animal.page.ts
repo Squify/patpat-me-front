@@ -6,6 +6,8 @@ import { AnimalType } from 'src/app/interfaces/animal-type';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { TypeService } from 'src/app/services/type/type.service';
 import { AnimalService } from 'src/app/services/animal/animal.service';
+import { AnimalTemper } from 'src/app/interfaces/animal-temper';
+import { AnimalRace } from 'src/app/interfaces/animal-race';
 
 @Component({
   selector: 'app-create-animal',
@@ -18,13 +20,15 @@ export class CreateAnimalPage implements OnInit {
   createAnimalForm: FormGroup;
   genders: AnimalGender[] = [];
   types: AnimalType[] = [];
-  
-  constructor( 
+  races: AnimalRace[] = [];
+  tempers: AnimalTemper[] = [];
+
+  constructor(
     private genderService: GenderService,
     private typeService: TypeService,
     private animalService: AnimalService,
 
-  ) { 
+  ) {
 
     this.buildForm();
   }
@@ -33,25 +37,30 @@ export class CreateAnimalPage implements OnInit {
   }
 
   buildForm(): void {
+
     this.getGenders();
-    //this.getGenders();
+    this.getTypes();
+    this.getTemper();
+    this.getRace();
 
     // Create account form
-    this.createAnimalForm = new FormGroup ({
+    this.createAnimalForm = new FormGroup({
 
       name: new FormControl('', {
         validators: [
-            Validators.required
+          Validators.required
         ]
       }),
 
       birthday: new FormControl(''),
 
-      fk_id_gender:  new FormControl(''),
+      fk_id_temper: new FormControl(''),
+
+      fk_id_gender: new FormControl(''),
 
       fk_id_type: new FormControl(''),
 
-      fk_id_race:  new FormControl(''),
+      fk_id_race: new FormControl(''),
 
     })
   }
@@ -59,41 +68,67 @@ export class CreateAnimalPage implements OnInit {
   //GetAnimalGender
   getGenders(): void {
     this.genderService.getAnimalGender().subscribe(
-        val => {
-            val.forEach((gender) => {
-                    const genderToAdd: AnimalGender = {name: gender.name};
-                    this.genders.push(genderToAdd);
-                }
-            );
+      val => {
+        val.forEach((gender) => {
+          const genderToAdd: AnimalGender = { name: gender.name };
+          this.genders.push(genderToAdd);
         }
+        );
+      }
     );
   }
 
   //GetAnimalType
   getTypes(): void {
     this.typeService.getAnimalType().subscribe(
-        val => {
-            val.forEach((type) => {
-                    const typeToAdd: AnimalType = {name: type.name};
-                    this.types.push(typeToAdd);
-                }
-            );
+      val => {
+        val.forEach((type) => {
+          const typeToAdd: AnimalType = { name: type.name };
+          this.types.push(typeToAdd);
         }
+        );
+      }
     );
   }
-  //TODO getRace() ?
+
+  //GetAnimalRace
+  getRace(): void {
+    this.animalService.getAnimalRace().subscribe(
+      val => {
+        val.forEach((race) => {
+          const raceToAdd: AnimalRace = { name: race.name };
+          this.races.push(raceToAdd);
+        }
+        );
+      }
+    );
+  }
+
+  //GetAnimalTemper
+  getTemper(): void {
+    this.animalService.getAnimalTemper().subscribe(
+      val => {
+        val.forEach((temper) => {
+          const tempersToAdd: AnimalRace = { name: temper.name };
+          this.tempers.push(tempersToAdd);
+        }
+        );
+      }
+    );
+  }
 
   submit(): void {
     //
   }
 
-  createAccount(): void { 
+  createAccount(): void {
     this.createAnimalInterface = {
       name: this.createAnimalForm.value.name,
       birthday: this.createAnimalForm.value.birthday,
+      fk_id_temper: this.createAnimalForm.value.temper,
       fk_id_gender: this.createAnimalForm.value.fk_id_gender,
       fk_id_type: this.createAnimalForm.value.fk_id_type,
-      fk_id_race: this.createAnimalForm.value. fk_id_race,
+      fk_id_race: this.createAnimalForm.value.fk_id_race,
     };
 
   }
