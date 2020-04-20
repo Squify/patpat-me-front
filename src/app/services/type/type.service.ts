@@ -18,6 +18,6 @@ export class TypeService {
   }
 
   getAnimalType(): Observable<AnimalType[]> {
-      return this.http.get<AnimalType[]>(environment.BACKEND_URL + '/api/animal/type');
+      return this.http.get<AnimalType[]>(environment.BACKEND_URL + '/api/animal/types');
   }
 }
