@@ -16,6 +16,9 @@
           <ion-input type="text" formControlName="name">
           </ion-input>
           <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
+          <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('name')">
+          </ion-icon>
         </ion-item>
 
         <ion-item>
@@ -24,6 +27,9 @@
             placeholder="Veuillez sélectionner une date">
           </ion-datetime>
           <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('birthday')">
+          </ion-icon>
         </ion-item>
 
         <ion-item mode="md">
@@ -33,7 +39,9 @@
               {{ type.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end input-icon-margin">
+          <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon *ngIf="typeError" mode="md" slot="end" name="alert-circle-outline"
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_type')">
           </ion-icon>
         </ion-item>
 
@@ -46,6 +54,9 @@
           </ion-select>
           <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end input-icon-margin">
           </ion-icon>
+          <ion-icon *ngIf="genderError" mode="md" slot="end" name="alert-circle-outline"
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_gender')">
+          </ion-icon>
         </ion-item>
 
         <ion-item mode="md">
@@ -57,6 +68,9 @@
           </ion-select>
           <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end input-icon-margin">
           </ion-icon>
+          <ion-icon *ngIf="raceError" mode="md" slot="end" name="alert-circle-outline"
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_race')">
+          </ion-icon>
         </ion-item>
 
         <ion-item mode="md">
@@ -67,6 +81,9 @@
             </ion-select-option>
           </ion-select>
           <ion-icon mode="md" slot="start" name="film-outline" class="ion-align-self-end input-icon-margin">
+          </ion-icon>
+          <ion-icon *ngIf="temperError" mode="md" slot="end" name="alert-circle-outline"
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_temper')">
           </ion-icon>
         </ion-item>
       </ion-list>
