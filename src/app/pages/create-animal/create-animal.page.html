@@ -10,7 +10,7 @@
     <form [formGroup]="createAnimalForm" (keyup.enter)="submit()">
 
       <ion-list>
-        
+
         <ion-item mode="md">
           <ion-label position="floating">Nom</ion-label>
           <ion-input type="text" formControlName="name">
@@ -55,7 +55,7 @@
               {{ race.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start"  name="paw-outline" class="ion-align-self-end input-icon-margin">
+          <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end input-icon-margin">
           </ion-icon>
         </ion-item>
 
@@ -66,10 +66,9 @@
               {{ temper.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start"  name="paw-outline" class="ion-align-self-end input-icon-margin">
+          <ion-icon mode="md" slot="start" name="film-outline" class="ion-align-self-end input-icon-margin">
           </ion-icon>
         </ion-item>
-
       </ion-list>
 
       <ion-button slot="end" class="submit-button" (click)="submit()">Valider le formulaire</ion-button>
