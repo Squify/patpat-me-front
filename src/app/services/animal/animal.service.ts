@@ -11,9 +11,6 @@ import { CreateAnimal } from 'src/app/interfaces/create-animal';
 })
 export class AnimalService {
 
-  races: AnimalRace[];
-  tempers: AnimalTemper[];
-
   constructor(
     private http: HttpClient
   ) {
@@ -26,6 +23,7 @@ export class AnimalService {
   getAnimalTemper(): Observable<AnimalTemper[]> {
     return this.http.get<AnimalTemper[]>(environment.BACKEND_URL + '/api/animal/tempers');
   }
+  
   getAnimalRace(): Observable<AnimalRace[]> {
     return this.http.get<AnimalRace[]>(environment.BACKEND_URL + '/api/animal/races');
   }

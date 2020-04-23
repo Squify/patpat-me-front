@@ -10,8 +10,6 @@ import { AnimalType } from 'src/app/interfaces/animal-type';
 })
 export class TypeService {
 
-  types: AnimalType[];
-
   constructor(
       private http: HttpClient
   ) {
