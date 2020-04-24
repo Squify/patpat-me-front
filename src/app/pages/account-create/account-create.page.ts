@@ -133,7 +133,6 @@ export class AccountCreatePage implements OnInit {
             this.connectUser();
         } else {
             this.presentToast('general');
-            console.log('ça marche po');
         }
     }
 
