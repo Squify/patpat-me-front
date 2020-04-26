@@ -25,11 +25,15 @@ export class UserService {
         return this.http.post<any>(environment.BACKEND_URL + '/api/user/create', createAccount);
     }
 
-    // TODO : check comment utiliser + api/auth/user/get
+    // TODO : check comment utiliser + api/auth/user
     getRemoteUser(): Observable<User> {
         // If there was an HTTP error, as is the case when we try to get the user and none is connected, we return null (see catchError())
-        return this.http.get<User>(environment.BACKEND_URL + '/api/user/get')
+        const test = this.http.get<User>(environment.BACKEND_URL + '/api/auth/user')
             .pipe(catchError((err: any, caught: Observable<User>) => of(null)));
+
+
+        console.log('getRemoteUser : ', test.subscribe());
+        return test;
     }
 
     setPerson(user: User): void {
@@ -37,6 +41,7 @@ export class UserService {
     }
 
     getUser(): BehaviorSubject<User> {
+        console.log(this.observableUser);
         return this.observableUser;
     }
 }

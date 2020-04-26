@@ -22,8 +22,8 @@ export class AccountCreatePage implements OnInit {
     unknownError: boolean;
     serverError: boolean;
     inputsError: boolean;
-    mailInputError: boolean;
-    mailAlreadyUsed: boolean;
+    emailInputError: boolean;
+    emailAlreadyUsed: boolean;
     passwordInputError: boolean;
     passwordSecurityError: boolean;
     pseudoInputError: boolean;
@@ -50,7 +50,7 @@ export class AccountCreatePage implements OnInit {
         // Create account form
         this.createPersonForm = new FormGroup({
 
-            mail: new FormControl('', {
+            email: new FormControl('', {
                 validators: [
                     Validators.required,
                     Validators.pattern(/^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/)
@@ -117,8 +117,8 @@ export class AccountCreatePage implements OnInit {
         this.serverError = false;
         this.unknownError = false;
         this.inputsError = false;
-        this.mailInputError = false;
-        this.mailAlreadyUsed = false;
+        this.emailInputError = false;
+        this.emailAlreadyUsed = false;
         this.passwordInputError = false;
         this.passwordSecurityError = false;
         this.pseudoInputError = false;
@@ -138,7 +138,7 @@ export class AccountCreatePage implements OnInit {
 
     createAccount(): void {
         this.createAccountInterface = {
-            mail: this.createPersonForm.value.mail,
+            email: this.createPersonForm.value.email,
             password: this.createPersonForm.value.password,
             pseudo: this.createPersonForm.value.pseudo,
             firstname: this.createPersonForm.value.firstname,
@@ -170,8 +170,8 @@ export class AccountCreatePage implements OnInit {
     }
 
     checkInputsError(): void {
-        if (this.createPersonForm.controls.mail.errors) {
-            this.mailInputError = true;
+        if (this.createPersonForm.controls.email.errors) {
+            this.emailInputError = true;
         }
         if (this.createPersonForm.controls.password.errors) {
             this.passwordInputError = true;
@@ -219,8 +219,8 @@ export class AccountCreatePage implements OnInit {
                     this.presentToast('back_pseudo_used');
                     break;
                 case 417:
-                    this.mailAlreadyUsed = true;
-                    this.presentToast('back_mail_used');
+                    this.emailAlreadyUsed = true;
+                    this.presentToast('back_email_used');
                     break;
                 case 500:
                     this.serverError = true;
@@ -252,7 +252,7 @@ export class AccountCreatePage implements OnInit {
                     duration: 2000
                 });
                 break;
-            case 'mail':
+            case 'email':
                 toast = await this.toastController.create({
                     message: 'Veuillez renseigner une adresse email valide.',
                     duration: 2000
@@ -288,7 +288,7 @@ export class AccountCreatePage implements OnInit {
                     duration: 2000
                 });
                 break;
-            case 'back_mail_used':
+            case 'back_email_used':
                 toast = await this.toastController.create({
                     message: 'L\'adresse email saisie est déjà utilisée.',
                     duration: 2000

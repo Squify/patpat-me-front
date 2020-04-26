@@ -1,5 +1,5 @@
 export interface CreateAccount {
-    mail: string;
+    email: string;
     password: string;
     pseudo: string;
     firstname: string;

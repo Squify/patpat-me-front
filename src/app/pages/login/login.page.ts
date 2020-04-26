@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
     unknownError: boolean;
     serverError: boolean;
     inputsError: boolean;
-    mailInputError: boolean;
+    emailInputError: boolean;
     passwordInputError: boolean;
 
     constructor(
@@ -41,6 +41,18 @@ export class LoginPage implements OnInit {
     }
 
     ngOnInit() {
+
+        // Retrieve the logged in user using a resolver (defined in the routing)
+        this.activatedRoute.data.subscribe(data => {
+
+            this.userService.setPerson(data.loggedInPerson);
+
+            // Redirect the logged user to home if he tries to access to /login
+            if (data.loggedInPerson) {
+                this.router.navigateByUrl('');
+            }
+        });
+
 
         this.showPassword = false;
 
@@ -58,14 +70,14 @@ export class LoginPage implements OnInit {
 
     ionViewDidLeave(): void {
 
-        this.loginForm.controls.mail.reset();
+        this.loginForm.controls.email.reset();
         this.loginForm.controls.password.reset();
     }
 
     buildForm(): void {
 
         this.loginForm = this.loginFormBuilder.group({
-            mail: new FormControl('', {
+            email: new FormControl('', {
                 validators: [
                     Validators.required,
                     Validators.pattern(/^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/)
@@ -83,7 +95,7 @@ export class LoginPage implements OnInit {
 
         if (this.loginForm.dirty && this.loginForm.valid) {
             this.credentials = {
-                mail: this.loginForm.value.mail,
+                email: this.loginForm.value.email,
                 password: this.loginForm.value.password
             };
             this.authService.login(this.credentials).subscribe(
@@ -91,11 +103,11 @@ export class LoginPage implements OnInit {
                 error => this.processError(error)
             );
         } else {
-            if (this.loginForm.controls.mail.errors && this.loginForm.controls.password.errors) {
+            if (this.loginForm.controls.email.errors && this.loginForm.controls.password.errors) {
                 this.inputsError = true;
                 this.presentToast('general');
-            } else if (this.loginForm.controls.mail.errors) {
-                this.mailInputError = true;
+            } else if (this.loginForm.controls.email.errors) {
+                this.emailInputError = true;
             } else if (this.loginForm.controls.password.errors) {
                 this.passwordInputError = true;
             }
@@ -131,7 +143,7 @@ export class LoginPage implements OnInit {
 
         if (this.loginForm.dirty && this.loginForm.valid) {
             this.credentials = {
-                mail: this.loginForm.value.mail,
+                email: this.loginForm.value.email,
                 password: this.loginForm.value.password
             };
             this.authService.login(this.credentials).subscribe(
@@ -153,7 +165,7 @@ export class LoginPage implements OnInit {
     async presentToast(error: string) {
         let toast: HTMLIonToastElement;
         switch (error) {
-            case 'mail':
+            case 'email':
                 toast = await this.toastController.create({
                     message: 'Veuillez renseigner une adresse email valide.',
                     duration: 2000

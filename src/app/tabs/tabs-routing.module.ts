@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs.page';
+import {AuthGuard} from '../guards/auth/auth.guard';
 
 const routes: Routes = [
     {
@@ -17,6 +18,7 @@ const routes: Routes = [
                     },
                     {
                         path: 'create',
+                        canActivate: [AuthGuard],
                         loadChildren: () =>
                             import('../pages/event-create/event-create.module').then(m => m.EventCreatePageModule)
                     }
@@ -24,6 +26,7 @@ const routes: Routes = [
             },
             {
                 path: 'tab2',
+                // canActivate: [AuthGuard],
                 children: [
                     {
                         path: '',
@@ -32,7 +35,7 @@ const routes: Routes = [
                     },
                     {
                         path: 'profil',
-                        loadChildren: () => import('../pages/profil/profil.module').then( m => m.ProfilPageModule)
+                        loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
                     }
                 ]
             },
