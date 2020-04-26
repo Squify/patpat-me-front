@@ -13,13 +13,13 @@
 </ion-header>
 
 <ion-content>
-    <div class="userContainer" *ngIf="userInterface">
+    <div class="userContainer" *ngIf="user">
         <h3>
-            {{ userInterface.firstname }}
-            {{ userInterface.lastname | uppercase }}
+            {{ user.firstname }}
+            {{ user.lastname | uppercase }}
         </h3>
         <p>
-            {{ userInterface.pseudo }}
+            {{ user.pseudo }}
         </p>
         <ion-segment (ionChange)="segmentChanged($event)">
 
@@ -38,36 +38,36 @@
                 <ion-list>
                     <ion-item>
                         <ion-icon mode="md" name="at" color="medium"></ion-icon>
-                        <ion-label>{{ userInterface.email | lowercase }} </ion-label>
+                        <ion-label>{{ user.email | lowercase }} </ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="call" color="medium"></ion-icon>
-                        <ion-label>{{ userInterface.phone }}</ion-label>
+                        <ion-label>{{ user.phone }}</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
                         <ion-label>Notifications
-                            <p>{{ userInterface.push_notification ? 'oui' : 'non' }}</p>
+                            <p>{{ user.push_notification ? 'oui' : 'non' }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
                         <ion-label>Géolocalisation
-                            <p>{{ userInterface.active_localisation ? 'oui' : 'non' }}</p>
+                            <p>{{ user.active_localisation ? 'oui' : 'non' }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="at" color="medium"></ion-icon>
-                        <ion-label>{{ userInterface.birthday }}</ion-label>
+                        <ion-label>{{ user.birthday }}</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="male-female-outline" color="medium"></ion-icon>
-                        <ion-label>{{ userInterface.fk_id_gender }}</ion-label>
+                        <ion-label>{{ user.fk_id_gender }}</ion-label>
                     </ion-item>
                 </ion-list>
             </ion-card>
@@ -79,7 +79,11 @@
             </ion-card>
         </div>
     </div>
-    <div *ngIf="!userInterface">
+    <div *ngIf="!user">
         Aucune information a afficher.
     </div>
+
+    <ion-button routerLink="" (click)="logout()">
+        logout
+    </ion-button>
 </ion-content>

@@ -12,12 +12,12 @@
             <ion-list>
                 <ion-item mode="md">
                     <ion-label position="floating">Adresse e-mail</ion-label>
-                    <ion-input type="text" formControlName="mail">
+                    <ion-input type="text" formControlName="email">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
-                    <ion-icon *ngIf="mailInputError" mode="md" slot="end" name="alert-circle-outline"
+                    <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
                               class="ion-align-self-end input-icon-margin error-message"
-                              (click)="presentToast('mail')"></ion-icon>
+                              (click)="presentToast('email')"></ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">

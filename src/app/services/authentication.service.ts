@@ -22,7 +22,7 @@ export class AuthenticationService {
   login(credentials: Credentials): Observable<User> {
     // Login credentials must be passed this way, because Spring Security expects the data to come from a form
     const formData = new HttpParams()
-        .set('username', credentials.mail)
+        .set('username', credentials.email)
         .set('password', credentials.password);
 
     return this.http.post<User>(environment.BACKEND_URL + '/api/login', formData);
