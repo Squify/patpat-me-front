@@ -26,7 +26,6 @@ const routes: Routes = [
             },
             {
                 path: 'tab2',
-                // canActivate: [AuthGuard],
                 children: [
                     {
                         path: '',
@@ -35,6 +34,7 @@ const routes: Routes = [
                     },
                     {
                         path: 'profil',
+                        canActivate: [AuthGuard],
                         loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
                     }
                 ]
