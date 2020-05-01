@@ -21,7 +21,8 @@
         <p>
             {{ user.pseudo }}
         </p>
-        <ion-segment (ionChange)="segmentChanged($event)">
+
+        <ion-segment (ionChange)="segmentChanged($event)" value="informationSegment">
 
             <ion-segment-button value="informationSegment">
                 Information

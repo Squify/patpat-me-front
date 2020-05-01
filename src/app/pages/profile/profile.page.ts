@@ -24,7 +24,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     ) {
     }
 
-
     logout() {
         this.authService.logout().subscribe(_ => this.processLogoutSuccess(), error => this.processError(error));
     }
@@ -42,8 +41,6 @@ export class ProfilePage implements OnInit, OnDestroy {
         // error processing here
     }
 
-
-
     segmentChanged(ev: any) {
 
         this.selectedSegment = ev.detail.value;
@@ -58,26 +55,4 @@ export class ProfilePage implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscriptionUser.unsubscribe();
     }
-
-    // getConnectedUser(): void {
-    //
-    //     this.userService.getUser().subscribe(
-    //         user => {
-    //             this.user = {
-    //                 lastname: user.lastname,
-    //                 firstname: user.firstname,
-    //                 pseudo: user.pseudo,
-    //                 email: user.email,
-    //                 birthday: user.birthday,
-    //                 phone: user.phone,
-    //                 push_notification: user.push_notification,
-    //                 display_real_name: user.display_real_name,
-    //                 active_localisation: user.active_localisation,
-    //                 fk_id_gender: user.fk_id_gender,
-    //             };
-    //             console.log(this.user);
-    //         }
-    //     );
-    // }
-
 }

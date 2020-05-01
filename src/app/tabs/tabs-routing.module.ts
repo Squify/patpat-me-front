@@ -6,6 +6,7 @@ import {AuthGuard} from '../guards/auth/auth.guard';
 const routes: Routes = [
     {
         path: 'tabs',
+        canActivate: [AuthGuard],
         component: TabsPage,
         children: [
             {
@@ -18,7 +19,6 @@ const routes: Routes = [
                     },
                     {
                         path: 'create',
-                        canActivate: [AuthGuard],
                         loadChildren: () =>
                             import('../pages/event-create/event-create.module').then(m => m.EventCreatePageModule)
                     }
@@ -34,18 +34,17 @@ const routes: Routes = [
                     },
                     {
                         path: 'profil',
-                        canActivate: [AuthGuard],
                         loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
                     }
                 ]
             },
             {
-                path: 'tab3',
+                path: 'profil',
                 children: [
                     {
                         path: '',
                         loadChildren: () =>
-                            import('../pages/tab3/tab3.module').then(m => m.Tab3PageModule)
+                            import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
                     }
                 ]
             },
@@ -60,11 +59,6 @@ const routes: Routes = [
         path: '',
         redirectTo: '/tabs/events',
         pathMatch: 'full'
-    },
-    {
-        path: 'account-create',
-        loadChildren: () =>
-            import('../pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
     },
 ];
 

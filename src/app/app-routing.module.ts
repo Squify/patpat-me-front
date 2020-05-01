@@ -13,8 +13,12 @@ const routes: Routes = [
       loggedInPerson: LoggedInPersonResolver
     },
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'account-create',
+    loadChildren: () =>
+        import('./pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
   }
-
 ];
 @NgModule({
   imports: [

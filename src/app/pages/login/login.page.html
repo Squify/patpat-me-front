@@ -39,5 +39,9 @@
         <div class="button-center">
             <ion-button slot="end" class="validation-button" (click)="login()">Se connecter</ion-button>
         </div>
+
+        <div class="button-center">
+            <p>Pas encore de compte ? <a [routerLink]="'/account-create'">Créez en un !</a></p>
+        </div>
     </div>
 </ion-content>

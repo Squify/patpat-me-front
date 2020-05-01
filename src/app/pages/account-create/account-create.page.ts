@@ -6,6 +6,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {UserGender} from '../../interfaces/user-gender';
 import {GenderService} from '../../services/gender/gender.service';
 import {ToastController} from '@ionic/angular';
+import {AuthenticationService} from '../../services/authentication.service';
+import {User} from '../../interfaces/user';
+import {Router} from '@angular/router';
+import {Credentials} from '../../interfaces/password/credentials';
 
 @Component({
     selector: 'app-account-create',
@@ -17,6 +21,7 @@ export class AccountCreatePage implements OnInit {
     createAccountInterface: CreateAccount;
     createPersonForm: FormGroup;
     genders: UserGender[] = [];
+    credentials: Credentials;
 
     // Errors
     unknownError: boolean;
@@ -34,6 +39,8 @@ export class AccountCreatePage implements OnInit {
     constructor(
         private userService: UserService,
         private genderService: GenderService,
+        private authService: AuthenticationService,
+        private router: Router,
         public toastController: ToastController
     ) {
 
@@ -158,7 +165,22 @@ export class AccountCreatePage implements OnInit {
     }
 
     connectUser(): void {
-        //
+
+        this.credentials = {
+            email: this.createPersonForm.value.email,
+            password: this.createPersonForm.value.password
+        };
+        this.authService.login(this.credentials).subscribe(
+            data => this.processLoginSuccess(data),
+            error => this.processError(error)
+        );
+    }
+
+    processLoginSuccess(user: User): void {
+
+        // set authenticated person in service
+        this.userService.setPerson(user);
+        this.router.navigateByUrl('');
     }
 
     formIsValid(): boolean {
