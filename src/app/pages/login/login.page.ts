@@ -118,7 +118,6 @@ export class LoginPage implements OnInit {
 
         // set authenticated person in service
         this.userService.setPerson(user);
-
         this.router.navigateByUrl('');
     }
 
@@ -137,29 +136,6 @@ export class LoginPage implements OnInit {
             this.unknownError = true;
             this.presentToast('back_unknown');
         }
-    }
-
-    loginbutton(): void {
-
-        if (this.loginForm.dirty && this.loginForm.valid) {
-            this.credentials = {
-                email: this.loginForm.value.email,
-                password: this.loginForm.value.password
-            };
-            this.authService.login(this.credentials).subscribe(
-                data => console.log(data),
-                error => console.log(error)
-            );
-        } else {
-            console.log('pb form');
-        }
-    }
-
-    logout(): void {
-        this.authService.logout().subscribe(
-            data => console.log('on est decooooo'),
-            error => console.log(error)
-        );
     }
 
     async presentToast(error: string) {
