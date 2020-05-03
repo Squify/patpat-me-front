@@ -1,30 +1,30 @@
-import { Injectable } from '@angular/core';
-import { AnimalRace } from 'src/app/interfaces/animal-race';
-import { AnimalTemper } from 'src/app/interfaces/animal-temper';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { CreateAnimal } from 'src/app/interfaces/create-animal';
+import {Injectable} from '@angular/core';
+import {Breed} from 'src/app/interfaces/animal/breed';
+import {AnimalTemper} from 'src/app/interfaces/animal/animal-temper';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {CreateAnimal} from 'src/app/interfaces/animal/create-animal';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AnimalService {
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
+    constructor(
+        private http: HttpClient
+    ) {
+    }
 
-  createAnimal(createAnimal: CreateAnimal): Observable<any> {
-    return this.http.post<any>(environment.BACKEND_URL + '/api/animal/create', createAnimal);
-  }
+    createAnimal(createAnimal: CreateAnimal): Observable<any> {
+        return this.http.post<any>(environment.BACKEND_URL + '/api/animal/create', createAnimal);
+    }
 
-  getAnimalTemper(): Observable<AnimalTemper[]> {
-    return this.http.get<AnimalTemper[]>(environment.BACKEND_URL + '/api/animal/tempers');
-  }
-  
-  getAnimalRace(): Observable<AnimalRace[]> {
-    return this.http.get<AnimalRace[]>(environment.BACKEND_URL + '/api/animal/races');
-  }
+    getAnimalTemper(): Observable<AnimalTemper[]> {
+        return this.http.get<AnimalTemper[]>(environment.BACKEND_URL + '/api/animal/tempers');
+    }
+
+    getAnimalBreed(): Observable<Breed[]> {
+        return this.http.get<Breed[]>(environment.BACKEND_URL + '/api/animal/breeds');
+    }
 }

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CreateAnimal} from 'src/app/interfaces/create-animal';
+import {CreateAnimal} from 'src/app/interfaces/animal/create-animal';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AnimalGender} from 'src/app/interfaces/animal-gender';
-import {AnimalType} from 'src/app/interfaces/animal-type';
+import {AnimalGender} from 'src/app/interfaces/animal/animal-gender';
+import {AnimalType} from 'src/app/interfaces/animal/animal-type';
 import {GenderService} from 'src/app/services/gender/gender.service';
 import {TypeService} from 'src/app/services/type/type.service';
 import {AnimalService} from 'src/app/services/animal/animal.service';
-import {AnimalTemper} from 'src/app/interfaces/animal-temper';
-import {AnimalRace} from 'src/app/interfaces/animal-race';
+import {AnimalTemper} from 'src/app/interfaces/animal/animal-temper';
+import {Breed} from 'src/app/interfaces/animal/breed';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ToastController} from '@ionic/angular';
 
@@ -22,7 +22,7 @@ export class CreateAnimalPage implements OnInit {
     createAnimalForm: FormGroup;
     genders: AnimalGender[] = [];
     types: AnimalType[] = [];
-    races: AnimalRace[] = [];
+    breeds: Breed[] = [];
     tempers: AnimalTemper[] = [];
 
     // Errors
@@ -32,7 +32,7 @@ export class CreateAnimalPage implements OnInit {
     nameInputError: boolean;
     birthdayError: boolean;
     typeError: boolean;
-    raceError: boolean;
+    breedError: boolean;
     temperError: boolean;
     genderError: boolean;
 
@@ -54,7 +54,7 @@ export class CreateAnimalPage implements OnInit {
         this.getGenders();
         this.getTypes();
         this.getTemper();
-        this.getRace();
+        this.getBreed();
 
         // Create account form
         this.createAnimalForm = new FormGroup({
@@ -81,7 +81,7 @@ export class CreateAnimalPage implements OnInit {
                 ]
             }),
 
-            fk_id_race: new FormControl(''),
+            fk_id_breed: new FormControl(''),
 
         });
     }
@@ -110,12 +110,12 @@ export class CreateAnimalPage implements OnInit {
         );
     }
 
-    getRace(): void {
-        this.animalService.getAnimalRace().subscribe(
+    getBreed(): void {
+        this.animalService.getAnimalBreed().subscribe(
             val => {
-                val.forEach((race) => {
-                        const raceToAdd: AnimalRace = {name: race.name};
-                        this.races.push(raceToAdd);
+                val.forEach((breed) => {
+                        const breedToAdd: Breed = {name: breed.name};
+                        this.breeds.push(breedToAdd);
                     }
                 );
             }
@@ -126,7 +126,7 @@ export class CreateAnimalPage implements OnInit {
         this.animalService.getAnimalTemper().subscribe(
             val => {
                 val.forEach((temper) => {
-                        const tempersToAdd: AnimalRace = {name: temper.name};
+                        const tempersToAdd: Breed = {name: temper.name};
                         this.tempers.push(tempersToAdd);
                     }
                 );
@@ -140,7 +140,7 @@ export class CreateAnimalPage implements OnInit {
         this.inputsError = false;
         this.nameInputError = false;
         this.birthdayError = false;
-        this.raceError = false;
+        this.breedError = false;
         this.temperError = false;
         this.genderError = false;
         this.typeError = false;
@@ -162,7 +162,7 @@ export class CreateAnimalPage implements OnInit {
             fk_id_temper: this.createAnimalForm.value.fk_id_temper,
             fk_id_gender: this.createAnimalForm.value.fk_id_gender,
             fk_id_type: this.createAnimalForm.value.fk_id_type,
-            fk_id_race: this.createAnimalForm.value.fk_id_race,
+            fk_id_breed: this.createAnimalForm.value.fk_id_breed,
         };
 
         this.animalService.createAnimal(this.createAnimalInterface).subscribe(
@@ -193,8 +193,8 @@ export class CreateAnimalPage implements OnInit {
         if (this.createAnimalForm.controls.fk_id_temper.errors) {
             this.temperError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_race.errors) {
-            this.raceError = true;
+        if (this.createAnimalForm.controls.fk_id_breed.errors) {
+            this.breedError = true;
         }
     }
 
@@ -247,9 +247,9 @@ export class CreateAnimalPage implements OnInit {
                     duration: 2000
                 });
                 break;
-            case 'fk_id_race':
+            case 'fk_id_breed':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner la racede l\'animal.',
+                    message: 'Veuillez renseigner la race de l\'animal.',
                     duration: 2000
                 });
                 break;

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import { AnimalType } from 'src/app/interfaces/animal-type';
+import { AnimalType } from 'src/app/interfaces/animal/animal-type';
 
 
 @Injectable({
