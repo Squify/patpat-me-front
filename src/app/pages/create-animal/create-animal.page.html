@@ -34,7 +34,7 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
-            placeholder="Sélectionnez le type d'animal">
+            placeholder="Sélectionnez le type d'animal" (ionChange)="typeChange()">
             <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
               {{ type.name }}
             </ion-select-option>
@@ -42,6 +42,20 @@
           <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end input-icon-margin"></ion-icon>
           <ion-icon *ngIf="typeError" mode="md" slot="end" name="alert-circle-outline"
             class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_type')">
+          </ion-icon>
+        </ion-item>
+
+        <ion-item mode="md">
+          <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
+                      placeholder="Sélectionnez la race" disabled="{{ !isTypeSelected }}">
+            <ion-select-option *ngFor="let breed of breedsToDisplay" value="{{ breed.name }}">
+              {{ breed.name }}
+            </ion-select-option>
+          </ion-select>
+          <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end input-icon-margin">
+          </ion-icon>
+          <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
+                    class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_breed')">
           </ion-icon>
         </ion-item>
 
@@ -56,20 +70,6 @@
           </ion-icon>
           <ion-icon *ngIf="genderError" mode="md" slot="end" name="alert-circle-outline"
             class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_gender')">
-          </ion-icon>
-        </ion-item>
-
-        <ion-item mode="md">
-          <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
-            placeholder="Sélectionnez la breed">
-            <ion-select-option *ngFor="let breed of breeds" value="{{ breed.name }}">
-              {{ breed.name }}
-            </ion-select-option>
-          </ion-select>
-          <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end input-icon-margin">
-          </ion-icon>
-          <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_breed')">
           </ion-icon>
         </ion-item>
 
