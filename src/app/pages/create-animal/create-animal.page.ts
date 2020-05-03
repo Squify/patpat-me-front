@@ -22,7 +22,9 @@ export class CreateAnimalPage implements OnInit {
     createAnimalForm: FormGroup;
     genders: AnimalGender[] = [];
     types: AnimalType[] = [];
+    isTypeSelected: boolean;
     breeds: Breed[] = [];
+    breedsToDisplay: Breed[] = [];
     tempers: AnimalTemper[] = [];
 
     // Errors
@@ -55,6 +57,7 @@ export class CreateAnimalPage implements OnInit {
         this.getTypes();
         this.getTemper();
         this.getBreed();
+        this.isTypeSelected = false;
 
         // Create account form
         this.createAnimalForm = new FormGroup({
@@ -86,6 +89,16 @@ export class CreateAnimalPage implements OnInit {
         });
     }
 
+    typeChange(): void {
+        this.isTypeSelected = true;
+
+        this.types.forEach((type) => {
+            if (type.name === this.createAnimalForm.value.fk_id_type) {
+                this.breedsToDisplay = this.breeds.filter(breed => breed.type.id === type.id);
+            }
+        });
+    }
+
     getGenders(): void {
         this.genderService.getAnimalGender().subscribe(
             val => {
@@ -102,7 +115,10 @@ export class CreateAnimalPage implements OnInit {
         this.typeService.getAnimalType().subscribe(
             val => {
                 val.forEach((type) => {
-                        const typeToAdd: AnimalType = {name: type.name};
+                        const typeToAdd: AnimalType = {
+                            id: type.id,
+                            name: type.name
+                        };
                         this.types.push(typeToAdd);
                     }
                 );
@@ -114,19 +130,24 @@ export class CreateAnimalPage implements OnInit {
         this.animalService.getAnimalBreed().subscribe(
             val => {
                 val.forEach((breed) => {
-                        const breedToAdd: Breed = {name: breed.name};
+                        const breedToAdd: Breed = {
+                            name: breed.name,
+                            type: breed.type
+                        };
                         this.breeds.push(breedToAdd);
                     }
                 );
             }
         );
+
+        this.breedsToDisplay = this.breeds;
     }
 
     getTemper(): void {
         this.animalService.getAnimalTemper().subscribe(
             val => {
                 val.forEach((temper) => {
-                        const tempersToAdd: Breed = {name: temper.name};
+                        const tempersToAdd: AnimalTemper = {name: temper.name};
                         this.tempers.push(tempersToAdd);
                     }
                 );
