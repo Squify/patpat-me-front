@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {UserGender} from '../../interfaces/user-gender';
 import {environment} from '../../../environments/environment';
 import {log} from 'util';
-import { AnimalGender } from 'src/app/interfaces/animal-gender';
+import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
 
 @Injectable({
     providedIn: 'root'

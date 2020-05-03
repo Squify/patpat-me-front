@@ -60,16 +60,16 @@
         </ion-item>
 
         <ion-item mode="md">
-          <ion-select interface="popover" id="select-race" formControlName="fk_id_race"
-            placeholder="Sélectionnez la race">
-            <ion-select-option *ngFor="let race of races" value="{{ race.name }}">
-              {{ race.name }}
+          <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
+            placeholder="Sélectionnez la breed">
+            <ion-select-option *ngFor="let breed of breeds" value="{{ breed.name }}">
+              {{ breed.name }}
             </ion-select-option>
           </ion-select>
           <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end input-icon-margin">
           </ion-icon>
-          <ion-icon *ngIf="raceError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_race')">
+          <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_breed')">
           </ion-icon>
         </ion-item>
 

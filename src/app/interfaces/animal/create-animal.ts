@@ -3,6 +3,6 @@ export interface CreateAnimal {
     birthday: string;
     fk_id_type: string;
     fk_id_gender: string;
-    fk_id_race: string;
+    fk_id_breed: string;
     fk_id_temper: string;
 }
