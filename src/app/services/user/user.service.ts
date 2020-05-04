@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {CreateAccount} from '../../interfaces/create-account';
+import {CreateAccount} from '../../interfaces/user/create-account';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {User} from '../../interfaces/user';
+import {User} from '../../interfaces/user/user';
 import {catchError, share} from 'rxjs/operators';
 
 

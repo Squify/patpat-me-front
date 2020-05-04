@@ -75,7 +75,7 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
-            placeholder="Sélectionnez le temperament">
+            placeholder="Sélectionnez les traits de caractère" multiple="true">
             <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
               {{ temper.name }}
             </ion-select-option>

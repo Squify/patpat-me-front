@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Credentials} from '../../interfaces/password/credentials';
-import {User} from '../../interfaces/user';
+import {Credentials} from '../../interfaces/user/credentials';
+import {User} from '../../interfaces/user/user';
 import {AuthenticationService} from '../../services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';

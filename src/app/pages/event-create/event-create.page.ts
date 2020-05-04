@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastController} from '@ionic/angular';
 import {HttpErrorResponse} from '@angular/common/http';
-import {CreateEvent} from '../../interfaces/create-event';
+import {CreateEvent} from '../../interfaces/event/create-event';
 import {EventService} from '../../services/event/event.service';
-import {UserGender} from '../../interfaces/user-gender';
-import {EventType} from '../../interfaces/event-type';
+import {UserGender} from '../../interfaces/user/user-gender';
+import {EventType} from '../../interfaces/event/event-type';
 import {log} from 'util';
 
 @Component({
