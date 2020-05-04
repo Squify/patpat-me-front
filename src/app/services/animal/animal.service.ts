@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Breed} from 'src/app/interfaces/animal/breed';
-import {AnimalTemper} from 'src/app/interfaces/animal/animal-temper';
+import {Temper} from 'src/app/interfaces/animal/temper';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
@@ -20,8 +20,8 @@ export class AnimalService {
         return this.http.post<any>(environment.BACKEND_URL + '/api/animal/create', createAnimal);
     }
 
-    getAnimalTemper(): Observable<AnimalTemper[]> {
-        return this.http.get<AnimalTemper[]>(environment.BACKEND_URL + '/api/animal/tempers');
+    getAnimalTemper(): Observable<Temper[]> {
+        return this.http.get<Temper[]>(environment.BACKEND_URL + '/api/animal/tempers');
     }
 
     getAnimalBreed(): Observable<Breed[]> {

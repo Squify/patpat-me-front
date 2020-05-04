@@ -6,7 +6,7 @@ import {AnimalType} from 'src/app/interfaces/animal/animal-type';
 import {GenderService} from 'src/app/services/gender/gender.service';
 import {TypeService} from 'src/app/services/type/type.service';
 import {AnimalService} from 'src/app/services/animal/animal.service';
-import {AnimalTemper} from 'src/app/interfaces/animal/animal-temper';
+import {Temper} from 'src/app/interfaces/animal/temper';
 import {Breed} from 'src/app/interfaces/animal/breed';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ToastController} from '@ionic/angular';
@@ -25,7 +25,7 @@ export class CreateAnimalPage implements OnInit {
     isTypeSelected: boolean;
     breeds: Breed[] = [];
     breedsToDisplay: Breed[] = [];
-    tempers: AnimalTemper[] = [];
+    tempers: Temper[] = [];
 
     // Errors
     unknownError: boolean;
@@ -147,7 +147,10 @@ export class CreateAnimalPage implements OnInit {
         this.animalService.getAnimalTemper().subscribe(
             val => {
                 val.forEach((temper) => {
-                        const tempersToAdd: AnimalTemper = {name: temper.name};
+                        const tempersToAdd: Temper = {
+                            id: temper.id,
+                            name: temper.name
+                        };
                         this.tempers.push(tempersToAdd);
                     }
                 );
@@ -180,7 +183,7 @@ export class CreateAnimalPage implements OnInit {
         this.createAnimalInterface = {
             name: this.createAnimalForm.value.name,
             birthday: this.createAnimalForm.value.birthday,
-            fk_id_temper: this.createAnimalForm.value.fk_id_temper,
+            tempers: this.createAnimalForm.value.fk_id_temper,
             fk_id_gender: this.createAnimalForm.value.fk_id_gender,
             fk_id_type: this.createAnimalForm.value.fk_id_type,
             fk_id_breed: this.createAnimalForm.value.fk_id_breed,

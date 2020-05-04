@@ -4,5 +4,5 @@ export interface CreateAnimal {
     fk_id_type: string;
     fk_id_gender: string;
     fk_id_breed: string;
-    fk_id_temper: string;
+    tempers: string[];
 }

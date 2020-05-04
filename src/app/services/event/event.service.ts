@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {CreateEvent} from '../../interfaces/create-event';
-import {EventType} from '../../interfaces/event-type';
+import {CreateEvent} from '../../interfaces/event/create-event';
+import {EventType} from '../../interfaces/event/event-type';
 
 @Injectable({
     providedIn: 'root'
