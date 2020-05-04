@@ -155,7 +155,6 @@ export class EventCreatePage implements OnInit {
 
     processError(error: HttpErrorResponse) {
         if (error) {
-            console.log(error);
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
