@@ -64,7 +64,10 @@ export class EventPage implements OnInit {
     this.eventService.getEventType().subscribe(
         val => {
           val.forEach((type) => {
-                const typeToAdd: EventType = { name: type.name };
+                const typeToAdd: EventType = {
+                  id: type.id,
+                  name: type.name
+                };
                 this.types.push(typeToAdd);
               }
           );
