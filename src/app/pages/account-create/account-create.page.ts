@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CreateAccount} from '../../interfaces/create-account';
+import {CreateAccount} from '../../interfaces/user/create-account';
 import {UserService} from '../../services/user/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {UserGender} from '../../interfaces/user-gender';
+import {UserGender} from '../../interfaces/user/user-gender';
 import {GenderService} from '../../services/gender/gender.service';
 import {ToastController} from '@ionic/angular';
 import {AuthenticationService} from '../../services/authentication.service';
-import {User} from '../../interfaces/user';
+import {User} from '../../interfaces/user/user';
 import {Router} from '@angular/router';
-import {Credentials} from '../../interfaces/password/credentials';
+import {Credentials} from '../../interfaces/user/credentials';
 
 @Component({
     selector: 'app-account-create',
