@@ -60,6 +60,10 @@ const routes: Routes = [
         redirectTo: '/tabs/events',
         pathMatch: 'full'
     },
+    {
+        path: 'create-animal',
+        loadChildren: () => import('../pages/create-animal/create-animal.module').then( m => m.CreateAnimalPageModule)
+    }
 ];
 
 @NgModule({
