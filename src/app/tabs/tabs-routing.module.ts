@@ -15,7 +15,7 @@ const routes: Routes = [
                     {
                         path: '',
                         loadChildren: () =>
-                            import('../pages/tab1/tab1.module').then(m => m.Tab1PageModule)
+                            import('../pages/events/events.module').then(m => m.EventsPageModule)
                     },
                     {
                         path: 'create',
