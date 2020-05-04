@@ -15,13 +15,17 @@ const routes: Routes = [
                     {
                         path: '',
                         loadChildren: () =>
-                            import('../pages/tab1/tab1.module').then(m => m.Tab1PageModule)
+                            import('../pages/events/events.module').then(m => m.EventsPageModule)
                     },
                     {
                         path: 'create',
                         loadChildren: () =>
                             import('../pages/event-create/event-create.module').then(m => m.EventCreatePageModule)
-                    }
+                    },
+                    {
+                        path: 'event/:id',
+                        loadChildren: () => import('../pages/event/event.module').then( m => m.EventPageModule)
+                    },
                 ]
             },
             {
