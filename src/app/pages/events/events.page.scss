@@ -1,0 +1,19 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+ion-fab-button {
+  margin-bottom: 57px;
+}
+
+.banner {
+  height: 100px;
+  background: url('/assets/images/grumpy.jpg') center;
+  background-size: cover;
+}
+.event-grid{
+  padding: 0 !important;
+  .event-content{
+    padding: 0;
+  }
+}

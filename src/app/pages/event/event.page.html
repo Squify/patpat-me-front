@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button>
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Événement</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="event">
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngIf="type != 'Randonnée'" class="banner">
+        </ion-col>
+        <ion-col *ngIf="type == 'Randonnée'" class="banner" id="rando">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          {{ event.name }}
+        </ion-col>
+        <ion-col>
+          <!-- Both tabs -->
+          <ion-segment  (ionChange)="segmentChanged($event)" value="informationSegment">
+
+            <ion-segment-button value="informationSegment">
+              Information
+            </ion-segment-button>
+            <ion-segment-button value="membersSegment">
+              Participants
+            </ion-segment-button>
+          </ion-segment>
+          <ion-row class="tabs" [ngSwitch]="selectedSegment">
+            <!-- Tabs content -->
+            <!-- Informations event part here -->
+            <ion-col *ngSwitchCase="'informationSegment'" class="tab tab-informations open">
+              <ion-row>
+                <ion-col>
+                  <ion-row>
+                    <ion-col size="auto">Localisation :</ion-col>
+                    <ion-col>
+                      {{ event.localisation }}
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="auto">Date :</ion-col>
+                    <ion-col>
+                      {{ event.date | date: 'dd/MM/yyyy à HH:mm' }}
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      Description :
+                      {{ event.description }}
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="auto">Type/Mots clés :</ion-col>
+                    <ion-col>
+                      {{ event.key_language_type }}
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <!-- End informations event part -->
+            <!-- Participants part here -->
+            <ion-col *ngSwitchCase="'membersSegment'" class="tab tab-participants">
+              <ion-list class="parts-list">
+                <ion-item *ngFor="let part of participants" class="part-card">
+                  <ion-thumbnail class="part-avatar">
+                    <ion-img [src]="img"></ion-img>
+                  </ion-thumbnail>
+                  <ion-col>
+                    {{part.pseudo}}
+                  </ion-col>
+                  <ion-col size="auto" class="role"></ion-col>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <!-- End participants event part here -->
+
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-col size="auto" class="join-event">
+      <ion-button>Participer</ion-button>
+    </ion-col>
+  </div>
+  <div *ngIf="!event">
+    Gestion d'erreur à faire
+  </div>
+</ion-content>
