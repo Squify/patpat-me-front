@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {CreateAnimal} from 'src/app/interfaces/animal/create-animal';
+import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,10 @@ export class AnimalService {
 
     createAnimal(createAnimal: CreateAnimal): Observable<any> {
         return this.http.post<any>(environment.BACKEND_URL + '/api/animal/create', createAnimal);
+    }
+
+    updateAnimal(updateAnimal: UpdateAnimal): Observable<any> {
+        return this.http.put<any>(environment.BACKEND_URL + '/api/animal/update', updateAnimal);
     }
 
     getAnimalTemper(): Observable<Temper[]> {
