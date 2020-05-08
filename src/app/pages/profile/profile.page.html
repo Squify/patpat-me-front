@@ -4,7 +4,7 @@
             <ion-back-button></ion-back-button>
             <ion-title>Profil</ion-title>
             <div style=float:right;>
-                <ion-button fill="clear">
+                <ion-button fill="clear" routerLink="/edit-profile">
                     <ion-icon name="pencil-outline" slot="end"></ion-icon>
                 </ion-button>
             </div>
@@ -74,7 +74,8 @@
             </ion-card>
 
             <ion-card *ngSwitchCase="'animalSegment'">
-                <ion-button mode="md" fill="clear" size="small" id="cgu-button"> <!-- [routerLink]="'/createAnimal'"-->
+                <ion-button mode="md" fill="clear" size="small" id="cgu-button">
+                    <!-- [routerLink]="'/createAnimal'"-->
                     Ajouter un animal
                 </ion-button>
             </ion-card>
