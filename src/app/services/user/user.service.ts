@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {CreateAccount} from '../../interfaces/user/create-account';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {environment} from '../../../environments/environment';
-import {User} from '../../interfaces/user/user';
-import {catchError, share} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { CreateAccount } from '../../interfaces/user/create-account';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { User } from '../../interfaces/user/user';
+import { catchError, share } from 'rxjs/operators';
 
 
 @Injectable({
@@ -23,6 +23,10 @@ export class UserService {
 
     createUser(createAccount: CreateAccount): Observable<any> {
         return this.http.post<any>(environment.BACKEND_URL + '/api/user/create', createAccount);
+    }
+
+    updateUser(createAccount: CreateAccount): Observable<any> {
+        return this.http.post<any>(environment.BACKEND_URL + '/api/user/update', createAccount);
     }
 
     getRemoteUser(): Observable<User> {
