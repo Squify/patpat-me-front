@@ -13,7 +13,7 @@
 
         <ion-item mode="md">
           <ion-label position="floating">Nom</ion-label>
-          <ion-input type="text" formControlName="name">
+          <ion-input type="text" formControlName="name" > <!--[value]="animal.name">-->
           </ion-input>
           <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
           <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
@@ -88,7 +88,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-button slot="end" class="submit-button" routerLink="/tabs/profil" (click)="submit()">Valider le formulaire</ion-button>
+      <ion-button slot="end" class="submit-button" routerLink="/tabs/profil" (click)="submit()">Mettre à jour son animal</ion-button>
     </form>
   </div>
 </ion-content>

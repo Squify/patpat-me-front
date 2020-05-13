@@ -32,4 +32,11 @@ export class AnimalService {
     getAnimalBreed(): Observable<Breed[]> {
         return this.http.get<Breed[]>(environment.BACKEND_URL + '/api/animal/breeds');
     }
+
+    //TODO recup info de l'animal dans le back 
+    /*
+    getAnimal(createAnimal: CreateAnimal): Observable<any> {
+        return this.http.get<any>(environment.BACKEND_URL + '/api/animal');
+    }*/
+
 }
