@@ -10,12 +10,18 @@ import {Temper} from 'src/app/interfaces/animal/temper';
 import {Breed} from 'src/app/interfaces/animal/breed';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ToastController} from '@ionic/angular';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-update-animal',
   templateUrl: './update-animal.page.html',
   styleUrls: ['./update-animal.page.scss'],
 })
 export class UpdateAnimalPage implements OnInit {
+
+/*
+  subscriptionAnimal: Subscription;
+  animal: UpdateAnimal;
+*/
 
   updateAnimalInterface: UpdateAnimal;
   updateAnimalForm: FormGroup;
@@ -48,6 +54,11 @@ export class UpdateAnimalPage implements OnInit {
   }
 
   ngOnInit() {
+    //TODO recup info de l'animal
+    /*
+        this.subscriptionAnimal = this.animalService.getAnimal().subscribe(animal => this.animal = animal);
+        console.log("animal", this.animal)
+    */
   }
 
   buildForm(): void {
