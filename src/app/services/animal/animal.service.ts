@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Breed} from 'src/app/interfaces/animal/breed';
 import {Temper} from 'src/app/interfaces/animal/temper';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {CreateAnimal} from 'src/app/interfaces/animal/create-animal';
 import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
+import { AnimalInterface } from 'src/app/interfaces/animal/animal-interface';
 
 @Injectable({
     providedIn: 'root'
@@ -33,10 +34,11 @@ export class AnimalService {
         return this.http.get<Breed[]>(environment.BACKEND_URL + '/api/animal/breeds');
     }
 
-    //TODO recup info de l'animal dans le back 
-    /*
-    getAnimal(createAnimal: CreateAnimal): Observable<any> {
-        return this.http.get<any>(environment.BACKEND_URL + '/api/animal');
-    }*/
+    //TODO recup info de l'animal dans le back à revoir 
+    public getAnimalById(animalId: number): Observable<AnimalInterface> {
+
+        const params: HttpParams = new HttpParams().set('animalId', animalId.toString());
+        return this.http.get<AnimalInterface>(environment.BACKEND_URL + '/api/animal', {params});
+    }
 
 }
