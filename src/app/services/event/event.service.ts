@@ -29,4 +29,8 @@ export class EventService {
         const params: HttpParams = new HttpParams().set('eventId', eventId.toString());
         return this.http.get<EventInterface>(environment.BACKEND_URL + '/api/event', {params});
     }
+
+    getEvents(): Observable<EventInterface[]> {
+        return this.http.get<EventInterface[]>(environment.BACKEND_URL + '/api/events');
+    }
 }
