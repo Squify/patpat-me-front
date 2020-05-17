@@ -10,13 +10,14 @@ import {Temper} from 'src/app/interfaces/animal/temper';
 import {Breed} from 'src/app/interfaces/animal/breed';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ToastController} from '@ionic/angular';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-create-animal',
-    templateUrl: './create-animal.page.html',
-    styleUrls: ['./create-animal.page.scss'],
+    templateUrl: './animal-create.page.html',
+    styleUrls: ['./animal-create.page.scss'],
 })
-export class CreateAnimalPage implements OnInit {
+export class AnimalCreatePage implements OnInit {
 
     createAnimalInterface: CreateAnimal;
     createAnimalForm: FormGroup;
@@ -43,6 +44,7 @@ export class CreateAnimalPage implements OnInit {
         private typeService: TypeService,
         private animalService: AnimalService,
         public toastController: ToastController,
+        public translate: TranslateService
     ) {
 
         this.buildForm();
@@ -249,61 +251,61 @@ export class CreateAnimalPage implements OnInit {
         switch (error) {
             case 'name':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un nom valide.',
+                    message: this.translate.instant('ERRORS.ANIMAL.NAME'),
                     duration: 2000
                 });
                 break;
             case 'birthday':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner une date d\'anniversaire.',
+                    message: this.translate.instant('ERRORS.ANIMAL.BIRTHDAY'),
                     duration: 2000
                 });
                 break;
             case 'fk_id_type':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner le type de l\'animal.',
+                    message: this.translate.instant('ERRORS.ANIMAL.TYPE'),
                     duration: 2000
                 });
                 break;
             case 'fk_id_genre':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner le genre de l\'animal.',
+                    message: this.translate.instant('ERRORS.ANIMAL.GENDER'),
                     duration: 2000
                 });
                 break;
             case 'fk_id_breed':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner la race de l\'animal.',
+                    message: this.translate.instant('ERRORS.ANIMAL.BREED'),
                     duration: 2000
                 });
                 break;
             case 'fk_id_temper':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner le temperament de l\'animal.',
+                    message: this.translate.instant('ERRORS.ANIMAL.TEMPER'),
                     duration: 2000
                 });
                 break;
             case 'back_input':
                 toast = await this.toastController.create({
-                    message: 'La requête est invalide, vérifiez les informations saisies.',
+                    message: this.translate.instant('ERRORS.BACK_INPUT'),
                     duration: 2000
                 });
                 break;
             case 'back_server':
                 toast = await this.toastController.create({
-                    message: 'Une erreur serveur est survenue.',
+                    message: this.translate.instant('ERRORS.BACK_SERVER'),
                     duration: 2000
                 });
                 break;
             case 'back_unknown':
                 toast = await this.toastController.create({
-                    message: 'Une erreur inconnue est survenue.',
+                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
                     duration: 2000
                 });
                 break;
             default:
                 toast = await this.toastController.create({
-                    message: 'Le formulaire est erroné ! Cliquez sur les ronds pour plus d\'infos.',
+                    message: this.translate.instant('ERRORS.DEFAULT'),
                     duration: 3000
                 });
                 break;

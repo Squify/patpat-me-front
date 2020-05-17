@@ -5,7 +5,7 @@
     </div>
 
     <div class="form-container">
-        <h2>Inscription sur l'application</h2>
+        <h2>{{ 'ACCOUNT_CREATE.TITLE' | translate }}</h2>
 
 <!--        <div class="button-center">-->
 <!--            <ion-button fill="clear" id="google" style="color:#5d4d4c;">-->
@@ -20,7 +20,7 @@
 
             <ion-list>
                 <ion-item mode="md">
-                    <ion-label position="floating">Pseudo</ion-label>
+                    <ion-label position="floating">{{ 'ACCOUNT_CREATE.PSEUDO' | translate }}</ion-label>
                     <ion-input type="text" formControlName="pseudo">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="person"
@@ -31,7 +31,7 @@
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-label position="floating">Mot de passe</ion-label>
+                    <ion-label position="floating">{{ 'ACCOUNT_CREATE.PASSWORD' | translate }}</ion-label>
                     <ion-input [type]="'password'" formControlName="password" maxlength="32">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="key"
@@ -45,7 +45,7 @@
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-label position="floating">Adresse e-mail</ion-label>
+                    <ion-label position="floating">{{ 'ACCOUNT_CREATE.EMAIL' | translate }}</ion-label>
                     <ion-input type="text" formControlName="email">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
@@ -57,7 +57,7 @@
                 <ion-row>
                     <ion-col col-6>
                         <ion-item mode="md">
-                            <ion-label position="floating">Nom</ion-label>
+                            <ion-label position="floating">{{ 'ACCOUNT_CREATE.LASTNAME' | translate }}</ion-label>
                             <ion-input type="text" formControlName="lastname">
                             </ion-input>
                             <ion-icon mode="md" slot="start" name="finger-print-outline"
@@ -69,7 +69,7 @@
                     </ion-col>
                     <ion-col col-6>
                         <ion-item mode="md">
-                            <ion-label position="floating">Prénom</ion-label>
+                            <ion-label position="floating">{{ 'ACCOUNT_CREATE.FIRSTNAME' | translate }}</ion-label>
                             <ion-input type="text" formControlName="firstname">
                             </ion-input>
                             <ion-icon *ngIf="firstnameInputError" mode="md" slot="end" name="alert-circle-outline"
@@ -81,7 +81,7 @@
 
                 <ion-item mode="md">
                     <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
-                                placeholder="Sélectionnez un genre">
+                                placeholder="{{ 'ACCOUNT_CREATE.GENDER' | translate }}">
                         <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
                             {{ gender.name }}
                         </ion-select-option>
@@ -91,7 +91,7 @@
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-label position="floating">Numéro de téléphone</ion-label>
+                    <ion-label position="floating">{{ 'ACCOUNT_CREATE.PHONE' | translate }}</ion-label>
                     <ion-input type="tel" formControlName="phone">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="call"
@@ -102,10 +102,10 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="floating">Date d'anniversaire</ion-label>
+                    <ion-label position="floating">{{ 'ACCOUNT_CREATE.BIRTHDAY' | translate }}</ion-label>
                     <ion-datetime formControlName="birthday"
                                   display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
-                                  placeholder="Veuillez sélectionner une date">
+                                  placeholder="{{ 'ACCOUNT_CREATE.SELECT_DATE' | translate }}">
                     </ion-datetime>
                     <ion-icon mode="md" slot="start" name="gift"
                               class="ion-align-self-end input-icon-margin"></ion-icon>
@@ -115,26 +115,26 @@
 
             <div class="checkbox">
                 <ion-checkbox formControlName="push_notification" checked="false"></ion-checkbox>
-                <ion-label>Notifications push</ion-label>
+                <ion-label>{{ 'ACCOUNT_CREATE.PUSH' | translate }}</ion-label>
             </div>
 
             <div class="checkbox">
                 <ion-checkbox formControlName="active_localisation" checked="false"></ion-checkbox>
-                <ion-label>Activer la géolocalisation</ion-label>
+                <ion-label>{{ 'ACCOUNT_CREATE.GEOLOC' | translate }}</ion-label>
             </div>
 
             <div class="checkbox">
                 <ion-checkbox formControlName="display_real_name" checked="false"></ion-checkbox>
-                <ion-label>Afficher le nom réel</ion-label>
+                <ion-label>{{ 'ACCOUNT_CREATE.DISPLAY_NAME' | translate }}</ion-label>
             </div>
         </form>
 
         <div class="button-center">
-            <ion-button slot="end" class="validation-button" (click)="submit()">Valider le formulaire</ion-button>
+            <ion-button slot="end" class="validation-button" (click)="submit()">{{ 'ACCOUNT_CREATE.SUBMIT' | translate }}</ion-button>
         </div>
 
         <div class="button-center">
-            <p>Déjà un compte ? <a [routerLink]="'/login'">Connectez-vous !</a></p>
+            <p>{{ 'ACCOUNT_CREATE.ALREADY_ACCOUNT' | translate }}<a [routerLink]="'/login'">{{ 'ACCOUNT_CREATE.CONNEXION' | translate }}</a></p>
         </div>
     </div>
 </ion-content>
