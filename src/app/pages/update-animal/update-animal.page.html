@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="form-container">
+  <div class="form-container" *ngIf="animal">
 
     <form [formGroup]="updateAnimalForm" (keyup.enter)="submit()">
 
@@ -13,7 +13,7 @@
 
         <ion-item mode="md">
           <ion-label position="floating">Nom</ion-label>
-          <ion-input type="text" formControlName="name">
+          <ion-input type="text" formControlName="name" value="{{animal.name}}">
           </ion-input>
           <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
           <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
