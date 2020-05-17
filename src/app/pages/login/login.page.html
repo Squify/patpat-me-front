@@ -5,13 +5,13 @@
     </div>
 
     <div class="form-container">
-        <h2>Connexion</h2>
+        <h2>{{ 'CONNEXION.TITLE' | translate }}</h2>
 
         <form *ngIf="loginForm" [formGroup]="loginForm" (keyup.enter)="login()">
 
             <ion-list>
                 <ion-item mode="md">
-                    <ion-label position="floating">Adresse e-mail</ion-label>
+                    <ion-label position="floating">{{ 'CONNEXION.EMAIL' | translate }}</ion-label>
                     <ion-input type="text" formControlName="email">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
@@ -21,7 +21,7 @@
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-label position="floating">Mot de passe</ion-label>
+                    <ion-label position="floating">{{ 'CONNEXION.PASSWORD' | translate }}</ion-label>
                     <ion-input [type]="'password'" formControlName="password" maxlength="32">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="key"
@@ -37,11 +37,11 @@
         </form>
 
         <div class="button-center">
-            <ion-button slot="end" class="validation-button" (click)="login()">Se connecter</ion-button>
+            <ion-button slot="end" class="validation-button" (click)="login()">{{ 'CONNEXION.CONNEXION' | translate }}</ion-button>
         </div>
 
         <div class="button-center">
-            <p>Pas encore de compte ? <a [routerLink]="'/account-create'">Créez en un !</a></p>
+            <p>{{ 'CONNEXION.ANY_ACCOUNT' | translate }}<a [routerLink]="'/account-create'">{{ 'CONNEXION.CREATE' | translate }}</a></p>
         </div>
     </div>
 </ion-content>
