@@ -66,6 +66,11 @@ export class UpdateAnimalPage implements OnInit {
                 this.animal.tempers.forEach((value) => {
                     this.updateAnimalForm.value.fk_id_temper.push(value.name)
                 });
+                this.updateAnimalForm.value.name = this.animal.name;
+                this.updateAnimalForm.value.birthday = this.animal.birthday;
+                this.updateAnimalForm.value.fk_id_gender = this.animal.fk_id_gender;
+                this.updateAnimalForm.value.fk_id_type = this.animal.fk_id_type;
+                this.updateAnimalForm.value.fk_id_breed = this.animal.fk_id_breed;
             },
             e => console.log(e)
         );
@@ -82,27 +87,15 @@ export class UpdateAnimalPage implements OnInit {
         // update account form
         this.updateAnimalForm = new FormGroup({
 
-            name: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
+            name: new FormControl(''),
 
             birthday: new FormControl(''),
 
             fk_id_temper: new FormControl(''),
 
-            fk_id_gender: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
+            fk_id_gender: new FormControl(''),
 
-            fk_id_type: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
+            fk_id_type: new FormControl(''),
 
             fk_id_breed: new FormControl(''),
 
