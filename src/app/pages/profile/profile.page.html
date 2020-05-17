@@ -44,37 +44,40 @@
 
                     <ion-item>
                         <ion-icon mode="md" name="call" color="medium"></ion-icon>
-                        <ion-label>{{ user.phone }}</ion-label>
+                        <ion-label *ngIf="user.phone">{{ user.phone }}</ion-label>
+                        <ion-label *ngIf="!user.phone">Non renseigné</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
                         <ion-label>Notifications
-                            <p>{{ user.push_notification ? 'oui' : 'non' }}</p>
+                            <p>{{ user.push_notification ? 'Activées' : 'Désactivées' }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
+                        <ion-icon mode="md" name="location-outline" color="medium"></ion-icon>
                         <ion-label>Géolocalisation
-                            <p>{{ user.active_localisation ? 'oui' : 'non' }}</p>
+                            <p>{{ user.active_localisation ? 'Activée' : 'Désactivée' }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon mode="md" name="at" color="medium"></ion-icon>
-                        <ion-label>{{ user.birthday }}</ion-label>
+                        <ion-icon mode="md" name="gift" color="medium"></ion-icon>
+                        <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy à HH:mm' }}</ion-label>
+                        <ion-label *ngIf="!user.birthday">Non renseigné</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="male-female-outline" color="medium"></ion-icon>
-                        <ion-label>{{ user.fk_id_gender }}</ion-label>
+                        <ion-label *ngIf="user.fk_id_gender">{{ user.fk_id_gender }}</ion-label>
+                        <ion-label *ngIf="!user.fk_id_gender">Non renseigné</ion-label>
                     </ion-item>
                 </ion-list>
             </ion-card>
 
             <ion-card *ngSwitchCase="'animalSegment'">
-                <ion-button mode="md" fill="clear" size="small" id="cgu-button"> <!-- [routerLink]="'/createAnimal'"-->
+                <ion-button mode="md" fill="clear" size="small" id="cgu-button" [routerLink]="'/create-animal'">
                     Ajouter un animal
                 </ion-button>
             </ion-card>
@@ -84,7 +87,9 @@
         Aucune information a afficher.
     </div>
 
-    <ion-button routerLink="" (click)="logout()">
-        logout
-    </ion-button>
+    <div class="button-center">
+        <ion-button routerLink="" (click)="logout()">
+            logout
+        </ion-button>
+    </div>
 </ion-content>

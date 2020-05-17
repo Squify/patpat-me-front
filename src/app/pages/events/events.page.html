@@ -52,12 +52,7 @@
     <ion-grid class="event-grid">
         <ion-row>
             <ion-col class="event-content">
-                <ion-row>
-                    <ion-col>
-                        Liste des événements près de chez moi
-                    </ion-col>
-                </ion-row>
-                <ion-list>
+                <ion-list *ngIf="events.length > 0">
                     <ion-item *ngFor="let event of events | eventFilter: filterArgs">
                         <!-- List of the events here -->
                         <ion-col>
@@ -89,6 +84,11 @@
                             </ion-button>
                         </ion-col>
                         <!-- List of the events here -->
+                    </ion-item>
+                </ion-list>
+                <ion-list *ngIf="events.length == 0">
+                    <ion-item>
+                        Aucun événement près de chez vous.
                     </ion-item>
                 </ion-list>
             </ion-col>
