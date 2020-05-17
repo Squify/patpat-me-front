@@ -56,19 +56,19 @@ export class UpdateAnimalPage implements OnInit {
 
     }
 
-    getAnimal(): void {
+      getAnimal(): void {
 
         this.animalService.getAnimalById(1).subscribe(
             value => {
                 this.animal = value;
+
+                this.updateAnimalForm.value.fk_id_temper = [];
+                this.animal.tempers.forEach((value) => {
+                    this.updateAnimalForm.value.fk_id_temper.push(value.name)
+                });
             },
             e => console.log(e)
         );
-
-        this.updateAnimalForm.value.fk_id_temper = [];
-        this.animal.tempers.forEach((value) => {
-            this.updateAnimalForm.value.fk_id_temper.push(value.name)
-        })
     }
 
     buildForm(): void {

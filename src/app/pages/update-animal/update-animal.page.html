@@ -75,7 +75,7 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
-          placeholder="Sélectionnez les traits de caractère" multiple="true" value="{{ this.updateAnimalForm.value.fk_id_temper }}">
+            placeholder="Sélectionnez les traits de caractère" multiple="true" value="{{ this.updateAnimalForm.value.fk_id_temper }}">
             <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
               {{ temper.name }}
             </ion-select-option>
@@ -88,7 +88,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-button slot="end" class="submit-button" routerLink="/tabs/profil" (click)="submit()">Mettre à jour son animal</ion-button>
+      <ion-button slot="end" class="submit-button" (click)="submit()">Mettre à jour son animal</ion-button>
     </form>
   </div>
 </ion-content>
