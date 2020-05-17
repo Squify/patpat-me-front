@@ -37,7 +37,15 @@ export class AnimalService {
     //TODO recup info de l'animal dans le back à revoir 
     public getAnimalById(animalId: number): Observable<AnimalInterface> {
 
+        console.log(animalId);
+
         const params: HttpParams = new HttpParams().set('animalId', animalId.toString());
+        console.log(this.http.get<AnimalInterface>(environment.BACKEND_URL + '/api/animal', {params}).subscribe(
+            value => {
+                console.log(value)
+            },
+            e => console.log(e)
+        ));
         return this.http.get<AnimalInterface>(environment.BACKEND_URL + '/api/animal', {params});
     }
 

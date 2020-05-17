@@ -24,7 +24,7 @@
         <ion-item>
           <ion-label position="floating">Anniversaire</ion-label>
           <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
-            placeholder="Veuillez sélectionner une date">
+            placeholder="Veuillez sélectionner une date" value="{{animal.birthday}}">
           </ion-datetime>
           <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin"></ion-icon>
           <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
@@ -33,7 +33,7 @@
         </ion-item>
 
         <ion-item mode="md">
-          <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
+          <ion-select interface="popover" id="select-type" formControlName="fk_id_type" value="{{animal.type.name}}"
             placeholder="Sélectionnez le type d'animal" (ionChange)="typeChange()">
             <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
               {{ type.name }}
@@ -46,7 +46,7 @@
         </ion-item>
 
         <ion-item mode="md">
-          <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
+          <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed" value="{{animal.breed.name}}"
                       placeholder="Sélectionnez la race" disabled="{{ !isTypeSelected }}">
             <ion-select-option *ngFor="let breed of breedsToDisplay" value="{{ breed.name }}">
               {{ breed.name }}
@@ -60,7 +60,7 @@
         </ion-item>
 
         <ion-item mode="md">
-          <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
+          <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender" value="{{animal.gender.name}}"
             placeholder="Sélectionnez le genre">
             <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
               {{ gender.name }}
@@ -75,7 +75,7 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
-            placeholder="Sélectionnez les traits de caractère" multiple="true">
+          placeholder="Sélectionnez les traits de caractère" multiple="true" value="{{ this.updateAnimalForm.value.fk_id_temper }}">
             <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
               {{ temper.name }}
             </ion-select-option>

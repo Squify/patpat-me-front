@@ -19,10 +19,6 @@ import { AnimalInterface } from 'src/app/interfaces/animal/animal-interface';
 })
 export class UpdateAnimalPage implements OnInit {
 
-    /*
-      subscriptionAnimal: Subscription;
-      animal: UpdateAnimal;
-    */
     animal: AnimalInterface;
 
     updateAnimalInterface: UpdateAnimal;
@@ -56,11 +52,6 @@ export class UpdateAnimalPage implements OnInit {
     }
 
     ngOnInit() {
-        //TODO recup info de l'animal
-        /*
-            this.subscriptionAnimal = this.animalService.getAnimalbyId().subscribe(animal => this.animal = animal);
-            console.log("animal", this.animal)
-        */
         this.getAnimal();
 
     }
@@ -73,6 +64,11 @@ export class UpdateAnimalPage implements OnInit {
             },
             e => console.log(e)
         );
+
+        this.updateAnimalForm.value.fk_id_temper = [];
+        this.animal.tempers.forEach((value) => {
+            this.updateAnimalForm.value.fk_id_temper.push(value.name)
+        })
     }
 
     buildForm(): void {
@@ -180,6 +176,7 @@ export class UpdateAnimalPage implements OnInit {
                 );
             }
         );
+       // this.updateAnimalForm.value.fk_id_temper= this.animal.tempers;
     }
 
     setAllErrorsToFalse(): void {
