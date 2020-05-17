@@ -10,4 +10,5 @@ export interface EventInterface {
     date: string;
     type: EventType;
     owner: User;
+    members: User[];
 }

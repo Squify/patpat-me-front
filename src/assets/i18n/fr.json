@@ -35,8 +35,7 @@
     "LOCATION": "Localisation",
     "DATE": "Date",
     "DESCRIPTION": "Description",
-    "TYPE": "Type/Mots clés",
-    "PARTICIPATE": "Participer"
+    "TYPE": "Type/Mots clés"
   },
   "EVENT_CREATE": {
     "TITLE": "Création d'évènement",
