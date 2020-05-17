@@ -15,6 +15,14 @@
 
 <ion-content>
   <div *ngIf="event">
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge>
+      <ion-fab-button (click)="changeEventParticipation()">
+        <ion-icon *ngIf="event.members.length > 0" name="person-remove-outline"></ion-icon>
+        <ion-icon *ngIf="event.members.length == 0" name="person-add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
     <ion-grid>
       <ion-row>
         <ion-col *ngIf="type != 'Randonnée'" class="banner">
@@ -74,13 +82,13 @@
             <!-- End informations event part -->
             <!-- Participants part here -->
             <ion-col *ngSwitchCase="'membersSegment'" class="tab tab-participants">
-              <ion-list class="parts-list">
-                <ion-item *ngFor="let part of participants" class="part-card">
+              <ion-list class="parts-list" *ngIf="event.members.length > 0">
+                <ion-item *ngFor="let member of event.members" class="part-card">
                   <ion-thumbnail class="part-avatar">
                     <ion-img [src]="img"></ion-img>
                   </ion-thumbnail>
                   <ion-col>
-                    {{part.pseudo}}
+                    {{member.pseudo}}
                   </ion-col>
                   <ion-col size="auto" class="role"></ion-col>
                 </ion-item>
@@ -92,9 +100,6 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-col size="auto" class="join-event">
-      <ion-button>{{ 'EVENT.PARTICIPATE' | translate }}</ion-button>
-    </ion-col>
   </div>
   <div *ngIf="!event">
     Gestion d'erreur à faire

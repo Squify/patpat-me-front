@@ -69,6 +69,7 @@ export class EventsPage {
                             date: event.date,
                             type: event.type,
                             owner: event.owner,
+                            members: event.members,
                         };
                         this.events.push(eventToAdd);
                     }
