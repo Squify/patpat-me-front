@@ -2,6 +2,8 @@ import {Component, NgZone, OnInit} from '@angular/core';
 import {EventService} from '../../services/event/event.service';
 import {EventInterface} from '../../interfaces/event/event-interface';
 import {EventType} from '../../interfaces/event/event-type';
+import {UserService} from "../../services/user/user.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-event',
@@ -12,6 +14,7 @@ export class EventPage implements OnInit {
 
     event: EventInterface;
     types: EventType[] = [];
+    eventId: number = null;
 
     selectedSegment = 'informationSegment';
     type = 'Randonnée';
@@ -20,18 +23,27 @@ export class EventPage implements OnInit {
 
     constructor(
         private eventService: EventService,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private userService: UserService,
+        public router: Router,
+        private activatedRoute: ActivatedRoute,
     ) {
     }
 
     ngOnInit() {
+
+        this.eventId = +this.activatedRoute.snapshot.paramMap.get('id');
+        if (!this.eventId) {
+            this.router.navigateByUrl('/tabs/events');
+        }
+
         this.getTypes();
         this.getEvent();
     }
 
     getEvent(): void {
 
-        this.eventService.getEventById(1).subscribe(
+        this.eventService.getEventById(this.eventId).subscribe(
             value => {
                 this.event = value;
             },
@@ -67,4 +79,12 @@ export class EventPage implements OnInit {
 
         this.selectedSegment = ev.detail.value;
     }
+
+    isOwner(): boolean {
+
+        let connectedUserId;
+        this.userService.getUser().subscribe(connectedUser => connectedUserId = connectedUser.id)
+        return this.event.owner.id == connectedUserId;
+    }
+
 }

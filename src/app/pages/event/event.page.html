@@ -16,7 +16,7 @@
 <ion-content>
   <div *ngIf="event">
 
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge *ngIf="!isOwner()">
       <ion-fab-button (click)="changeEventParticipation()">
         <ion-icon *ngIf="event.members.length > 0" name="person-remove-outline"></ion-icon>
         <ion-icon *ngIf="event.members.length == 0" name="person-add-outline"></ion-icon>
@@ -72,7 +72,7 @@
                   <ion-row>
                     <ion-col size="auto">{{ 'EVENT.TYPE' | translate }} :</ion-col>
                     <ion-col>
-                      {{ event.type }}
+                      {{ event.type.name }}
 <!--                      {{ event.tags }}-->
                     </ion-col>
                   </ion-row>
