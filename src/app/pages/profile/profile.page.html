@@ -1,14 +1,15 @@
 <ion-header>
     <ion-toolbar>
-        <div class="topbar">
-            <ion-back-button></ion-back-button>
-            <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
-            <div style=float:right;>
-                <ion-button fill="clear">
-                    <ion-icon name="pencil-outline" slot="end"></ion-icon>
-                </ion-button>
-            </div>
-        </div>
+        <ion-buttons slot="start">
+            <ion-back-button>
+            </ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon name="pencil-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -89,6 +90,7 @@
 
     <div class="button-center">
         <ion-button routerLink="" (click)="logout()">
+            <ion-icon style="margin-right: 10px" name="log-out-outline"></ion-icon>
             {{ 'PROFILE.LOGOUT' | translate }}
         </ion-button>
     </div>
