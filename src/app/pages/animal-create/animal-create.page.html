@@ -4,7 +4,7 @@
       <ion-back-button>
       </ion-back-button>
     </ion-buttons>
-    <ion-title>Ajouter un animal</ion-title>
+    <ion-title>{{ 'ANIMAL_CREATE.TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
       <ion-list>
 
         <ion-item mode="md">
-          <ion-label position="floating">Nom</ion-label>
+          <ion-label position="floating">{{ 'ANIMAL_CREATE.NAME' | translate }}</ion-label>
           <ion-input type="text" formControlName="name">
           </ion-input>
           <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
@@ -26,9 +26,9 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Anniversaire</ion-label>
+          <ion-label position="floating">{{ 'ANIMAL_CREATE.BIRTHDAY' | translate }}</ion-label>
           <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
-            placeholder="Veuillez sélectionner une date">
+            placeholder="{{ 'ANIMAL_CREATE.SELECT_DATE' | translate }}">
           </ion-datetime>
           <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin"></ion-icon>
           <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
@@ -38,7 +38,7 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
-            placeholder="Sélectionnez le type d'animal" (ionChange)="typeChange()">
+            placeholder="{{ 'ANIMAL_CREATE.TYPE' | translate }}" (ionChange)="typeChange()">
             <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
               {{ type.name }}
             </ion-select-option>
@@ -51,7 +51,7 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
-                      placeholder="Sélectionnez la race" disabled="{{ !isTypeSelected }}">
+                      placeholder="{{ 'ANIMAL_CREATE.BREED' | translate }}" disabled="{{ !isTypeSelected }}">
             <ion-select-option *ngFor="let breed of breedsToDisplay" value="{{ breed.name }}">
               {{ breed.name }}
             </ion-select-option>
@@ -65,7 +65,7 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
-            placeholder="Sélectionnez le genre">
+            placeholder="{{ 'ANIMAL_CREATE.GENDER' | translate }}">
             <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
               {{ gender.name }}
             </ion-select-option>
@@ -79,9 +79,9 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
-            placeholder="Sélectionnez les traits de caractère" multiple="true">
+            placeholder="{{ 'ANIMAL_CREATE.TEMPER' | translate }}" multiple="true">
             <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
-              {{ temper.name }}
+              {{ 'TEMPER.' + temper.name | translate }}
             </ion-select-option>
           </ion-select>
           <ion-icon mode="md" slot="start" name="american-football-outline" class="ion-align-self-end input-icon-margin">
@@ -92,7 +92,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-button slot="end" class="submit-button" (click)="submit()">Valider le formulaire</ion-button>
+      <ion-button slot="end" class="submit-button" (click)="submit()">{{ 'ANIMAL_CREATE.SUBMIT' | translate }}</ion-button>
     </form>
   </div>
 </ion-content>

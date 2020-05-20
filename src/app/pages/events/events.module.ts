@@ -8,15 +8,17 @@ import { EventsPageRoutingModule } from './events-routing.module';
 
 import { EventsPage } from './events.page';
 import {SharedPipeModule} from "../../pipes/shared-pipe.module";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    EventsPageRoutingModule,
-    SharedPipeModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        EventsPageRoutingModule,
+        SharedPipeModule,
+        TranslateModule
+    ],
   declarations: [EventsPage]
 })
 export class EventsPageModule {}

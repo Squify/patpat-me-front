@@ -4,7 +4,7 @@
       <ion-back-button>
       </ion-back-button>
     </ion-buttons>
-    <ion-title>Événement</ion-title>
+    <ion-title>{{ 'EVENT.TITLE' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button>
         <ion-icon name="pencil-outline"></ion-icon>
@@ -31,10 +31,10 @@
           <ion-segment  (ionChange)="segmentChanged($event)" value="informationSegment">
 
             <ion-segment-button value="informationSegment">
-              Information
+              {{ 'EVENT.INFO' | translate }}
             </ion-segment-button>
             <ion-segment-button value="membersSegment">
-              Participants
+              {{ 'EVENT.PARTICIPANTS' | translate }}
             </ion-segment-button>
           </ion-segment>
           <ion-row class="tabs" [ngSwitch]="selectedSegment">
@@ -44,27 +44,28 @@
               <ion-row>
                 <ion-col>
                   <ion-row>
-                    <ion-col size="auto">Localisation :</ion-col>
+                    <ion-col size="auto">{{ 'EVENT.LOCATION' | translate }} :</ion-col>
                     <ion-col>
                       {{ event.localisation }}
                     </ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col size="auto">Date :</ion-col>
+                    <ion-col size="auto">{{ 'EVENT.DATE' | translate }} :</ion-col>
                     <ion-col>
                       {{ event.date | date: 'dd/MM/yyyy à HH:mm' }}
                     </ion-col>
                   </ion-row>
                   <ion-row>
                     <ion-col>
-                      Description :
+                      {{ 'EVENT.DESCRIPTION' | translate }} :
                       {{ event.description }}
                     </ion-col>
                   </ion-row>
                   <ion-row>
-                    <ion-col size="auto">Type/Mots clés :</ion-col>
+                    <ion-col size="auto">{{ 'EVENT.TYPE' | translate }} :</ion-col>
                     <ion-col>
-                      {{ event.key_language_type }}
+                      {{ event.type }}
+<!--                      {{ event.tags }}-->
                     </ion-col>
                   </ion-row>
                 </ion-col>
@@ -92,7 +93,7 @@
       </ion-row>
     </ion-grid>
     <ion-col size="auto" class="join-event">
-      <ion-button>Participer</ion-button>
+      <ion-button>{{ 'EVENT.PARTICIPATE' | translate }}</ion-button>
     </ion-col>
   </div>
   <div *ngIf="!event">
