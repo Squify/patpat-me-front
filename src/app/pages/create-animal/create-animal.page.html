@@ -30,7 +30,8 @@
           <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
             placeholder="Veuillez sélectionner une date">
           </ion-datetime>
-          <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" slot="start" name="calendar-outline" class="ion-align-self-end input-icon-margin">
+          </ion-icon>
           <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
             class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('birthday')">
           </ion-icon>
@@ -51,15 +52,16 @@
 
         <ion-item mode="md">
           <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
-                      placeholder="Sélectionnez la race" disabled="{{ !isTypeSelected }}">
+            placeholder="Sélectionnez la race" disabled="{{ !isTypeSelected }}">
             <ion-select-option *ngFor="let breed of breedsToDisplay" value="{{ breed.name }}">
               {{ breed.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end input-icon-margin">
+          <!-- Previous icon was trail-sign-outline -->
+          <ion-icon mode="md" slot="start" name="paw" class="ion-align-self-end input-icon-margin">
           </ion-icon>
           <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
-                    class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_breed')">
+            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_breed')">
           </ion-icon>
         </ion-item>
 
@@ -84,7 +86,7 @@
               {{ temper.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start" name="american-football-outline" class="ion-align-self-end input-icon-margin">
+          <ion-icon mode="md" slot="start" name="happy-outline" class="ion-align-self-end input-icon-margin">
           </ion-icon>
           <ion-icon *ngIf="temperError" mode="md" slot="end" name="alert-circle-outline"
             class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_temper')">

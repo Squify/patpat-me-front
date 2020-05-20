@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {LoggedInPersonResolver} from './resolver/logged-in-person-resolver';
+import { LoggedInPersonResolver } from './resolver/logged-in-person-resolver';
 
 const routes: Routes = [
   {
@@ -12,19 +12,24 @@ const routes: Routes = [
     resolve: {
       loggedInPerson: LoggedInPersonResolver
     },
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'account-create',
     loadChildren: () =>
-        import('./pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
-  },  {
+      import('./pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
+  },
+  {
     path: 'event',
-    loadChildren: () => import('./pages/event/event.module').then( m => m.EventPageModule)
+    loadChildren: () => import('./pages/event/event.module').then(m => m.EventPageModule)
   },
   {
     path: 'events',
-    loadChildren: () => import('./pages/events/events.module').then( m => m.EventsPageModule)
+    loadChildren: () => import('./pages/events/events.module').then(m => m.EventsPageModule)
+  },
+  {
+    path: 'animal-profile',
+    loadChildren: () => import('./pages/animal-profile/animal-profile.module').then(m => m.AnimalProfilePageModule)
   }
 
 ];
@@ -34,4 +39,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
