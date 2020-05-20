@@ -60,6 +60,16 @@ ion-list {
   margin-top: 16px;
 }
 
+// Removing padding
+.padding0 {
+  padding: 0;
+}
+
+// Removing rounded border
+.noRoundedBorder {
+  border-radius: 0;
+}
+
 // Quand l'écran fait plus de 820px (tablettes / grands téléphones / pc)
 @media (min-width: 820px) {
   .create-account-img {

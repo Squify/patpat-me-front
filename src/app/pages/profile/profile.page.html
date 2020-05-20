@@ -77,9 +77,21 @@
             </ion-card>
 
             <ion-card *ngSwitchCase="'animalSegment'">
-                <ion-button mode="md" fill="clear" size="small" id="cgu-button" [routerLink]="'/create-animal'">
-                    Ajouter un animal
-                </ion-button>
+                <ion-row>
+                    <ion-col>
+                        <ion-button mode="md" fill="clear" size="small" id="cgu-button"
+                            [routerLink]="'/animal-profile'">
+                            Afficher animal
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-button mode="md" fill="clear" size="small" id="cgu-button" [routerLink]="'/create-animal'">
+                            Ajouter un animal
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
             </ion-card>
         </div>
     </div>
