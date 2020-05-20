@@ -35,8 +35,7 @@
     "LOCATION": "Localisation",
     "DATE": "Date",
     "DESCRIPTION": "Description",
-    "TYPE": "Type/Mots clés",
-    "PARTICIPATE": "Participer"
+    "TYPE": "Type/Mots clés"
   },
   "EVENT_CREATE": {
     "TITLE": "Création d'évènement",
@@ -76,6 +75,7 @@
     "ACTIVATED": "Activé",
     "DEACTIVATED": "Désactivé",
     "ADD_ANIMAL": "Ajouter un animal",
+    "ANY_ANIMAL": "Vous n'avez pas encore ajouté d'animal, cliquez sur le bouton en bas de page pour en ajouter un.",
     "ANY_INFORMATIONS": "Aucune information a afficher.",
     "LOGOUT": "Déconnexion"
   },
@@ -149,6 +149,7 @@
       "DATE": "Veuillez renseigner une date.",
       "TYPE": "Veuillez renseigner un type pour l'évènement."
     },
+    "USER_IS_OWNER": "Vous êtes l'hôte de cet événement, vous participez déjà à celui-ci.",
     "BACK_INPUT": "La requête est invalide, vérifiez les informations saisies.",
     "BACK_SERVER": "Une erreur serveur est survenue",
     "BACK_UNKNOWN": "Une erreur inconnue est survenue",
