@@ -6,6 +6,7 @@ import {CreateEvent} from '../../interfaces/event/create-event';
 import {EventService} from '../../services/event/event.service';
 import {EventType} from '../../interfaces/event/event-type';
 import {TranslateService} from "@ngx-translate/core";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-event-create',
@@ -32,7 +33,8 @@ export class EventCreatePage implements OnInit {
     constructor(
         public toastController: ToastController,
         private eventService: EventService,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public router: Router,
     ) {
         this.buildForm();
     }
@@ -126,7 +128,7 @@ export class EventCreatePage implements OnInit {
         };
 
         this.eventService.createEvent(this.createEventInterface).subscribe(
-            _ => console.log('redirect ici'),
+            _ => this.router.navigateByUrl(''),
             error => this.processError(error))
         ;
     }

@@ -33,4 +33,8 @@ export class EventService {
     getEvents(): Observable<EventInterface[]> {
         return this.http.get<EventInterface[]>(environment.BACKEND_URL + '/api/events');
     }
+
+    changeEventParticipation(eventId: number): Observable<EventInterface> {
+        return this.http.post<any>(environment.BACKEND_URL + '/api/event/participation', eventId);
+    }
 }
