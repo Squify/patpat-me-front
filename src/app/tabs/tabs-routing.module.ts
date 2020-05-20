@@ -24,7 +24,7 @@ const routes: Routes = [
                     },
                     {
                         path: 'event/:id',
-                        loadChildren: () => import('../pages/event/event.module').then( m => m.EventPageModule)
+                        loadChildren: () => import('../pages/event/event.module').then(m => m.EventPageModule)
                     },
                 ]
             },
@@ -66,7 +66,7 @@ const routes: Routes = [
     },
     {
         path: 'create-animal',
-        loadChildren: () => import('../pages/create-animal/create-animal.module').then( m => m.CreateAnimalPageModule)
+        loadChildren: () => import('../pages/animal-create/animal-create.module').then(m => m.AnimalCreateModule)
     }
 ];
 

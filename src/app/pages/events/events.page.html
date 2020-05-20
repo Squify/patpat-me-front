@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-title>
-            Événements
+            {{ 'EVENTS.TITLE' | translate }}
         </ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="openFilter()">
@@ -15,7 +15,7 @@
 <ion-menu side="end" menuId="first" contentId="main">
     <ion-header>
         <ion-toolbar color="primary">
-            <ion-title>Filtrer les événements</ion-title>
+            <ion-title>{{ 'EVENTS.FILTER' | translate }}</ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -35,12 +35,6 @@
 </ion-menu>
 
 <ion-content [fullscreen]="true" id="main">
-    <!-- Top of the page -->
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">PatPatMe</ion-title>
-        </ion-toolbar>
-    </ion-header>
 
     <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge>
         <ion-fab-button [routerLink]="'create'">
@@ -80,7 +74,7 @@
                                 </ion-col>
                             </ion-row>
                             <ion-button mode="md" [routerLink]="'event/'+ event.id" fill="clear" size="small">
-                                > Plus de détails
+                                > {{ 'EVENTS.MORE_DETAILS' | translate }}
                             </ion-button>
                         </ion-col>
                         <!-- List of the events here -->
@@ -88,7 +82,7 @@
                 </ion-list>
                 <ion-list *ngIf="events.length == 0">
                     <ion-item>
-                        Aucun événement près de chez vous.
+                        {{ 'EVENTS.ANY_EVENT' | translate }}
                     </ion-item>
                 </ion-list>
             </ion-col>

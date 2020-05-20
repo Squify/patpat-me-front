@@ -2,7 +2,7 @@
     <ion-toolbar>
         <div class="topbar">
             <ion-back-button></ion-back-button>
-            <ion-title>Profil</ion-title>
+            <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
             <div style=float:right;>
                 <ion-button fill="clear">
                     <ion-icon name="pencil-outline" slot="end"></ion-icon>
@@ -25,10 +25,10 @@
         <ion-segment (ionChange)="segmentChanged($event)" value="informationSegment">
 
             <ion-segment-button value="informationSegment">
-                Information
+                {{ 'PROFILE.INFORMATIONS' | translate }}
             </ion-segment-button>
             <ion-segment-button value="animalSegment">
-                Animaux
+                {{ 'PROFILE.ANIMALS' | translate }}
             </ion-segment-button>
         </ion-segment>
 
@@ -45,51 +45,51 @@
                     <ion-item>
                         <ion-icon mode="md" name="call" color="medium"></ion-icon>
                         <ion-label *ngIf="user.phone">{{ user.phone }}</ion-label>
-                        <ion-label *ngIf="!user.phone">Non renseigné</ion-label>
+                        <ion-label *ngIf="!user.phone">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
-                        <ion-label>Notifications
-                            <p>{{ user.push_notification ? 'Activées' : 'Désactivées' }}</p>
+                        <ion-label>{{ 'PROFILE.NOTIFICATIONS' | translate }}
+                            <p>{{ user.push_notification ? 'PROFILE.ACTIVATED' : 'PROFILE.DEACTIVATED' | translate }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="location-outline" color="medium"></ion-icon>
-                        <ion-label>Géolocalisation
-                            <p>{{ user.active_localisation ? 'Activée' : 'Désactivée' }}</p>
+                        <ion-label>{{ 'PROFILE.GEOLOCATION' | translate }}
+                            <p>{{ user.active_localisation ? 'PROFILE.ACTIVATED' : 'PROFILE.DEACTIVATED' | translate }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="gift" color="medium"></ion-icon>
                         <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy à HH:mm' }}</ion-label>
-                        <ion-label *ngIf="!user.birthday">Non renseigné</ion-label>
+                        <ion-label *ngIf="!user.birthday">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="male-female-outline" color="medium"></ion-icon>
                         <ion-label *ngIf="user.fk_id_gender">{{ user.fk_id_gender }}</ion-label>
-                        <ion-label *ngIf="!user.fk_id_gender">Non renseigné</ion-label>
+                        <ion-label *ngIf="!user.fk_id_gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
                 </ion-list>
             </ion-card>
 
             <ion-card *ngSwitchCase="'animalSegment'">
                 <ion-button mode="md" fill="clear" size="small" id="cgu-button" [routerLink]="'/create-animal'">
-                    Ajouter un animal
+                    {{ 'PROFILE.ADD_ANIMAL' | translate }}
                 </ion-button>
             </ion-card>
         </div>
     </div>
     <div *ngIf="!user">
-        Aucune information a afficher.
+        {{ 'PROFILE.ANY_INFORMATIONS' | translate }}
     </div>
 
     <div class="button-center">
         <ion-button routerLink="" (click)="logout()">
-            logout
+            {{ 'PROFILE.LOGOUT' | translate }}
         </ion-button>
     </div>
 </ion-content>
