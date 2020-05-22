@@ -4,9 +4,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EventCreatePageRoutingModule } from './event-create-routing.module';
+import { EventsPageRoutingModule } from './events-routing.module';
 
-import { EventCreatePage } from './event-create.page';
+import { EventsPage } from './events.page';
+import {SharedPipeModule} from "../../pipes/shared-pipe.module";
 import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
@@ -14,10 +15,10 @@ import {TranslateModule} from "@ngx-translate/core";
         CommonModule,
         FormsModule,
         IonicModule,
-        EventCreatePageRoutingModule,
-        ReactiveFormsModule,
+        EventsPageRoutingModule,
+        SharedPipeModule,
         TranslateModule
     ],
-  declarations: [EventCreatePage]
+  declarations: [EventsPage]
 })
-export class EventCreatePageModule {}
+export class EventsPageModule {}

@@ -4,9 +4,9 @@ import {ToastController} from '@ionic/angular';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CreateEvent} from '../../interfaces/event/create-event';
 import {EventService} from '../../services/event/event.service';
-import {UserGender} from '../../interfaces/user/user-gender';
 import {EventType} from '../../interfaces/event/event-type';
-import {log} from 'util';
+import {TranslateService} from "@ngx-translate/core";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-event-create',
@@ -33,6 +33,8 @@ export class EventCreatePage implements OnInit {
     constructor(
         public toastController: ToastController,
         private eventService: EventService,
+        public translate: TranslateService,
+        public router: Router,
     ) {
         this.buildForm();
     }
@@ -85,7 +87,10 @@ export class EventCreatePage implements OnInit {
         this.eventService.getEventType().subscribe(
             val => {
                 val.forEach((type) => {
-                        const typeToAdd: UserGender = {name: type.name};
+                        const typeToAdd: EventType = {
+                            id: type.id,
+                            name: type.name
+                        };
                         this.types.push(typeToAdd);
                     }
                 );
@@ -119,11 +124,11 @@ export class EventCreatePage implements OnInit {
             description: this.createEventForm.value.description,
             localisation: this.createEventForm.value.localisation,
             date: this.createEventForm.value.date,
-            fk_id_type: this.createEventForm.value.fk_id_type,
+            type: this.createEventForm.value.fk_id_type,
         };
 
         this.eventService.createEvent(this.createEventInterface).subscribe(
-            _ => console.log('redirect ici'),
+            _ => this.router.navigateByUrl(''),
             error => this.processError(error))
         ;
     }
@@ -184,61 +189,61 @@ export class EventCreatePage implements OnInit {
         switch (error) {
             case 'name':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un nom pour l\'évènement.',
+                    message: this.translate.instant('ERRORS.EVENT.NAME'),
                     duration: 2000
                 });
                 break;
             case 'name_exist':
                 toast = await this.toastController.create({
-                    message: 'Le nom saisi est déjà utilisé.',
+                    message: this.translate.instant('ERRORS.EVENT.NAME_ALREADY_USED'),
                     duration: 2000
                 });
                 break;
             case 'description':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner une description valide.',
+                    message: this.translate.instant('ERRORS.EVENT.DESCRIPTION'),
                     duration: 2000
                 });
                 break;
             case 'localisation':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner une localisation valide.',
+                    message: this.translate.instant('ERRORS.EVENT.LOCATION'),
                     duration: 2000
                 });
                 break;
             case 'date':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner une date.',
+                    message: this.translate.instant('ERRORS.EVENT.DATE'),
                     duration: 2000
                 });
                 break;
             case 'fk_id_type':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un type pour l\'évènement.',
+                    message: this.translate.instant('ERRORS.EVENT.TYPE'),
                     duration: 2000
                 });
                 break;
             case 'back_input':
                 toast = await this.toastController.create({
-                    message: 'La requête est invalide, vérifiez les informations saisies.',
+                    message: this.translate.instant('ERRORS.BACK_INPUT'),
                     duration: 2000
                 });
                 break;
             case 'back_server':
                 toast = await this.toastController.create({
-                    message: 'Une erreur serveur est survenue.',
+                    message: this.translate.instant('ERRORS.BACK_SERVER'),
                     duration: 2000
                 });
                 break;
             case 'back_unknown':
                 toast = await this.toastController.create({
-                    message: 'Une erreur inconnue est survenue.',
+                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
                     duration: 2000
                 });
                 break;
             default:
                 toast = await this.toastController.create({
-                    message: 'Le formulaire est erroné ! Cliquez sur les ronds pour plus d\'infos.',
+                    message: this.translate.instant('ERRORS.DEFAULT'),
                     duration: 3000
                 });
                 break;

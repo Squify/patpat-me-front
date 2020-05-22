@@ -1,3 +1,10 @@
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/interfaces/user/user';
+import { Subscription } from 'rxjs';
+import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/interfaces/user/user';
@@ -21,6 +28,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         private userService: UserService,
         private authService: AuthenticationService,
         private router: Router,
+        private ngZone: NgZone,
     ) {
     }
 
@@ -48,11 +56,15 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
+        this.getUserDetail();
         // this.getConnectedUser();
     }
 
     ngOnDestroy() {
         this.subscriptionUser.unsubscribe();
+    }
+
+    getUserDetail(): void {
+        this.ngZone.run(() => this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user));
     }
 }
