@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CreateAccount} from '../../interfaces/user/create-account';
-import {UserService} from '../../services/user/user.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {UserGender} from '../../interfaces/user/user-gender';
-import {GenderService} from '../../services/gender/gender.service';
-import {ToastController} from '@ionic/angular';
-import {AuthenticationService} from '../../services/authentication.service';
-import {User} from '../../interfaces/user/user';
-import {Router} from '@angular/router';
-import {Credentials} from '../../interfaces/user/credentials';
-import {TranslateService} from "@ngx-translate/core";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountCreate } from '../../interfaces/user/account-create';
+import { UserService } from '../../services/user/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserGender } from '../../interfaces/user/user-gender';
+import { GenderService } from '../../services/gender/gender.service';
+import { ToastController } from '@ionic/angular';
+import { AuthenticationService } from '../../services/authentication.service';
+import { User } from '../../interfaces/user/user';
+import { Router } from '@angular/router';
+import { Credentials } from '../../interfaces/user/credentials';
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-account-create',
@@ -19,7 +19,7 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class AccountCreatePage implements OnInit {
 
-    createAccountInterface: CreateAccount;
+    accountCreateInterface: AccountCreate;
     createPersonForm: FormGroup;
     genders: UserGender[] = [];
     credentials: Credentials;
@@ -46,6 +46,7 @@ export class AccountCreatePage implements OnInit {
         public translate: TranslateService
     ) {
 
+        this.getGenders();
         this.buildForm();
     }
 
@@ -54,9 +55,6 @@ export class AccountCreatePage implements OnInit {
 
     buildForm(): void {
 
-        this.getGenders();
-
-        // Create account form
         this.createPersonForm = new FormGroup({
 
             email: new FormControl('', {
@@ -146,7 +144,7 @@ export class AccountCreatePage implements OnInit {
     }
 
     createAccount(): void {
-        this.createAccountInterface = {
+        this.accountCreateInterface = {
             email: this.createPersonForm.value.email,
             password: this.createPersonForm.value.password,
             pseudo: this.createPersonForm.value.pseudo,
@@ -160,7 +158,7 @@ export class AccountCreatePage implements OnInit {
             gender: this.createPersonForm.value.fk_id_gender,
         };
 
-        this.userService.createUser(this.createAccountInterface).subscribe(
+        this.userService.createUser(this.accountCreateInterface).subscribe(
             _ => this.connectUser(),
             error => this.processError(error))
         ;

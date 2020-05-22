@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'edit-profile',
-    loadChildren: () => import('./pages/edit-profile/edit-profile.module').then(m => m.EditProfilePageModule)
+    loadChildren: () => import('./pages/profile-edit/profile-edit.module').then(m => m.EditProfilePageModule)
   },
 
 ];
