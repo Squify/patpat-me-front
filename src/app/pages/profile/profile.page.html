@@ -2,12 +2,12 @@
     <ion-toolbar>
         <div class="topbar">
             <ion-back-button></ion-back-button>
-        <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
-        <ion-buttons slot="end">
+            <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
+            <ion-buttons slot="end">
                 <ion-button fill="clear" routerLink="/edit-profile">
                     <ion-icon name="pencil-outline" slot="end"></ion-icon>
                 </ion-button>
-            </div>
+            </ion-buttons>
         </div>
     </ion-toolbar>
 </ion-header>
@@ -28,7 +28,8 @@
             {{ user.pseudo }}
         </p>
 
-        <ion-segment (ionChange)="segmentChanged($event)" value="informationSegment" style="margin: unset; border-bottom-left-radius: 0;border-bottom-right-radius: 0">
+        <ion-segment (ionChange)="segmentChanged($event)" value="informationSegment"
+                     style="margin: unset; border-bottom-left-radius: 0;border-bottom-right-radius: 0">
 
             <ion-segment-button value="informationSegment">
                 {{ 'PROFILE.INFORMATIONS' | translate }}
@@ -40,7 +41,8 @@
 
 
         <div [ngSwitch]="selectedSegment">
-            <ion-card *ngSwitchCase="'informationSegment'" style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+            <ion-card *ngSwitchCase="'informationSegment'"
+                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
                 <ion-list>
                     <ion-item>
                         <ion-icon mode="md" name="at" color="medium"></ion-icon>
@@ -81,7 +83,8 @@
                 </ion-list>
             </ion-card>
 
-            <ion-card *ngSwitchCase="'animalSegment'" style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+            <ion-card *ngSwitchCase="'animalSegment'"
+                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
                 <ion-list>
                     <p style="margin: 16px">
                         {{ 'PROFILE.ANY_ANIMAL' | translate }}
