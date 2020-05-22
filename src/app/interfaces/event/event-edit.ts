@@ -1,7 +1,6 @@
-export interface CreateEvent {
-    name: string;
+export interface EventEdit {
+    id: number;
     description: string;
     localisation: string;
     date: string;
-    type: string;
 }

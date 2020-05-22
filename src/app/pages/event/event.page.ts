@@ -52,6 +52,13 @@ export class EventPage implements OnInit {
         this.getEvent();
     }
 
+    ionViewDidEnter() {
+        if (history.state.comingFromEdition) {
+            this.ngZone.run(() => this.getEvent())
+        }
+    }
+
+
     getEvent(): void {
 
         this.eventService.getEventById(this.eventId).subscribe(

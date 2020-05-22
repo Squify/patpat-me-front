@@ -5,8 +5,8 @@
       </ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'EVENT.TITLE' | translate }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
+    <ion-buttons slot="end" *ngIf="event">
+      <ion-button *ngIf="isOwner()" [routerLink]="'edit'">
         <ion-icon name="pencil-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
