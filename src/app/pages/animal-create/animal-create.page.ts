@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {CreateAnimal} from 'src/app/interfaces/animal/create-animal';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AnimalGender} from 'src/app/interfaces/animal/animal-gender';
-import {AnimalType} from 'src/app/interfaces/animal/animal-type';
-import {GenderService} from 'src/app/services/gender/gender.service';
-import {TypeService} from 'src/app/services/type/type.service';
-import {AnimalService} from 'src/app/services/animal/animal.service';
-import {Temper} from 'src/app/interfaces/animal/temper';
-import {Breed} from 'src/app/interfaces/animal/breed';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ToastController} from '@ionic/angular';
-import {TranslateService} from "@ngx-translate/core";
+import { Component, OnInit } from '@angular/core';
+import { CreateAnimal } from 'src/app/interfaces/animal/create-animal';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
+import { AnimalType } from 'src/app/interfaces/animal/animal-type';
+import { GenderService } from 'src/app/services/gender/gender.service';
+import { TypeService } from 'src/app/services/type/type.service';
+import { AnimalService } from 'src/app/services/animal/animal.service';
+import { Temper } from 'src/app/interfaces/animal/temper';
+import { Breed } from 'src/app/interfaces/animal/breed';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
+import { TranslateService } from "@ngx-translate/core";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-create-animal',
@@ -44,7 +45,8 @@ export class AnimalCreatePage implements OnInit {
         private typeService: TypeService,
         private animalService: AnimalService,
         public toastController: ToastController,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public router: Router,
     ) {
 
         this.buildForm();
@@ -177,7 +179,6 @@ export class AnimalCreatePage implements OnInit {
             this.createAnimal();
         } else {
             this.presentToast('general');
-            console.log('ça marche po');
         }
     }
 
@@ -186,13 +187,13 @@ export class AnimalCreatePage implements OnInit {
             name: this.createAnimalForm.value.name,
             birthday: this.createAnimalForm.value.birthday,
             tempers: this.createAnimalForm.value.fk_id_temper,
-            fk_id_gender: this.createAnimalForm.value.fk_id_gender,
-            fk_id_type: this.createAnimalForm.value.fk_id_type,
-            fk_id_breed: this.createAnimalForm.value.fk_id_breed,
+            gender: this.createAnimalForm.value.fk_id_gender,
+            type: this.createAnimalForm.value.fk_id_type,
+            breed: this.createAnimalForm.value.fk_id_breed,
         };
 
         this.animalService.createAnimal(this.createAnimalInterface).subscribe(
-            _ => console.log('animal créé'),
+            _ => this.router.navigate(['tabs/profile']),
             error => this.processError(error));
     }
 

@@ -157,7 +157,7 @@ export class AccountCreatePage implements OnInit {
             push_notification: this.createPersonForm.value.push_notification,
             active_localisation: this.createPersonForm.value.active_localisation,
             display_real_name: this.createPersonForm.value.display_real_name,
-            fk_id_gender: this.createPersonForm.value.fk_id_gender,
+            gender: this.createPersonForm.value.fk_id_gender,
         };
 
         this.userService.createUser(this.createAccountInterface).subscribe(

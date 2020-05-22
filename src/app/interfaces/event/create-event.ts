@@ -3,5 +3,5 @@ export interface CreateEvent {
     description: string;
     localisation: string;
     date: string;
-    fk_id_type: string;
+    type: string;
 }

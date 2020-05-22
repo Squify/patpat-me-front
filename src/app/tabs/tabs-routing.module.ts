@@ -37,18 +37,22 @@ const routes: Routes = [
                             import('../pages/tab2/tab2.module').then(m => m.Tab2PageModule)
                     },
                     {
-                        path: 'profil',
+                        path: 'profile',
                         loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
                     }
                 ]
             },
             {
-                path: 'profil',
+                path: 'profile',
                 children: [
                     {
                         path: '',
                         loadChildren: () =>
                             import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
+                    },
+                    {
+                        path: 'create-animal',
+                        loadChildren: () => import('../pages/animal-create/animal-create.module').then(m => m.AnimalCreateModule)
                     }
                 ]
             },
@@ -63,10 +67,6 @@ const routes: Routes = [
         path: '',
         redirectTo: '/tabs/events',
         pathMatch: 'full'
-    },
-    {
-        path: 'create-animal',
-        loadChildren: () => import('../pages/animal-create/animal-create.module').then(m => m.AnimalCreateModule)
     }
 ];
 

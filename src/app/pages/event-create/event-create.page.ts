@@ -124,7 +124,7 @@ export class EventCreatePage implements OnInit {
             description: this.createEventForm.value.description,
             localisation: this.createEventForm.value.localisation,
             date: this.createEventForm.value.date,
-            fk_id_type: this.createEventForm.value.fk_id_type,
+            type: this.createEventForm.value.fk_id_type,
         };
 
         this.eventService.createEvent(this.createEventInterface).subscribe(

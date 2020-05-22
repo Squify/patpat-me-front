@@ -1,5 +1,5 @@
-import {EventType} from "./event-type";
-import {User} from "../user/user";
+import { EventType } from "./event-type";
+import { User } from "../user/user";
 
 export interface EventInterface {
 
