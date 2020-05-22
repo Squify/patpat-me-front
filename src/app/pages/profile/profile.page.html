@@ -96,23 +96,9 @@
                             <ion-img [src]="img"></ion-img>
                         </ion-thumbnail>
                         <ion-col>
-                            {{ animal.name }}
+                            {{ animal.name }}<br>
+                            {{ calculateAge(animal.birthday) }}
                         </ion-col>
-                        <ion-col>
-                            {{ animal.gender.name }}
-                        </ion-col>
-                        <ion-col>
-                            {{ animal.birthday | date: 'dd/MM/yyyy à HH:mm' }}
-                        </ion-col>
-                        <ion-col>
-                            {{ animal.type.name }} - {{ animal.breed.name }}
-                        </ion-col>
-                        <ion-col>
-                            <div *ngFor="let temper of animal.tempers">
-                                {{ 'TEMPER.' + temper.name | translate }} ; 
-                            </div>
-                        </ion-col>
-                        <ion-col size="auto" class="role"></ion-col>
                     </ion-item>
                 </ion-list>
             </ion-card>
