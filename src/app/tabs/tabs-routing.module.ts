@@ -53,7 +53,11 @@ const routes: Routes = [
                     {
                         path: 'create-animal',
                         loadChildren: () => import('../pages/animal-create/animal-create.module').then(m => m.AnimalCreateModule)
-                    }
+                    },
+                    {
+                        path: 'edit-profile',
+                        loadChildren: () => import('../pages/profile-edit/profile-edit.module').then(m => m.EditProfilePageModule)
+                    },
                 ]
             },
             {
