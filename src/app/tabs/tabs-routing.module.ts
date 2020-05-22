@@ -18,14 +18,24 @@ const routes: Routes = [
                             import('../pages/events/events.module').then(m => m.EventsPageModule)
                     },
                     {
+                        path: 'event/:id',
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import('../pages/event/event.module').then(m => m.EventPageModule)
+                            },
+                            {
+                                path: 'edit',
+                                loadChildren: () => import('../pages/event-edit/event-edit.module').then(m => m.EventEditPageModule)
+                            }
+                        ]
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import('../pages/event-create/event-create.module').then(m => m.EventCreatePageModule)
-                    },
-                    {
-                        path: 'event/:id',
-                        loadChildren: () => import('../pages/event/event.module').then(m => m.EventPageModule)
-                    },
+                    }
                 ]
             },
             {
