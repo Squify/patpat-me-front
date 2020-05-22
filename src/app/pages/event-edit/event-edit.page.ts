@@ -1,23 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastController} from '@ionic/angular';
-import {HttpErrorResponse} from '@angular/common/http';
-import {EventCreate} from '../../interfaces/event/event-create';
-import {EventService} from '../../services/event/event.service';
-import {EventType} from '../../interfaces/event/event-type';
-import {TranslateService} from "@ngx-translate/core";
-import {Router} from "@angular/router";
+import { Component, NgZone, OnInit } from '@angular/core';
+import { EventService } from "../../services/event/event.service";
+import { UserService } from "../../services/user/user.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ToastController } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
+import { EventInterface } from "../../interfaces/event/event-interface";
+import { EventType } from "../../interfaces/event/event-type";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { EventEdit } from "../../interfaces/event/event-edit";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
-    selector: 'app-event-create',
-    templateUrl: './event-create.page.html',
-    styleUrls: ['./event-create.page.scss'],
+    selector: 'app-event-edit',
+    templateUrl: './event-edit.page.html',
+    styleUrls: ['./event-edit.page.scss'],
 })
-export class EventCreatePage implements OnInit {
+export class EventEditPage implements OnInit {
 
-    createEventInterface: EventCreate;
-    createEventForm: FormGroup;
+    event: EventInterface;
     types: EventType[] = [];
+    eventId: number = null;
+
+    eventEditInterface: EventEdit;
+    eventEditForm: FormGroup;
 
     // Errors
     unknownError: boolean;
@@ -31,15 +36,25 @@ export class EventCreatePage implements OnInit {
     typeError: boolean;
 
     constructor(
-        public toastController: ToastController,
         private eventService: EventService,
-        public translate: TranslateService,
+        private ngZone: NgZone,
+        private userService: UserService,
         public router: Router,
+        private activatedRoute: ActivatedRoute,
+        public toastController: ToastController,
+        public translate: TranslateService
     ) {
-        this.buildForm();
+        this.eventId = +this.activatedRoute.snapshot.paramMap.get('id');
+        if (!this.eventId)
+            this.router.navigateByUrl('/tabs/events');
+
+        this.getEvent();
+        this.getTypes();
+
     }
 
     ngOnInit() {
+
     }
 
     buildForm(): void {
@@ -47,15 +62,9 @@ export class EventCreatePage implements OnInit {
         this.getTypes();
 
         // Create event form
-        this.createEventForm = new FormGroup({
+        this.eventEditForm = new FormGroup({
 
-            name: new FormControl('', {
-                validators: [
-                    Validators.required,
-                ]
-            }),
-
-            description: new FormControl('', {
+            description: new FormControl({value: this.event.description, disabled: false}, {
                 validators: [
                     Validators.required,
                     Validators.minLength(8),
@@ -63,24 +72,93 @@ export class EventCreatePage implements OnInit {
                 ]
             }),
 
-            localisation: new FormControl('', {
+            localisation: new FormControl({value: this.event.localisation, disabled: false}, {
                 validators: [
                     Validators.required
                 ]
             }),
 
-            date: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
-
-            fk_id_type: new FormControl('', {
+            date: new FormControl({value: this.event.date, disabled: false}, {
                 validators: [
                     Validators.required
                 ]
             }),
         });
+    }
+
+    submit(): void {
+        if (this.formIsValid()) {
+            this.createEvent();
+        } else {
+            this.presentToast('general');
+        }
+    }
+
+    createEvent(): void {
+        this.eventEditInterface = {
+            id: this.eventId,
+            description: this.eventEditForm.value.description,
+            localisation: this.eventEditForm.value.localisation,
+            date: this.eventEditForm.value.date,
+        };
+
+        this.eventService.editEvent(this.eventEditInterface).subscribe(
+            _ => this.router.navigateByUrl('/tabs/events/event/' + this.eventId, {state: {comingFromEdition: true}}),
+            error => this.processError(error))
+        ;
+    }
+
+    formIsValid(): boolean {
+        this.setAllErrorsToFalse();
+        this.checkInputsError();
+
+        return !this.eventEditForm.invalid;
+    }
+
+    setAllErrorsToFalse(): void {
+        this.serverError = false;
+        this.unknownError = false;
+        this.inputsError = false;
+        this.nameError = false;
+        this.nameExistError = false;
+        this.descriptionError = false;
+        this.localisationError = false;
+        this.dateError = false;
+        this.typeError = false;
+    }
+
+    checkInputsError(): void {
+        if (this.eventEditForm.controls.description.errors) {
+            this.descriptionError = true;
+        }
+        if (this.eventEditForm.controls.localisation.errors) {
+            this.localisationError = true;
+        }
+        if (this.eventEditForm.controls.date.errors) {
+            this.dateError = true;
+        }
+    }
+
+    processError(error: HttpErrorResponse) {
+        if (error) {
+            switch (error.status) {
+                case 400:
+                    this.inputsError = true;
+                    this.presentToast('back_input');
+                    break;
+                case 500:
+                    this.serverError = true;
+                    this.presentToast('back_server');
+                    break;
+                default:
+                    this.unknownError = true;
+                    this.presentToast('back_unknown');
+                    break;
+            }
+        } else {
+            this.unknownError = true;
+            this.presentToast('back_unknown');
+        }
     }
 
     getTypes(): void {
@@ -98,107 +176,29 @@ export class EventCreatePage implements OnInit {
         );
     }
 
-    setAllErrorsToFalse(): void {
-        this.serverError = false;
-        this.unknownError = false;
-        this.inputsError = false;
-        this.nameError = false;
-        this.nameExistError = false;
-        this.descriptionError = false;
-        this.localisationError = false;
-        this.dateError = false;
-        this.typeError = false;
+    getEvent(): void {
+
+        this.eventService.getEventById(this.eventId).subscribe(
+            value => {
+                this.event = value;
+                if (!this.isOwner())
+                    this.router.navigateByUrl('/tabs/events');
+                this.buildForm();
+            },
+            e => console.log(e)
+        );
     }
 
-    submit(): void {
-        if (this.formIsValid()) {
-            this.createEvent();
-        } else {
-            this.presentToast('general');
-        }
-    }
+    isOwner(): boolean {
 
-    createEvent(): void {
-        this.createEventInterface = {
-            name: this.createEventForm.value.name,
-            description: this.createEventForm.value.description,
-            localisation: this.createEventForm.value.localisation,
-            date: this.createEventForm.value.date,
-            type: this.createEventForm.value.fk_id_type,
-        };
-
-        this.eventService.createEvent(this.createEventInterface).subscribe(
-            _ => this.router.navigateByUrl(''),
-            error => this.processError(error))
-        ;
-    }
-
-    formIsValid(): boolean {
-        this.setAllErrorsToFalse();
-        this.checkInputsError();
-
-        return !this.createEventForm.invalid;
-    }
-
-    checkInputsError(): void {
-        if (this.createEventForm.controls.name.errors) {
-            this.nameError = true;
-        }
-        if (this.createEventForm.controls.description.errors) {
-            this.descriptionError = true;
-        }
-        if (this.createEventForm.controls.localisation.errors) {
-            this.localisationError = true;
-        }
-        if (this.createEventForm.controls.date.errors) {
-            this.dateError = true;
-        }
-        if (this.createEventForm.controls.fk_id_type.errors) {
-            this.typeError = true;
-        }
-    }
-
-    processError(error: HttpErrorResponse) {
-        if (error) {
-            switch (error.status) {
-                case 400:
-                    this.inputsError = true;
-                    this.presentToast('back_input');
-                    break;
-                case 417:
-                    this.nameExistError = true;
-                    this.presentToast('name_exist');
-                    break;
-                case 500:
-                    this.serverError = true;
-                    this.presentToast('back_server');
-                    break;
-                default:
-                    this.unknownError = true;
-                    this.presentToast('back_unknown');
-                    break;
-            }
-        } else {
-            this.unknownError = true;
-            this.presentToast('back_unknown');
-        }
+        let connectedUserId;
+        this.userService.getUser().subscribe(connectedUser => connectedUserId = connectedUser.id)
+        return this.event.owner.id == connectedUserId;
     }
 
     async presentToast(error: string) {
         let toast: HTMLIonToastElement;
         switch (error) {
-            case 'name':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.EVENT.NAME'),
-                    duration: 2000
-                });
-                break;
-            case 'name_exist':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.EVENT.NAME_ALREADY_USED'),
-                    duration: 2000
-                });
-                break;
             case 'description':
                 toast = await this.toastController.create({
                     message: this.translate.instant('ERRORS.EVENT.DESCRIPTION'),
@@ -214,12 +214,6 @@ export class EventCreatePage implements OnInit {
             case 'date':
                 toast = await this.toastController.create({
                     message: this.translate.instant('ERRORS.EVENT.DATE'),
-                    duration: 2000
-                });
-                break;
-            case 'fk_id_type':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.EVENT.TYPE'),
                     duration: 2000
                 });
                 break;
