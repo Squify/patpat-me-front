@@ -10,6 +10,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {User} from '../../interfaces/user/user';
 import {Router} from '@angular/router';
 import {Credentials} from '../../interfaces/user/credentials';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-account-create',
@@ -41,7 +42,8 @@ export class AccountCreatePage implements OnInit {
         private genderService: GenderService,
         private authService: AuthenticationService,
         private router: Router,
-        public toastController: ToastController
+        public toastController: ToastController,
+        public translate: TranslateService
     ) {
 
         this.buildForm();
@@ -155,7 +157,7 @@ export class AccountCreatePage implements OnInit {
             push_notification: this.createPersonForm.value.push_notification,
             active_localisation: this.createPersonForm.value.active_localisation,
             display_real_name: this.createPersonForm.value.display_real_name,
-            fk_id_gender: this.createPersonForm.value.fk_id_gender,
+            gender: this.createPersonForm.value.fk_id_gender,
         };
 
         this.userService.createUser(this.createAccountInterface).subscribe(
@@ -264,73 +266,73 @@ export class AccountCreatePage implements OnInit {
         switch (error) {
             case 'pseudo':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un pseudo valide.',
+                    message: this.translate.instant('ERRORS.PSEUDO'),
                     duration: 2000
                 });
                 break;
             case 'password':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un mot de passe valide et sécurisé.',
+                    message: this.translate.instant('ERRORS.PASSWORD'),
                     duration: 2000
                 });
                 break;
             case 'email':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner une adresse email valide.',
+                    message: this.translate.instant('ERRORS.EMAIL'),
                     duration: 2000
                 });
                 break;
             case 'lastname':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un nom valide.',
+                    message: this.translate.instant('ERRORS.LASTNAME'),
                     duration: 2000
                 });
                 break;
             case 'firstname':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un prénom valide.',
+                    message: this.translate.instant('ERRORS.FIRSTNAME'),
                     duration: 2000
                 });
                 break;
             case 'phone':
                 toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un numéro de téléphone valide.',
+                    message: this.translate.instant('ERRORS.PHONE'),
                     duration: 2000
                 });
                 break;
             case 'back_input':
                 toast = await this.toastController.create({
-                    message: 'La requête est invalide, vérifiez les informations saisies.',
+                    message: this.translate.instant('ERRORS.BACK_INPUT'),
                     duration: 2000
                 });
                 break;
             case 'back_pseudo_used':
                 toast = await this.toastController.create({
-                    message: 'Le pseudo saisi est déjà utilisé.',
+                    message: this.translate.instant('ERRORS.PSEUDO_ALREADY_USED'),
                     duration: 2000
                 });
                 break;
             case 'back_email_used':
                 toast = await this.toastController.create({
-                    message: 'L\'adresse email saisie est déjà utilisée.',
+                    message: this.translate.instant('ERRORS.EMAIL_ALREADY_USED'),
                     duration: 2000
                 });
                 break;
             case 'back_server':
                 toast = await this.toastController.create({
-                    message: 'Une erreur serveur est survenue.',
+                    message: this.translate.instant('ERRORS.BACK_SERVER'),
                     duration: 2000
                 });
                 break;
             case 'back_unknown':
                 toast = await this.toastController.create({
-                    message: 'Une erreur inconnue est survenue.',
+                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
                     duration: 2000
                 });
                 break;
             default:
                 toast = await this.toastController.create({
-                    message: 'Le formulaire est erroné ! Cliquez sur les ronds pour plus d\'infos.',
+                    message: this.translate.instant('ERRORS.DEFAULT'),
                     duration: 3000
                 });
                 break;
