@@ -15,7 +15,7 @@
 
 <ion-content>
     <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge *ngIf="this.selectedSegment == 'animalSegment'">
-        <ion-fab-button [routerLink]="">
+        <ion-fab-button [routerLink]="'create-animal'">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
@@ -62,8 +62,8 @@
 
                     <ion-item>
                         <ion-icon mode="md" name="male-female-outline" color="medium"></ion-icon>
-                        <ion-label *ngIf="user.fk_id_gender">{{ user.fk_id_gender }}</ion-label>
-                        <ion-label *ngIf="!user.fk_id_gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
+                        <ion-label *ngIf="user.gender">{{ user.gender.name }}</ion-label>
+                        <ion-label *ngIf="!user.gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
