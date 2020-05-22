@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { User } from '../../interfaces/user/user';
 import { catchError, share } from 'rxjs/operators';
 import { AccountEdit } from "../../interfaces/user/account-edit";
+import { Animal } from "../../interfaces/animal/animal";
 
 
 @Injectable({
@@ -42,5 +43,9 @@ export class UserService {
 
     getUser(): BehaviorSubject<User> {
         return this.observableUser;
+    }
+
+    getUserAnimals(): Observable<Animal[]> {
+        return this.http.get<Animal[]>(environment.BACKEND_URL + '/api/animals');
     }
 }
