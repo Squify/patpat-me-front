@@ -262,12 +262,6 @@ export class AccountCreatePage implements OnInit {
     async presentToast(error: string) {
         let toast: HTMLIonToastElement;
         switch (error) {
-            case 'pseudo':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.PSEUDO'),
-                    duration: 2000
-                });
-                break;
             case 'password':
                 toast = await this.toastController.create({
                     message: this.translate.instant('ERRORS.PASSWORD'),
@@ -280,18 +274,6 @@ export class AccountCreatePage implements OnInit {
                     duration: 2000
                 });
                 break;
-            case 'lastname':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.LASTNAME'),
-                    duration: 2000
-                });
-                break;
-            case 'firstname':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.FIRSTNAME'),
-                    duration: 2000
-                });
-                break;
             case 'phone':
                 toast = await this.toastController.create({
                     message: this.translate.instant('ERRORS.PHONE'),
@@ -301,12 +283,6 @@ export class AccountCreatePage implements OnInit {
             case 'back_input':
                 toast = await this.toastController.create({
                     message: this.translate.instant('ERRORS.BACK_INPUT'),
-                    duration: 2000
-                });
-                break;
-            case 'back_pseudo_used':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.PSEUDO_ALREADY_USED'),
                     duration: 2000
                 });
                 break;

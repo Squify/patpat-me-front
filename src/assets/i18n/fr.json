@@ -79,6 +79,22 @@
     "ANY_INFORMATIONS": "Aucune information a afficher.",
     "LOGOUT": "Déconnexion"
   },
+  "PROFILE_EDIT": {
+    "TITLE": "Modification du profil",
+    "PSEUDO": "Pseudo",
+    "PASSWORD": "Mot de passe",
+    "EMAIL": "Adresse e-mail",
+    "LASTNAME": "Nom",
+    "FIRSTNAME": "Prénom",
+    "GENDER": "Sélectionnez un genre",
+    "PHONE": "Numéro de téléphone",
+    "BIRTHDAY": "Date d'anniversaire",
+    "SELECT_DATE": "Veuillez sélectionner une date",
+    "PUSH": "Notifications push",
+    "GEOLOC": "Activer la géolocalisation",
+    "DISPLAY_NAME": "Afficher le nom réel",
+    "SUBMIT": "Mettre à jour son profil"
+  },
   "TABBAR": {
     "EVENTS": "Événements",
     "MEET": "Rencontres",
