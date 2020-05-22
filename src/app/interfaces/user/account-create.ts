@@ -1,4 +1,4 @@
-export interface CreateAccount {
+export interface AccountCreate {
     email: string;
     password: string;
     pseudo: string;

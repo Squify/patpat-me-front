@@ -70,14 +70,14 @@
                     <ion-item>
                         <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
                         <ion-label>{{ 'PROFILE.NOTIFICATIONS' | translate }}
-                            <p>{{ user.push_notification ? 'PROFILE.ACTIVATED' : 'PROFILE.DEACTIVATED' | translate }}</p>
+                            <p>{{ user.push_notification ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon mode="md" name="location-outline" color="medium"></ion-icon>
                         <ion-label>{{ 'PROFILE.GEOLOCATION' | translate }}
-                            <p>{{ user.active_localisation ? 'PROFILE.ACTIVATED' : 'PROFILE.DEACTIVATED' | translate }}</p>
+                            <p>{{ user.active_localisation ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}</p>
                         </ion-label>
                     </ion-item>
                 </ion-list>

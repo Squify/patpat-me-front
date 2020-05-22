@@ -8,13 +8,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+  <ion-grid *ngIf="user">
     <ion-row>
-      <form *ngIf="createPersonForm" [formGroup]="createPersonForm" (keyup.enter)="submit()">
+      <form *ngIf="editPersonForm" [formGroup]="editPersonForm" (keyup.enter)="submit()">
         <ion-list>
           <ion-item mode="md">
             <ion-label position="floating">Pseudo</ion-label>
-            <ion-input type="text" formControlName="pseudo" disabled [value]="user.pseudo">
+            <ion-input type="text" [value]="user.pseudo" [disabled]="true">
             </ion-input>
             <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end input-icon-margin">
             </ion-icon>
@@ -41,30 +41,24 @@
             <ion-col col-6>
               <ion-item mode="md">
                 <ion-label position="floating">Nom</ion-label>
-                <ion-input type="text" formControlName="lastname" disabled [value]="user.firstname">
+                <ion-input type="text" [value]="user.firstname" [disabled]="true">
                 </ion-input>
                 <ion-icon mode="md" slot="start" name="finger-print-outline"
                   class="ion-align-self-end input-icon-margin"></ion-icon>
-                <ion-icon *ngIf="lastnameInputError" mode="md" slot="end" name="alert-circle-outline"
-                  class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('lastname')">
-                </ion-icon>
               </ion-item>
             </ion-col>
             <ion-col col-6>
               <ion-item mode="md">
                 <ion-label position="floating">Prénom</ion-label>
-                <ion-input type="text" formControlName="firstname" disabled [value]="user.lastname">
+                <ion-input type="text" [value]="user.lastname" [disabled]="true">
                 </ion-input>
-                <ion-icon *ngIf="firstnameInputError" mode="md" slot="end" name="alert-circle-outline"
-                  class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('firstname')">
-                </ion-icon>
               </ion-item>
             </ion-col>
           </ion-row>
 
           <ion-item mode="md">
             <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
-              placeholder="Sélectionnez un genre">
+              placeholder="Sélectionnez un genre" [value]="user.gender.name">
               <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
                 {{ gender.name }}
               </ion-select-option>
@@ -80,6 +74,16 @@
             <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end input-icon-margin"></ion-icon>
             <ion-icon *ngIf="phoneInputError" mode="md" slot="end" name="alert-circle-outline"
               class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('phone')"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">{{ 'ACCOUNT_CREATE.BIRTHDAY' | translate }}</ion-label>
+            <ion-datetime [disabled]="true" [value]="user.birthday"
+                          display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
+                          placeholder="{{ 'ACCOUNT_CREATE.SELECT_DATE' | translate }}">
+            </ion-datetime>
+            <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin">
+            </ion-icon>
           </ion-item>
 
         </ion-list>

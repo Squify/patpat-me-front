@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { EditProfilePage } from './edit-profile.page';
+import { ProfileEditPage } from './profile-edit.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: EditProfilePage
+    component: ProfileEditPage
   }
 ];
 
