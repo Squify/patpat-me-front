@@ -218,13 +218,13 @@ export class EditProfilePage implements OnInit {
       push_notification: this.createPersonForm.value.push_notification,
       active_localisation: this.createPersonForm.value.active_localisation,
       display_real_name: this.createPersonForm.value.display_real_name,
-      fk_id_gender: this.createPersonForm.value.fk_id_gender,
+      gender: this.createPersonForm.value.fk_id_gender,
     };
 
-    this.userService.updateUser(this.createAccountInterface).subscribe(
-      _ => this.router.navigateByUrl('/tabs/profil'),
-      error => this.processError(error))
-      ;
+    // this.userService.updateUser(this.createAccountInterface).subscribe(
+    //   _ => this.router.navigateByUrl('/tabs/profil'),
+    //   error => this.processError(error))
+    //   ;
   }
 
   formIsValid(): boolean {
