@@ -85,10 +85,35 @@
 
             <ion-card *ngSwitchCase="'animalSegment'"
                       style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
-                <ion-list>
+                <ion-list *ngIf="animals.length == 0">
                     <p style="margin: 16px">
                         {{ 'PROFILE.ANY_ANIMAL' | translate }}
                     </p>
+                </ion-list>
+                <ion-list class="parts-list" *ngIf="animals.length > 0">
+                    <ion-item *ngFor="let animal of animals" class="part-card">
+                        <ion-thumbnail class="part-avatar">
+                            <ion-img [src]="img"></ion-img>
+                        </ion-thumbnail>
+                        <ion-col>
+                            {{ animal.name }}
+                        </ion-col>
+                        <ion-col>
+                            {{ animal.gender.name }}
+                        </ion-col>
+                        <ion-col>
+                            {{ animal.birthday | date: 'dd/MM/yyyy à HH:mm' }}
+                        </ion-col>
+                        <ion-col>
+                            {{ animal.type.name }} - {{ animal.breed.name }}
+                        </ion-col>
+                        <ion-col>
+                            <div *ngFor="let temper of animal.tempers">
+                                {{ 'TEMPER.' + temper.name | translate }} ; 
+                            </div>
+                        </ion-col>
+                        <ion-col size="auto" class="role"></ion-col>
+                    </ion-item>
                 </ion-list>
             </ion-card>
         </div>
