@@ -1,10 +1,12 @@
-import {Injectable} from '@angular/core';
-import {CreateAccount} from '../../interfaces/user/create-account';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {environment} from '../../../environments/environment';
-import {User} from '../../interfaces/user/user';
-import {catchError, share} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { AccountCreate } from '../../interfaces/user/account-create';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { User } from '../../interfaces/user/user';
+import { catchError, share } from 'rxjs/operators';
+import { AccountEdit } from "../../interfaces/user/account-edit";
+import { Animal } from "../../interfaces/animal/animal";
 
 
 @Injectable({
@@ -21,8 +23,12 @@ export class UserService {
         this.observableUser.pipe(share());
     }
 
-    createUser(createAccount: CreateAccount): Observable<any> {
-        return this.http.post<any>(environment.BACKEND_URL + '/api/user/create', createAccount);
+    createUser(accountCreate: AccountCreate): Observable<any> {
+        return this.http.post<any>(environment.BACKEND_URL + '/api/user/create', accountCreate);
+    }
+
+    updateUser(accountEdit: AccountEdit): Observable<any> {
+        return this.http.post<any>(environment.BACKEND_URL + '/api/user/update', accountEdit);
     }
 
     getRemoteUser(): Observable<User> {
@@ -37,5 +43,9 @@ export class UserService {
 
     getUser(): BehaviorSubject<User> {
         return this.observableUser;
+    }
+
+    getUserAnimals(): Observable<Animal[]> {
+        return this.http.get<Animal[]>(environment.BACKEND_URL + '/api/animals');
     }
 }
