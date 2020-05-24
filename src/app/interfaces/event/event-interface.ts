@@ -1,3 +1,6 @@
+import { EventType } from "./event-type";
+import { User } from "../user/user";
+
 export interface EventInterface {
 
     id: number;
@@ -5,5 +8,7 @@ export interface EventInterface {
     description: string;
     localisation: string;
     date: string;
-    key_language_type: string;
+    type: EventType;
+    owner: User;
+    members: User[];
 }

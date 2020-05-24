@@ -1,7 +1,7 @@
-export interface CreateEvent {
+export interface EventCreate {
     name: string;
     description: string;
     localisation: string;
     date: string;
-    fk_id_type: string;
+    type: string;
 }

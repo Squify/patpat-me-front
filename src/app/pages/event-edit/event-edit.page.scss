@@ -5,21 +5,19 @@
 }
 
 #rando {
-  background: url('/assets/images/event-type/rando.jpg') center !important;
+  background: url('/assets/images/event-type/rando.jpg') center!important;
 }
 
-.parts-list {
-  .part-card {
+.parts-list{
+  .part-card{
     padding: 10px 0;
-
-    .part-avatar {
+    .part-avatar{
       --border-radius: 50%;
     }
   }
 
 }
-
-.join-event {
+.join-event{
   position: absolute;
   bottom: 5px;
   Right: 5px;

@@ -18,14 +18,24 @@ const routes: Routes = [
                             import('../pages/events/events.module').then(m => m.EventsPageModule)
                     },
                     {
+                        path: 'event/:id',
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import('../pages/event/event.module').then(m => m.EventPageModule)
+                            },
+                            {
+                                path: 'edit',
+                                loadChildren: () => import('../pages/event-edit/event-edit.module').then(m => m.EventEditPageModule)
+                            }
+                        ]
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import('../pages/event-create/event-create.module').then(m => m.EventCreatePageModule)
-                    },
-                    {
-                        path: 'event/:id',
-                        loadChildren: () => import('../pages/event/event.module').then( m => m.EventPageModule)
-                    },
+                    }
                 ]
             },
             {
@@ -37,19 +47,27 @@ const routes: Routes = [
                             import('../pages/tab2/tab2.module').then(m => m.Tab2PageModule)
                     },
                     {
-                        path: 'profil',
+                        path: 'profile',
                         loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
                     }
                 ]
             },
             {
-                path: 'profil',
+                path: 'profile',
                 children: [
                     {
                         path: '',
                         loadChildren: () =>
                             import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
-                    }
+                    },
+                    {
+                        path: 'create-animal',
+                        loadChildren: () => import('../pages/animal-create/animal-create.module').then(m => m.AnimalCreateModule)
+                    },
+                    {
+                        path: 'edit-profile',
+                        loadChildren: () => import('../pages/profile-edit/profile-edit.module').then(m => m.EditProfilePageModule)
+                    },
                 ]
             },
             {
@@ -63,10 +81,6 @@ const routes: Routes = [
         path: '',
         redirectTo: '/tabs/events',
         pathMatch: 'full'
-    },
-    {
-        path: 'create-animal',
-        loadChildren: () => import('../pages/create-animal/create-animal.module').then( m => m.CreateAnimalPageModule)
     }
 ];
 

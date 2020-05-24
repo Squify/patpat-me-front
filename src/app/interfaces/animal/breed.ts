@@ -1,4 +1,4 @@
-import {AnimalType} from './animal-type';
+import { AnimalType } from './animal-type';
 
 export interface Breed {
     name: string;
