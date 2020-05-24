@@ -7,6 +7,7 @@ import {environment} from 'src/environments/environment';
 import {CreateAnimal} from 'src/app/interfaces/animal/create-animal';
 import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
 import { AnimalInterface } from 'src/app/interfaces/animal/animal-interface';
+import { Animal } from "../../interfaces/animal/animal";
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ export class AnimalService {
     }
 
     updateAnimal(updateAnimal: UpdateAnimal): Observable<any> {
-        return this.http.put<any>(environment.BACKEND_URL + '/api/animal/update', updateAnimal);
+        return this.http.post<any>(environment.BACKEND_URL + '/api/animal/update', updateAnimal);
     }
 
     getAnimalTemper(): Observable<Temper[]> {
@@ -35,17 +36,9 @@ export class AnimalService {
     }
 
     //TODO recup info de l'animal dans le back à revoir 
-    public getAnimalById(animalId: number): Observable<AnimalInterface> {
-
-        console.log(animalId);
+    public getAnimalById(animalId: number): Observable<Animal> {
 
         const params: HttpParams = new HttpParams().set('animalId', animalId.toString());
-        console.log(this.http.get<AnimalInterface>(environment.BACKEND_URL + '/api/animal', {params}).subscribe(
-            value => {
-                console.log(value)
-            },
-            e => console.log(e)
-        ));
         return this.http.get<AnimalInterface>(environment.BACKEND_URL + '/api/animal', {params});
     }
 

@@ -1,12 +1,12 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {EventService} from '../../services/event/event.service';
-import {EventInterface} from '../../interfaces/event/event-interface';
-import {EventType} from '../../interfaces/event/event-type';
-import {UserService} from "../../services/user/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {HttpErrorResponse} from "@angular/common/http";
-import {ToastController} from "@ionic/angular";
-import {TranslateService} from "@ngx-translate/core";
+import { Component, NgZone, OnInit } from '@angular/core';
+import { EventService } from '../../services/event/event.service';
+import { EventInterface } from '../../interfaces/event/event-interface';
+import { EventType } from '../../interfaces/event/event-type';
+import { UserService } from "../../services/user/user.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ToastController } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-event',
@@ -57,7 +57,6 @@ export class EventPage implements OnInit {
             this.ngZone.run(() => this.getEvent())
         }
     }
-
 
     getEvent(): void {
 

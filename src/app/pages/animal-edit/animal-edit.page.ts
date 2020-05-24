@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
 import { AnimalType } from 'src/app/interfaces/animal/animal-type';
 import { GenderService } from 'src/app/services/gender/gender.service';
@@ -10,16 +10,18 @@ import { Temper } from 'src/app/interfaces/animal/temper';
 import { Breed } from 'src/app/interfaces/animal/breed';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
-import { AnimalInterface } from 'src/app/interfaces/animal/animal-interface';
+import { Animal } from "../../interfaces/animal/animal";
+import { ActivatedRoute, Router } from "@angular/router";
+
 @Component({
     selector: 'app-update-animal',
-    templateUrl: './update-animal.page.html',
-    styleUrls: ['./update-animal.page.scss'],
+    templateUrl: './animal-edit.page.html',
+    styleUrls: ['./animal-edit.page.scss'],
 })
-export class UpdateAnimalPage implements OnInit {
+export class AnimalEditPage implements OnInit {
 
-    animal: AnimalInterface;
+    animalId: number;
+    animal: Animal;
 
     updateAnimalInterface: UpdateAnimal;
     updateAnimalForm: FormGroup;
@@ -46,59 +48,43 @@ export class UpdateAnimalPage implements OnInit {
         private typeService: TypeService,
         private animalService: AnimalService,
         public toastController: ToastController,
+        public router: Router,
+        private activatedRoute: ActivatedRoute,
     ) {
-
-        this.buildForm();
     }
 
     ngOnInit() {
-        this.getAnimal();
 
+        this.animalId = +this.activatedRoute.snapshot.paramMap.get('id');
+        this.getAnimal();
+        this.getGenders();
+        this.getTypes();
+        this.getTemper();
+        this.getBreed();
     }
 
-      getAnimal(): void {
+    getAnimal(): void {
 
-        this.animalService.getAnimalById(1).subscribe(
+        this.animalService.getAnimalById(this.animalId).subscribe(
             value => {
                 this.animal = value;
-
-                this.updateAnimalForm.value.fk_id_temper = [];
-                this.animal.tempers.forEach((value) => {
-                    this.updateAnimalForm.value.fk_id_temper.push(value.name)
-                });
-                this.updateAnimalForm.value.name = this.animal.name;
-                this.updateAnimalForm.value.birthday = this.animal.birthday;
-                this.updateAnimalForm.value.fk_id_gender = this.animal.fk_id_gender;
-                this.updateAnimalForm.value.fk_id_type = this.animal.fk_id_type;
-                this.updateAnimalForm.value.fk_id_breed = this.animal.fk_id_breed;
+                this.buildForm();
             },
-            e => console.log(e)
+            e => this.processError(e)
         );
     }
 
     buildForm(): void {
 
-        this.getGenders();
-        this.getTypes();
-        this.getTemper();
-        this.getBreed();
         this.isTypeSelected = false;
 
-        // update account form
         this.updateAnimalForm = new FormGroup({
 
-            name: new FormControl(''),
-
-            birthday: new FormControl(''),
-
-            fk_id_temper: new FormControl(''),
-
-            fk_id_gender: new FormControl(''),
-
-            fk_id_type: new FormControl(''),
-
-            fk_id_breed: new FormControl(''),
-
+            birthday: new FormControl({value: this.animal.birthday, disabled: false}),
+            fk_id_temper: new FormControl({value: this.animal.tempers.map(temper => temper.name), disabled: false}),
+            fk_id_gender: new FormControl({value: this.animal.gender.name, disabled: false}),
+            fk_id_type: new FormControl({value: this.animal.type.name, disabled: false}),
+            fk_id_breed: new FormControl({value: this.animal.breed.name, disabled: false}),
         });
     }
 
@@ -116,9 +102,11 @@ export class UpdateAnimalPage implements OnInit {
         this.genderService.getAnimalGender().subscribe(
             val => {
                 val.forEach((gender) => {
-                    const genderToAdd: AnimalGender = { name: gender.name };
-                    this.genders.push(genderToAdd);
-                }
+                        const genderToAdd: AnimalGender = {
+                            name: gender.name
+                        };
+                        this.genders.push(genderToAdd);
+                    }
                 );
             }
         );
@@ -128,12 +116,12 @@ export class UpdateAnimalPage implements OnInit {
         this.typeService.getAnimalType().subscribe(
             val => {
                 val.forEach((type) => {
-                    const typeToAdd: AnimalType = {
-                        id: type.id,
-                        name: type.name
-                    };
-                    this.types.push(typeToAdd);
-                }
+                        const typeToAdd: AnimalType = {
+                            id: type.id,
+                            name: type.name
+                        };
+                        this.types.push(typeToAdd);
+                    }
                 );
             }
         );
@@ -143,12 +131,12 @@ export class UpdateAnimalPage implements OnInit {
         this.animalService.getAnimalBreed().subscribe(
             val => {
                 val.forEach((breed) => {
-                    const breedToAdd: Breed = {
-                        name: breed.name,
-                        type: breed.type
-                    };
-                    this.breeds.push(breedToAdd);
-                }
+                        const breedToAdd: Breed = {
+                            name: breed.name,
+                            type: breed.type
+                        };
+                        this.breeds.push(breedToAdd);
+                    }
                 );
             }
         );
@@ -160,23 +148,21 @@ export class UpdateAnimalPage implements OnInit {
         this.animalService.getAnimalTemper().subscribe(
             val => {
                 val.forEach((temper) => {
-                    const tempersToAdd: Temper = {
-                        id: temper.id,
-                        name: temper.name
-                    };
-                    this.tempers.push(tempersToAdd);
-                }
+                        const tempersToAdd: Temper = {
+                            id: temper.id,
+                            name: temper.name
+                        };
+                        this.tempers.push(tempersToAdd);
+                    }
                 );
             }
         );
-       // this.updateAnimalForm.value.fk_id_temper= this.animal.tempers;
     }
 
     setAllErrorsToFalse(): void {
         this.serverError = false;
         this.unknownError = false;
         this.inputsError = false;
-        this.nameInputError = false;
         this.birthdayError = false;
         this.breedError = false;
         this.temperError = false;
@@ -189,23 +175,23 @@ export class UpdateAnimalPage implements OnInit {
             this.updateAnimal();
         } else {
             this.presentToast('general');
-            console.log('ça marche po');
         }
     }
 
     updateAnimal(): void {
         this.updateAnimalInterface = {
-            name: this.updateAnimalForm.value.name,
+            id: this.animal.id,
             birthday: this.updateAnimalForm.value.birthday,
             tempers: this.updateAnimalForm.value.fk_id_temper,
-            fk_id_gender: this.updateAnimalForm.value.fk_id_gender,
-            fk_id_type: this.updateAnimalForm.value.fk_id_type,
-            fk_id_breed: this.updateAnimalForm.value.fk_id_breed,
+            gender: this.updateAnimalForm.value.fk_id_gender,
+            type: this.updateAnimalForm.value.fk_id_type,
+            breed: this.updateAnimalForm.value.fk_id_breed,
         };
 
         this.animalService.updateAnimal(this.updateAnimalInterface).subscribe(
-            _ => console.log('animal updater'),
-            error => this.processError(error));
+            _ => this.router.navigateByUrl('/tabs/profile/animal/' + this.animalId, {state: {comingFromEdition: true}}),
+            e => this.processError(e)
+        );
     }
 
     formIsValid(): boolean {
@@ -216,9 +202,6 @@ export class UpdateAnimalPage implements OnInit {
     }
 
     checkInputsError(): void {
-        if (this.updateAnimalForm.controls.name.errors) {
-            this.nameInputError = true;
-        }
         if (this.updateAnimalForm.controls.birthday.errors) {
             this.birthdayError = true;
         }
@@ -261,12 +244,6 @@ export class UpdateAnimalPage implements OnInit {
     async presentToast(error: string) {
         let toast: HTMLIonToastElement;
         switch (error) {
-            case 'name':
-                toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un nom valide.',
-                    duration: 2000
-                });
-                break;
             case 'birthday':
                 toast = await this.toastController.create({
                     message: 'Veuillez renseigner une date d\'anniversaire.',

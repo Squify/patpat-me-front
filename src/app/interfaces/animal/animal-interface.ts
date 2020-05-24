@@ -8,8 +8,8 @@ export interface AnimalInterface {
     id: number;
     name: string;
     birthday: string;
-    fk_id_type: AnimalType;
-    fk_id_gender: AnimalGender;
-    fk_id_breed: Breed;
+    type: AnimalType;
+    gender: AnimalGender;
+    breed: Breed;
     tempers: Temper[];
 }
