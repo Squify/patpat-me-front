@@ -17,6 +17,17 @@
     "ALREADY_ACCOUNT": "Déjà un compte ? ",
     "CONNEXION": "Connectez-vous !"
   },
+  "ANIMAL_EDIT": {
+    "TITLE": "Mettre à jour son animal",
+    "NAME": "Nom",
+    "BIRTHDAY": "Date d'anniversaire",
+    "SELECT_DATE": "Veuillez sélectionner une date",
+    "TYPE": "Sélectionnez le type d'animal",
+    "BREED": "Sélectionnez la race",
+    "GENDER": "Sélectionnez le genre",
+    "TEMPER": "Sélectionnez les traits de caractère",
+    "SUBMIT": "Mettre à jour"
+  },
   "ANIMAL_CREATE": {
     "TITLE": "Ajouter un animal",
     "NAME": "Nom",
@@ -126,7 +137,7 @@
     "GAFFEUR": "Gaffeur",
     "GOURMAND": "Gourmand",
     "IMPATIENT": "Impatient",
-    "IMPUDENT": "Impudent",
+    "IMPUDENT": "Imprudent",
     "INTELLIGENT": "Intelligent",
     "JEALOUS": "Jaloux",
     "PLAYER": "Joueur",
