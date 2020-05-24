@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { Animal } from "../../interfaces/animal/animal";
 import { ActivatedRoute, Router } from "@angular/router";
+import { UserService } from "../../services/user/user.service";
 
 @Component({
     selector: 'app-update-animal',
@@ -50,12 +51,16 @@ export class AnimalEditPage implements OnInit {
         public toastController: ToastController,
         public router: Router,
         private activatedRoute: ActivatedRoute,
+        private userService: UserService,
     ) {
     }
 
     ngOnInit() {
 
         this.animalId = +this.activatedRoute.snapshot.paramMap.get('id');
+        if (!this.animalId)
+            this.router.navigateByUrl('/tabs/profile');
+
         this.getAnimal();
         this.getGenders();
         this.getTypes();
@@ -68,10 +73,20 @@ export class AnimalEditPage implements OnInit {
         this.animalService.getAnimalById(this.animalId).subscribe(
             value => {
                 this.animal = value;
+                if (!this.isOwner())
+                    this.router.navigateByUrl('/tabs/events');
+
                 this.buildForm();
             },
             e => this.processError(e)
         );
+    }
+
+    isOwner(): boolean {
+
+        let connectedUserId;
+        this.userService.getUser().subscribe(connectedUser => connectedUserId = connectedUser.id)
+        return this.animal.owner.id == connectedUserId;
     }
 
     buildForm(): void {
@@ -181,6 +196,7 @@ export class AnimalEditPage implements OnInit {
     updateAnimal(): void {
         this.updateAnimalInterface = {
             id: this.animal.id,
+            owner: this.animal.owner.id,
             birthday: this.updateAnimalForm.value.birthday,
             tempers: this.updateAnimalForm.value.fk_id_temper,
             gender: this.updateAnimalForm.value.fk_id_gender,
@@ -225,6 +241,10 @@ export class AnimalEditPage implements OnInit {
                 case 400:
                     this.inputsError = true;
                     this.presentToast('back_input');
+                    break;
+                case 417:
+                    this.inputsError = true;
+                    this.presentToast('back_user');
                     break;
                 case 500:
                     this.serverError = true;
@@ -271,6 +291,12 @@ export class AnimalEditPage implements OnInit {
             case 'fk_id_temper':
                 toast = await this.toastController.create({
                     message: 'Veuillez renseigner le temperament de l\'animal.',
+                    duration: 2000
+                });
+                break;
+            case 'back_user':
+                toast = await this.toastController.create({
+                    message: 'Vous ne pouvez pas modifier un animal qui n\'est pas à vous.',
                     duration: 2000
                 });
                 break;
