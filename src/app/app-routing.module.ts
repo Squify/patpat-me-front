@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {LoggedInPersonResolver} from './resolver/logged-in-person-resolver';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { LoggedInPersonResolver } from './resolver/logged-in-person-resolver';
 
 const routes: Routes = [
     {
@@ -18,13 +18,9 @@ const routes: Routes = [
         path: 'account-create',
         loadChildren: () =>
             import('./pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
-  },  {
-    path: 'event-edit',
-    loadChildren: () => import('./pages/event-edit/event-edit.module').then( m => m.EventEditPageModule)
-  }
-
-
+    }
 ];
+
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
