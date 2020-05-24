@@ -91,7 +91,7 @@
                     </p>
                 </ion-list>
                 <ion-list class="parts-list" *ngIf="animals.length > 0">
-                    <ion-item *ngFor="let animal of animals" class="part-card">
+                    <ion-item *ngFor="let animal of animals" class="part-card" [routerLink]="'animal/'+ animal.id">
                         <ion-thumbnail class="part-avatar">
                             <ion-img [src]="img"></ion-img>
                         </ion-thumbnail>

@@ -18,11 +18,8 @@ const routes: Routes = [
         path: 'account-create',
         loadChildren: () =>
             import('./pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
-  },
-  {
-    path: 'update-animal',
-    loadChildren: () => import('./pages/update-animal/update-animal.module').then( m => m.UpdateAnimalPageModule)
-  }
+    }
+
 ];
 
 @NgModule({
