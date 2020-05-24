@@ -185,7 +185,7 @@ export class EventEditPage implements OnInit {
                     this.router.navigateByUrl('/tabs/events');
                 this.buildForm();
             },
-            e => console.log(e)
+            e => this.processError(e)
         );
     }
 

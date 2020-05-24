@@ -64,7 +64,7 @@ export class EventPage implements OnInit {
             value => {
                 this.event = value;
             },
-            e => console.log(e)
+            e => this.processError(e)
         );
     }
 
@@ -72,7 +72,7 @@ export class EventPage implements OnInit {
 
         this.eventService.changeEventParticipation(this.event.id).subscribe(
             _ =>
-                e => console.log(e)
+                e => this.processError(e)
         );
         this.ngZone.run(() => this.getEvent())
     }
