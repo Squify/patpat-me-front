@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {MenuController} from '@ionic/angular';
 import {EventService} from "../../services/event/event.service";
 import {EventInterface} from "../../interfaces/event/event-interface";
@@ -49,6 +49,7 @@ export class EventsPage {
     constructor(
         private menu: MenuController,
         private eventService: EventService,
+        private ngZone: NgZone,
     ) {
     }
 
@@ -56,8 +57,13 @@ export class EventsPage {
         this.getEvents();
     }
 
+    ionViewDidEnter() {
+        this.ngZone.run(() => this.getEvents())
+    }
+
     getEvents(): void {
 
+        this.events = [];
         this.eventService.getEvents().subscribe(
             val => {
                 val.forEach((event) => {
@@ -69,14 +75,13 @@ export class EventsPage {
                             date: event.date,
                             type: event.type,
                             owner: event.owner,
+                            members: event.members,
                         };
                         this.events.push(eventToAdd);
                     }
                 );
             }
         );
-
-      console.log(this.events);
     }
 
     openFilter() {

@@ -33,6 +33,10 @@ ion-content {
   --ion-background-color: #f6f6f6;
 }
 
+ion-fab-button {
+  margin-bottom: 40px;
+}
+
 .button-center {
   display: flex;
   justify-content: space-around;
@@ -54,8 +58,8 @@ ion-content {
 
 ion-list {
   border-radius: 25px;
-  padding-bottom: 0!important;
-  padding-top: 0!important;
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
   margin-bottom: 16px;
   margin-top: 16px;
 }
@@ -73,7 +77,7 @@ ion-list {
 // Quand l'écran fait plus de 820px (tablettes / grands téléphones / pc)
 @media (min-width: 820px) {
   .create-account-img {
-    width: 20%!important;
+    width: 20% !important;
     margin-top: 8px;
   }
 

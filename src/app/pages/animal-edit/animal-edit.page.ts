@@ -1,25 +1,31 @@
-import {Component, OnInit} from '@angular/core';
-import {CreateAnimal} from 'src/app/interfaces/animal/create-animal';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AnimalGender} from 'src/app/interfaces/animal/animal-gender';
-import {AnimalType} from 'src/app/interfaces/animal/animal-type';
-import {GenderService} from 'src/app/services/gender/gender.service';
-import {TypeService} from 'src/app/services/type/type.service';
-import {AnimalService} from 'src/app/services/animal/animal.service';
-import {Temper} from 'src/app/interfaces/animal/temper';
-import {Breed} from 'src/app/interfaces/animal/breed';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ToastController} from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
+import { FormControl, FormGroup } from '@angular/forms';
+import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
+import { AnimalType } from 'src/app/interfaces/animal/animal-type';
+import { GenderService } from 'src/app/services/gender/gender.service';
+import { TypeService } from 'src/app/services/type/type.service';
+import { AnimalService } from 'src/app/services/animal/animal.service';
+import { Temper } from 'src/app/interfaces/animal/temper';
+import { Breed } from 'src/app/interfaces/animal/breed';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
+import { Animal } from "../../interfaces/animal/animal";
+import { ActivatedRoute, Router } from "@angular/router";
+import { UserService } from "../../services/user/user.service";
 
 @Component({
-    selector: 'app-create-animal',
-    templateUrl: './create-animal.page.html',
-    styleUrls: ['./create-animal.page.scss'],
+    selector: 'app-update-animal',
+    templateUrl: './animal-edit.page.html',
+    styleUrls: ['./animal-edit.page.scss'],
 })
-export class CreateAnimalPage implements OnInit {
+export class AnimalEditPage implements OnInit {
 
-    createAnimalInterface: CreateAnimal;
-    createAnimalForm: FormGroup;
+    animalId: number;
+    animal: Animal;
+
+    updateAnimalInterface: UpdateAnimal;
+    updateAnimalForm: FormGroup;
     genders: AnimalGender[] = [];
     types: AnimalType[] = [];
     isTypeSelected: boolean;
@@ -43,49 +49,57 @@ export class CreateAnimalPage implements OnInit {
         private typeService: TypeService,
         private animalService: AnimalService,
         public toastController: ToastController,
+        public router: Router,
+        private activatedRoute: ActivatedRoute,
+        private userService: UserService,
     ) {
-
-        this.buildForm();
     }
 
     ngOnInit() {
-    }
 
-    buildForm(): void {
+        this.animalId = +this.activatedRoute.snapshot.paramMap.get('id');
+        if (!this.animalId)
+            this.router.navigateByUrl('/tabs/profile');
 
+        this.getAnimal();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
+    }
+
+    getAnimal(): void {
+
+        this.animalService.getAnimalById(this.animalId).subscribe(
+            value => {
+                this.animal = value;
+                if (!this.isOwner())
+                    this.router.navigateByUrl('/tabs/events');
+
+                this.buildForm();
+            },
+            e => this.processError(e)
+        );
+    }
+
+    isOwner(): boolean {
+
+        let connectedUserId;
+        this.userService.getUser().subscribe(connectedUser => connectedUserId = connectedUser.id)
+        return this.animal.owner.id == connectedUserId;
+    }
+
+    buildForm(): void {
+
         this.isTypeSelected = false;
 
-        // Create account form
-        this.createAnimalForm = new FormGroup({
+        this.updateAnimalForm = new FormGroup({
 
-            name: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
-
-            birthday: new FormControl(''),
-
-            fk_id_temper: new FormControl(''),
-
-            fk_id_gender: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
-
-            fk_id_type: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
-
-            fk_id_breed: new FormControl(''),
-
+            birthday: new FormControl({value: this.animal.birthday, disabled: false}),
+            fk_id_temper: new FormControl({value: this.animal.tempers.map(temper => temper.name), disabled: false}),
+            fk_id_gender: new FormControl({value: this.animal.gender.name, disabled: false}),
+            fk_id_type: new FormControl({value: this.animal.type.name, disabled: false}),
+            fk_id_breed: new FormControl({value: this.animal.breed.name, disabled: false}),
         });
     }
 
@@ -93,7 +107,7 @@ export class CreateAnimalPage implements OnInit {
         this.isTypeSelected = true;
 
         this.types.forEach((type) => {
-            if (type.name === this.createAnimalForm.value.fk_id_type) {
+            if (type.name === this.updateAnimalForm.value.fk_id_type) {
                 this.breedsToDisplay = this.breeds.filter(breed => breed.type.id === type.id);
             }
         });
@@ -103,7 +117,9 @@ export class CreateAnimalPage implements OnInit {
         this.genderService.getAnimalGender().subscribe(
             val => {
                 val.forEach((gender) => {
-                        const genderToAdd: AnimalGender = {name: gender.name};
+                        const genderToAdd: AnimalGender = {
+                            name: gender.name
+                        };
                         this.genders.push(genderToAdd);
                     }
                 );
@@ -162,7 +178,6 @@ export class CreateAnimalPage implements OnInit {
         this.serverError = false;
         this.unknownError = false;
         this.inputsError = false;
-        this.nameInputError = false;
         this.birthdayError = false;
         this.breedError = false;
         this.temperError = false;
@@ -172,52 +187,50 @@ export class CreateAnimalPage implements OnInit {
 
     submit(): void {
         if (this.formIsValid()) {
-            this.createAnimal();
+            this.updateAnimal();
         } else {
             this.presentToast('general');
-            console.log('ça marche po');
         }
     }
 
-    createAnimal(): void {
-        this.createAnimalInterface = {
-            name: this.createAnimalForm.value.name,
-            birthday: this.createAnimalForm.value.birthday,
-            tempers: this.createAnimalForm.value.fk_id_temper,
-            fk_id_gender: this.createAnimalForm.value.fk_id_gender,
-            fk_id_type: this.createAnimalForm.value.fk_id_type,
-            fk_id_breed: this.createAnimalForm.value.fk_id_breed,
+    updateAnimal(): void {
+        this.updateAnimalInterface = {
+            id: this.animal.id,
+            owner: this.animal.owner.id,
+            birthday: this.updateAnimalForm.value.birthday,
+            tempers: this.updateAnimalForm.value.fk_id_temper,
+            gender: this.updateAnimalForm.value.fk_id_gender,
+            type: this.updateAnimalForm.value.fk_id_type,
+            breed: this.updateAnimalForm.value.fk_id_breed,
         };
 
-        this.animalService.createAnimal(this.createAnimalInterface).subscribe(
-            _ => console.log('animal créé'),
-            error => this.processError(error));
+        this.animalService.updateAnimal(this.updateAnimalInterface).subscribe(
+            _ => this.router.navigateByUrl('/tabs/profile/animal/' + this.animalId, {state: {comingFromEdition: true}}),
+            e => this.processError(e)
+        );
     }
 
     formIsValid(): boolean {
         this.setAllErrorsToFalse();
         this.checkInputsError();
 
-        return !this.createAnimalForm.invalid;
+        return !this.updateAnimalForm.invalid;
     }
 
     checkInputsError(): void {
-        if (this.createAnimalForm.controls.name.errors) {
-            this.nameInputError = true;
-        }
-        if (this.createAnimalForm.controls.birthday.errors) {
+        if (this.updateAnimalForm.controls.birthday.errors) {
             this.birthdayError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_type.errors) {
+        if (this.updateAnimalForm.controls.fk_id_type.errors) {
             this.typeError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_gender.errors) {
+        if (this.updateAnimalForm.controls.fk_id_gender.errors) {
             this.genderError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_temper.errors) {
+        if (this.updateAnimalForm.controls.fk_id_temper.errors) {
             this.temperError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_breed.errors) {
+        if (this.updateAnimalForm.controls.fk_id_breed.errors) {
             this.breedError = true;
         }
     }
@@ -228,6 +241,10 @@ export class CreateAnimalPage implements OnInit {
                 case 400:
                     this.inputsError = true;
                     this.presentToast('back_input');
+                    break;
+                case 417:
+                    this.inputsError = true;
+                    this.presentToast('back_user');
                     break;
                 case 500:
                     this.serverError = true;
@@ -247,12 +264,6 @@ export class CreateAnimalPage implements OnInit {
     async presentToast(error: string) {
         let toast: HTMLIonToastElement;
         switch (error) {
-            case 'name':
-                toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un nom valide.',
-                    duration: 2000
-                });
-                break;
             case 'birthday':
                 toast = await this.toastController.create({
                     message: 'Veuillez renseigner une date d\'anniversaire.',
@@ -280,6 +291,12 @@ export class CreateAnimalPage implements OnInit {
             case 'fk_id_temper':
                 toast = await this.toastController.create({
                     message: 'Veuillez renseigner le temperament de l\'animal.',
+                    duration: 2000
+                });
+                break;
+            case 'back_user':
+                toast = await this.toastController.create({
+                    message: 'Vous ne pouvez pas modifier un animal qui n\'est pas à vous.',
                     duration: 2000
                 });
                 break;
@@ -312,3 +329,4 @@ export class CreateAnimalPage implements OnInit {
     }
 
 }
+
