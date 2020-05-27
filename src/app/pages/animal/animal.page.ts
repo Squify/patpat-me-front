@@ -9,7 +9,16 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class AnimalPage implements OnInit {
 
     animalId: number;
-
+    
+    private animal = {
+        name: 'Pipoudou',
+        birthday: '07/07/2019',
+        type: 'Chat',
+        breed: 'Sacré de Birmanie',
+        gender: 'Mâle',
+        nature: 'Câlin'
+      };
+    
     constructor(
         public router: Router,
         private activatedRoute: ActivatedRoute,
