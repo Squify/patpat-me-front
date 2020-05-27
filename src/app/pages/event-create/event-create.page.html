@@ -2,7 +2,7 @@
     <ion-toolbar>
         <div class="topbar">
             <ion-back-button></ion-back-button>
-            <ion-title>Création d'évènement</ion-title>
+            <ion-title>{{ 'EVENT_CREATE.TITLE' | translate }}</ion-title>
         </div>
     </ion-toolbar>
 </ion-header>
@@ -11,14 +11,10 @@
 
     <ion-card class="warning-card">
         <ion-card-header>
-            <ion-card-title>Informations sur la création d'un évènement</ion-card-title>
+            <ion-card-title>{{ 'EVENT_CREATE.WARNING.TITLE' | translate }}</ion-card-title>
         </ion-card-header>
-
         <ion-card-content>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-            Duis egestas accumsan scelerisque. Morbi dapibus nisi sit amet dui vulputate, eu accumsan ante placerat. Sed velit ante, porttitor nec justo tincidunt, viverra consectetur ligula.<br>
-            <br>
-            Praesent non nisl at quam dictum viverra sit amet ut orci. Cras vitae odio arcu. Cras pulvinar lacus est, non feugiat est commodo non. Ut iaculis id.
+            {{ 'EVENT_CREATE.WARNING.TEXT' | translate }}
         </ion-card-content>
     </ion-card>
 
@@ -27,7 +23,7 @@
 
             <ion-list>
                 <ion-item mode="md">
-                    <ion-label position="floating">Nom</ion-label>
+                    <ion-label position="floating">{{ 'EVENT_CREATE.NAME' | translate }}</ion-label>
                     <ion-input type="text" formControlName="name">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="information-circle-outline"
@@ -41,7 +37,7 @@
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-label position="floating">Description</ion-label>
+                    <ion-label position="floating">{{ 'EVENT_CREATE.DESCRIPTION' | translate }}</ion-label>
                     <ion-input type="text" formControlName="description">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="menu-outline"
@@ -52,7 +48,7 @@
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-label position="floating">Localisation</ion-label>
+                    <ion-label position="floating">{{ 'EVENT_CREATE.LOCATION' | translate }}</ion-label>
                     <ion-input type="text" formControlName="localisation">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="golf-outline"
@@ -63,10 +59,10 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="floating">Date</ion-label>
+                    <ion-label position="floating">{{ 'EVENT_CREATE.DATE' | translate }}</ion-label>
                     <ion-datetime formControlName="date"
                                   display-format="DD MMMM YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" mode="md"
-                                  placeholder="Veuillez sélectionner une date">
+                                  placeholder="{{ 'EVENT_CREATE.SELECT_DATE' | translate }}">
                     </ion-datetime>
                     <ion-icon mode="md" slot="start" name="calendar-outline"
                               class="ion-align-self-end input-icon-margin"></ion-icon>
@@ -77,7 +73,7 @@
 
                 <ion-item mode="md">
                     <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
-                                placeholder="Sélectionnez un type">
+                                placeholder="{{ 'EVENT_CREATE.TYPE' | translate }}">
                         <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
                             {{ type.name }}
                         </ion-select-option>
@@ -92,7 +88,7 @@
             </ion-list>
 
             <div class="button-center">
-                <ion-button slot="end" class="validation-button" (click)="submit()">Valider le formulaire</ion-button>
+                <ion-button slot="end" class="validation-button" (click)="submit()">{{ 'EVENT_CREATE.SUBMIT' | translate }}</ion-button>
             </div>
         </form>
     </div>

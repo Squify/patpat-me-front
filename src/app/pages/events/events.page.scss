@@ -2,18 +2,25 @@ ion-content ion-toolbar {
   --background: translucent;
 }
 
-ion-fab-button {
-  margin-bottom: 57px;
-}
-
 .banner {
   height: 100px;
   background: url('/assets/images/grumpy.jpg') center;
   background-size: cover;
 }
-.event-grid{
+
+.event-grid {
   padding: 0 !important;
-  .event-content{
+
+  .event-content {
     padding: 0;
   }
+}
+
+ion-icon {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.event-name {
+  font-size: 18px;
 }

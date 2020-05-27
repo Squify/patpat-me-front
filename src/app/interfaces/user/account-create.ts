@@ -1,4 +1,4 @@
-export interface CreateAccount {
+export interface AccountCreate {
     email: string;
     password: string;
     pseudo: string;
@@ -9,5 +9,5 @@ export interface CreateAccount {
     push_notification: boolean;
     active_localisation: boolean;
     display_real_name: boolean;
-    fk_id_gender: string;
+    gender: string;
 }
