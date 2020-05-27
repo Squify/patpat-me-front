@@ -27,28 +27,28 @@
     </ion-item>
     <!-- Animal birthday -->
     <ion-item>
-      <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon>
+      <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon> 
       {{ animal.birthday | date: 'dd/MM/yyyy' }}
     </ion-item>
     <!-- Animal species -->
     <ion-item>
       <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
-      {{ animal.type }}
+      {{ type.name }}
     </ion-item>
     <!-- Animal breed -->
     <ion-item>
       <ion-icon mode="md" slot="start" name="paw"></ion-icon>
-      {{ animal.breed }}
+      {{ breed.name }}
     </ion-item>
     <!-- Animal genre -->
     <ion-item>
       <ion-icon mode="md" slot="start" name="male-female-outline"></ion-icon>
-      {{ animal.gender }}
+      {{ gender.name }}
     </ion-item>
     <!-- Animal nature -->
     <ion-item>
       <ion-icon mode="md" slot="start" name="happy-outline"></ion-icon>
-      {{ animal.nature }}
+      {{ temper.name }}
     </ion-item>
   </ion-list>
 
