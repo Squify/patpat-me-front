@@ -50,9 +50,10 @@ export class AnimalPage implements OnInit {
 
     ionViewDidEnter() {
         if (history.state.comingFromEdition) {
-            this.ngZone.run(() => this.getAnimal())
+            //this.ngZone.run(() => this.getAnimal())
         }
     }
+    
     getAnimal(): void {
 
         this.animalService.getAnimalById(this.animalId).subscribe(
