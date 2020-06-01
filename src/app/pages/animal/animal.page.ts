@@ -133,5 +133,10 @@ export class AnimalPage implements OnInit {
         );
     }
 
+    deleteAnimal(): void {
+        this.animalService.deleteAnimal(this.animalId).subscribe(
+            _=> this.router.navigateByUrl('/tabs/profile')
+        );
+    }
     
 }
