@@ -59,7 +59,6 @@ export class AnimalPage implements OnInit {
         this.animalService.getAnimalById(this.animalId).subscribe(
             value => {
                 this.animal = value;
-                console.log(value)
                 if (!this.isOwner())
                 this.router.navigateByUrl('/tabs/events');
             },
@@ -134,5 +133,5 @@ export class AnimalPage implements OnInit {
         );
     }
 
-
+    
 }
