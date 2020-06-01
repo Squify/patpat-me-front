@@ -17,6 +17,10 @@
     "ALREADY_ACCOUNT": "Déjà un compte ? ",
     "CONNEXION": "Connectez-vous !"
   },
+  "ANIMAL": {
+    "TITLE": "Mon animal",
+    "DELETE": "Supprimer l'animal"
+  },
   "ANIMAL_EDIT": {
     "TITLE": "Mettre à jour son animal",
     "NAME": "Nom",
