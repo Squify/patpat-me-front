@@ -39,4 +39,8 @@ export class AnimalService {
         return this.http.get<Animal>(environment.BACKEND_URL + '/api/animal', {params});
     }
 
+    deleteAnimal(animalId: number) {
+        const params: HttpParams = new HttpParams().set('animalId', animalId.toString());
+        return this.http.delete<any>(environment.BACKEND_URL+'api/animal/delete',{params})
+    }
 }
