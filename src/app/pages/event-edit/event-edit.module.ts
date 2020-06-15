@@ -8,6 +8,7 @@ import { EventEditPageRoutingModule } from './event-edit-routing.module';
 
 import { EventEditPage } from './event-edit.page';
 import { TranslateModule } from "@ngx-translate/core";
+import { ComponentModule } from "../../components/component.module";
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { TranslateModule } from "@ngx-translate/core";
         IonicModule,
         EventEditPageRoutingModule,
         TranslateModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ComponentModule
     ],
   declarations: [EventEditPage]
 })
