@@ -185,5 +185,8 @@
     "BACK_SERVER": "Une erreur serveur est survenue",
     "BACK_UNKNOWN": "Une erreur inconnue est survenue",
     "DEFAULT": "Le formulaire est erroné ! Cliquez sur les ronds pour plus d'informations."
+  },
+  "EVENT_EDIT": {
+    "TITLE": "Editer mon événement"
   }
 }
