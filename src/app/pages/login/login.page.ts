@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Credentials } from '../../interfaces/user/credentials';
-import { User } from '../../interfaces/user/user';
-import { AuthenticationService } from '../../services/authentication.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { HttpErrorResponse } from '@angular/common/http';
-import { UserService } from '../../services/user/user.service';
-import { GeolocationService } from "../../services/geolocation.service";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Credentials} from '../../interfaces/user/credentials';
+import {User} from '../../interfaces/user/user';
+import {AuthenticationService} from '../../services/authentication.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastController} from '@ionic/angular';
+import {HttpErrorResponse} from '@angular/common/http';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
     selector: 'app-login',
@@ -29,23 +28,14 @@ export class LoginPage implements OnInit {
     emailInputError: boolean;
     passwordInputError: boolean;
 
-    data = null;
-
     constructor(
         public loginFormBuilder: FormBuilder,
         private authService: AuthenticationService,
         private userService: UserService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        public toastController: ToastController,
-        private geolocationService: GeolocationService
+        public toastController: ToastController
     ) {
-        this.geolocationService.myMethod$.subscribe((data) => {
-                this.data = data; // And he have data here too!
-                console.log(this.data);
-            }
-        );
-
 
         this.buildForm();
     }
