@@ -7,22 +7,17 @@
     text-align: center;
   }
 
-  ion-list {
-    border-radius: 25px;
-    padding-bottom: 0!important;
-    padding-top: 0!important;
-    margin-bottom: 16px;
-    margin-top: 16px;
-  }
-
-  .checkbox {
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-left: 16px;
-    letter-spacing: 0.1px;
+  #geolocation-input {
     display: flex;
-    ion-label {
-      margin-left: 10px;
+    flex-direction: row;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 8px 0;
+    background: var(--ion-item-background, var(--ion-background-color, #fff));
+
+    #geolocation-icon {
+      margin-left: 20px;
+      padding-right: 20px
     }
   }
 }
