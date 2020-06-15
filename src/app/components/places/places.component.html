@@ -1,1 +1,1 @@
-<input #input type="search" placeholder="Where are we going?" />
+<input (change)="sendValue()" #input type="search" placeholder="{{ 'EVENT_CREATE.LOCATION' | translate }}" />

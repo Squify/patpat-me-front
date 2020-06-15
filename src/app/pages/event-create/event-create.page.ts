@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastController} from '@ionic/angular';
-import {HttpErrorResponse} from '@angular/common/http';
-import {EventCreate} from '../../interfaces/event/event-create';
-import {EventService} from '../../services/event/event.service';
-import {EventType} from '../../interfaces/event/event-type';
-import {TranslateService} from "@ngx-translate/core";
-import {Router} from "@angular/router";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EventCreate } from '../../interfaces/event/event-create';
+import { EventService } from '../../services/event/event.service';
+import { EventType } from '../../interfaces/event/event-type';
+import { TranslateService } from "@ngx-translate/core";
+import { Router } from "@angular/router";
+import { GeolocationService } from "../../services/geolocation.service";
 
 @Component({
     selector: 'app-event-create',
@@ -14,6 +15,10 @@ import {Router} from "@angular/router";
     styleUrls: ['./event-create.page.scss'],
 })
 export class EventCreatePage implements OnInit {
+    public data: string = null;
+
+    @ViewChild("input", null) input;
+    location: string = null;
 
     createEventInterface: EventCreate;
     createEventForm: FormGroup;
@@ -26,7 +31,7 @@ export class EventCreatePage implements OnInit {
     nameError: boolean;
     nameExistError: boolean;
     descriptionError: boolean;
-    localisationError: boolean;
+    locationError: boolean;
     dateError: boolean;
     typeError: boolean;
 
@@ -35,7 +40,14 @@ export class EventCreatePage implements OnInit {
         private eventService: EventService,
         public translate: TranslateService,
         public router: Router,
+        private geolocationService: GeolocationService
     ) {
+        this.geolocationService.myMethod$.subscribe((data) => {
+                this.data = data; // And he have data here too!
+                this.location = this.data;
+            }
+        );
+
         this.buildForm();
     }
 
@@ -63,11 +75,6 @@ export class EventCreatePage implements OnInit {
                 ]
             }),
 
-            localisation: new FormControl('', {
-                validators: [
-                    Validators.required
-                ]
-            }),
 
             date: new FormControl('', {
                 validators: [
@@ -105,7 +112,7 @@ export class EventCreatePage implements OnInit {
         this.nameError = false;
         this.nameExistError = false;
         this.descriptionError = false;
-        this.localisationError = false;
+        this.locationError = false;
         this.dateError = false;
         this.typeError = false;
     }
@@ -122,13 +129,16 @@ export class EventCreatePage implements OnInit {
         this.createEventInterface = {
             name: this.createEventForm.value.name,
             description: this.createEventForm.value.description,
-            localisation: this.createEventForm.value.localisation,
+            localisation: this.location,
             date: this.createEventForm.value.date,
             type: this.createEventForm.value.fk_id_type,
         };
 
         this.eventService.createEvent(this.createEventInterface).subscribe(
-            _ => this.router.navigateByUrl(''),
+            _ => {
+                this.createEventForm.reset();
+                this.router.navigateByUrl('');
+            },
             error => this.processError(error))
         ;
     }
@@ -147,8 +157,8 @@ export class EventCreatePage implements OnInit {
         if (this.createEventForm.controls.description.errors) {
             this.descriptionError = true;
         }
-        if (this.createEventForm.controls.localisation.errors) {
-            this.localisationError = true;
+        if (this.location == null || this.location == '') {
+            this.locationError = true;
         }
         if (this.createEventForm.controls.date.errors) {
             this.dateError = true;
@@ -205,7 +215,7 @@ export class EventCreatePage implements OnInit {
                     duration: 2000
                 });
                 break;
-            case 'localisation':
+            case 'location':
                 toast = await this.toastController.create({
                     message: this.translate.instant('ERRORS.EVENT.LOCATION'),
                     duration: 2000

@@ -8,6 +8,7 @@ import { EventCreatePageRoutingModule } from './event-create-routing.module';
 
 import { EventCreatePage } from './event-create.page';
 import {TranslateModule} from "@ngx-translate/core";
+import { ComponentModule } from "../../components/component.module";
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import {TranslateModule} from "@ngx-translate/core";
         IonicModule,
         EventCreatePageRoutingModule,
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule,
+        ComponentModule
     ],
   declarations: [EventCreatePage]
 })
