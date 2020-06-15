@@ -21,7 +21,6 @@
     <div class="form-container">
         <form *ngIf="createEventForm" [formGroup]="createEventForm" (keyup.enter)="submit()">
 
-            <!--            <div id="test2">-->
             <ion-item mode="md">
                 <ion-icon mode="md" slot="start" name="information-circle-outline"
                           class="ion-align-self-start"></ion-icon>
@@ -82,8 +81,6 @@
                           class="ion-align-self-end error-message"
                           (click)="presentToast('fk_id_type')"></ion-icon>
             </ion-item>
-
-            <!--            </div>-->
 
             <div class="button-center">
                 <ion-button slot="end" class="validation-button"
