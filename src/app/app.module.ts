@@ -12,6 +12,8 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {CustomHttpInterceptor} from './interceptors/custom-http-interceptor';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { PlacesComponent } from "./components/places/places.component";
+import { NgAisModule } from "angular-instantsearch";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -33,7 +35,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-
+        NgAisModule.forRoot(),
     ],
     providers: [
         StatusBar,
