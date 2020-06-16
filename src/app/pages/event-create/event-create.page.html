@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content>
-
     <ion-card class="warning-card">
         <ion-card-header>
             <ion-card-title>{{ 'EVENT_CREATE.WARNING.TITLE' | translate }}</ion-card-title>
@@ -47,9 +46,9 @@
             </ion-item>
 
             <div id="geolocation-input">
-                <ion-icon mode="md" slot="start" name="golf-outline" id="geolocation-icon"
+                <ion-icon mode="md" slot="start" name="location-outline" id="geolocation-icon"
                           class="ion-align-self-center"></ion-icon>
-                <app-places style="width: calc(100%);"></app-places>
+                <app-places defaultLocation="{{ null }}" style="width: calc(100%);"></app-places>
                 <ion-icon mode="md" *ngIf="locationError" slot="end" name="alert-circle-outline"
                           class="ion-align-self-center error-message"
                           (click)="presentToast('location')"></ion-icon>
@@ -75,7 +74,7 @@
                         {{ type.name }}
                     </ion-select-option>
                 </ion-select>
-                <ion-icon mode="md" slot="start" name="bookmarks-outline"
+                <ion-icon mode="md" slot="start" name="paw-outline"
                           class="ion-align-self-end"></ion-icon>
                 <ion-icon mode="md" *ngIf="typeError" slot="end" name="alert-circle-outline"
                           class="ion-align-self-end error-message"
