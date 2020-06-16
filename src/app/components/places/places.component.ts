@@ -13,7 +13,7 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("input", null) input;
     @Output() onChange? = new EventEmitter();
-    @Input() editLocation: string;
+    @Input() defaultLocation: string;
 
     constructor(
         private geolocationService: GeolocationService,
@@ -26,7 +26,7 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
             container: this.input.nativeElement
             // places options
         });
-        this.ngZone.run(() => this.input.nativeElement.value = this.editLocation);
+        this.ngZone.run(() => this.input.nativeElement.value = this.defaultLocation);
     }
 
     ngOnDestroy() {

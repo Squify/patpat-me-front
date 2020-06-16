@@ -26,9 +26,7 @@ export class EventPage implements OnInit {
     userIsOwnerError: boolean;
 
     selectedSegment = 'informationSegment';
-    type = 'Randonnée';
-    url = '/src/assets/images/event-type/' + this.type + '.jpg';
-    private img = '/assets/images/grumpy.jpg';
+    defaultProfilePic = '/assets/images/grumpy.jpg';
 
     constructor(
         private eventService: EventService,
@@ -56,6 +54,10 @@ export class EventPage implements OnInit {
         if (history.state.comingFromEdition) {
             this.ngZone.run(() => this.getEvent())
         }
+    }
+
+    openMaps() {
+        window.open("https://maps.google.com/?q=" + this.event.localisation)
     }
 
     getEvent(): void {
