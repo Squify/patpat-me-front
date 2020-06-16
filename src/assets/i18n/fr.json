@@ -90,7 +90,8 @@
     "MAPS": "Voir dans maps",
     "PARTICIPANTS": "Participants",
     "TITLE": "Événement",
-    "TYPE": "Type/Mots clés"
+    "TYPE": "Type/Mots clés",
+    "OWNER_MESSAGE": "Cet utilisateur à créé l'événement"
   },
   "EVENT_CREATE": {
     "DATE": "Date",

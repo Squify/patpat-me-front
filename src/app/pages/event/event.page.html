@@ -1,8 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button>
-            </ion-back-button>
+            <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>{{ 'EVENT.TITLE' | translate }}</ion-title>
         <ion-buttons slot="end" *ngIf="event">
@@ -43,6 +42,7 @@
             <ion-row>
                 <ion-col size="12">
                     <h4>{{ event.name }}</h4>
+                    <span>{{ event.members.length }} participant(s)</span>
                 </ion-col>
                 <ion-col>
                     <!-- Both tabs -->
@@ -60,24 +60,40 @@
                         <ion-col *ngSwitchCase="'informationSegment'" class="tab tab-informations open">
                             <ion-row>
                                 <ion-col>
-                                    <ion-row>
-                                        <ion-col size="auto"><ion-icon name="calendar-outline"></ion-icon></ion-col>
-                                        <ion-col class="information-list" size="auto">{{ 'EVENT.DATE' | translate }} :</ion-col>
+                                    <ion-row class="ion-padding-top">
+                                        <ion-col size="auto">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                        </ion-col>
+                                        <ion-col class="information-list-title"
+                                                 size="auto">{{ 'EVENT.DATE' | translate }} :
+                                        </ion-col>
                                         <ion-col>{{ event.date | date: 'dd/MM/yyyy à HH:mm' }}</ion-col>
                                     </ion-row>
-                                    <ion-row>
-                                        <ion-col size="auto"><ion-icon name="menu-outline"></ion-icon></ion-col>
-                                        <ion-col class="information-list" size="auto">{{ 'EVENT.DESCRIPTION' | translate }} :</ion-col>
+                                    <ion-row class="ion-padding-top">
+                                        <ion-col size="auto">
+                                            <ion-icon name="menu-outline"></ion-icon>
+                                        </ion-col>
+                                        <ion-col class="information-list-title"
+                                                 size="auto">{{ 'EVENT.DESCRIPTION' | translate }} :
+                                        </ion-col>
                                         <ion-col>{{ event.description }}</ion-col>
                                     </ion-row>
-                                    <ion-row>
-                                        <ion-col size="auto"><ion-icon name="paw-outline"></ion-icon></ion-col>
-                                        <ion-col class="information-list" size="auto">{{ 'EVENT.TYPE' | translate }} :</ion-col>
+                                    <ion-row class="ion-padding-top">
+                                        <ion-col size="auto">
+                                            <ion-icon name="paw-outline"></ion-icon>
+                                        </ion-col>
+                                        <ion-col class="information-list-title"
+                                                 size="auto">{{ 'EVENT.TYPE' | translate }} :
+                                        </ion-col>
                                         <ion-col>{{ event.type.name }}</ion-col>
                                     </ion-row>
-                                    <ion-row>
-                                        <ion-col size="auto"><ion-icon name="location-outline"></ion-icon></ion-col>
-                                        <ion-col class="information-list" size="auto">{{ 'EVENT.LOCATION' | translate }} :</ion-col>
+                                    <ion-row class="ion-padding-top">
+                                        <ion-col size="auto">
+                                            <ion-icon name="location-outline"></ion-icon>
+                                        </ion-col>
+                                        <ion-col class="information-list-title"
+                                                 size="auto">{{ 'EVENT.LOCATION' | translate }} :
+                                        </ion-col>
                                         <ion-col>{{ event.localisation }}</ion-col>
                                     </ion-row>
                                     <div class="button-center">
@@ -91,15 +107,25 @@
                         <!-- End informations event part -->
                         <!-- Participants part here -->
                         <ion-col *ngSwitchCase="'membersSegment'" class="tab tab-participants">
-                            <ion-list class="parts-list" *ngIf="event.members.length > 0">
-                                <ion-item *ngFor="let member of event.members" class="part-card">
-                                    <ion-thumbnail class="part-avatar">
-                                        <ion-img [src]="defaultProfilePic"></ion-img>
-                                    </ion-thumbnail>
-                                    <ion-col>
-                                        {{member.pseudo}}
+                            <ion-list class="parts-list">
+                                <ion-item class="part-card">
+                                    <ion-col style="max-width: 20%">
+                                        <ion-thumbnail class="part-avatar">
+                                            <ion-img [src]="defaultProfilePic"></ion-img>
+                                        </ion-thumbnail>
                                     </ion-col>
-                                    <ion-col size="auto" class="role"></ion-col>
+                                    <ion-col style="max-width: 70%">{{event.owner.pseudo}}</ion-col>
+                                    <ion-col (click)="presentToast('owner')" style="max-width: 10%">
+                                        <ion-icon size="large" name="help-circle-outline"></ion-icon>
+                                    </ion-col>
+                                </ion-item>
+                                <ion-item *ngFor="let member of event.members" class="part-card">
+                                    <ion-col style="max-width: 20%">
+                                        <ion-thumbnail class="part-avatar">
+                                            <ion-img [src]="defaultProfilePic"></ion-img>
+                                        </ion-thumbnail>
+                                    </ion-col>
+                                    <ion-col style="max-width: 80%">{{member.pseudo}}</ion-col>
                                 </ion-item>
                             </ion-list>
                         </ion-col>

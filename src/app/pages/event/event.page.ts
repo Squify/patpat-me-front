@@ -135,6 +135,12 @@ export class EventPage implements OnInit {
     async presentToast(error: string) {
         let toast: HTMLIonToastElement;
         switch (error) {
+            case 'owner':
+                toast = await this.toastController.create({
+                    message: this.translate.instant('EVENT.OWNER_MESSAGE'),
+                    duration: 2000
+                });
+                break;
             case 'back_input':
                 toast = await this.toastController.create({
                     message: this.translate.instant('ERRORS.BACK_INPUT'),

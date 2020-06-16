@@ -1,14 +1,14 @@
 <ion-header>
     <ion-toolbar>
-        <div class="topbar">
+        <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
-            <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
-            <ion-buttons slot="end">
-                <ion-button fill="clear" [routerLink]="'edit-profile'">
-                    <ion-icon name="pencil-outline" slot="end"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-        </div>
+        </ion-buttons>
+        <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" [routerLink]="'edit-profile'">
+                <ion-icon name="pencil-outline" slot="end"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
