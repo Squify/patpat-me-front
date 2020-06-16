@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ 'PROFILE_EDIT.TITLE' | translate }}</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-title>{{ 'PROFILE_EDIT.TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
             <ion-label position="floating">{{ 'PROFILE_EDIT.PSEUDO' | translate }}</ion-label>
             <ion-input type="text" [value]="user.pseudo" [disabled]="true">
             </ion-input>
-            <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end input-icon-margin">
+            <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end">
             </ion-icon>
           </ion-item>
 
@@ -24,9 +24,9 @@
             <ion-label position="floating">{{ 'PROFILE_EDIT.PASSWORD' | translate }}</ion-label>
             <ion-input [type]="'password'" formControlName="password" maxlength="32">
             </ion-input>
-            <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end input-icon-margin"></ion-icon>
+            <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
             <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
-              name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message"
+              name="alert-circle-outline" class="ion-align-self-end error-message"
               (click)="presentToast('password')"></ion-icon>
           </ion-item>
 
@@ -34,9 +34,9 @@
             <ion-label position="floating">{{ 'PROFILE_EDIT.EMAIL' | translate }}</ion-label>
             <ion-input type="text" formControlName="email" [value]="user.email">
             </ion-input>
-            <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
+            <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end"></ion-icon>
             <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
-              class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('email')"></ion-icon>
+              class="ion-align-self-end error-message" (click)="presentToast('email')"></ion-icon>
           </ion-item>
           <ion-row>
             <ion-col col-6>
@@ -45,7 +45,7 @@
                 <ion-input type="text" [value]="user.firstname" [disabled]="true">
                 </ion-input>
                 <ion-icon mode="md" slot="start" name="finger-print-outline"
-                  class="ion-align-self-end input-icon-margin"></ion-icon>
+                  class="ion-align-self-end"></ion-icon>
               </ion-item>
             </ion-col>
             <ion-col col-6>
@@ -64,7 +64,7 @@
                 {{ gender.name }}
               </ion-select-option>
             </ion-select>
-            <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end input-icon-margin">
+            <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end">
             </ion-icon>
           </ion-item>
 
@@ -72,9 +72,9 @@
             <ion-label position="floating">{{ 'PROFILE_EDIT.PHONE' | translate }}</ion-label>
             <ion-input type="tel" formControlName="phone" [value]="user.phone">
             </ion-input>
-            <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end input-icon-margin"></ion-icon>
+            <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end"></ion-icon>
             <ion-icon *ngIf="phoneInputError" mode="md" slot="end" name="alert-circle-outline"
-              class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('phone')"></ion-icon>
+              class="ion-align-self-end error-message" (click)="presentToast('phone')"></ion-icon>
           </ion-item>
 
           <ion-item>
@@ -83,7 +83,7 @@
                           display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
                           placeholder="{{ 'PROFILE_EDIT.SELECT_DATE' | translate }}">
             </ion-datetime>
-            <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin">
+            <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">
             </ion-icon>
           </ion-item>
 

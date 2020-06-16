@@ -1,9 +1,9 @@
 <ion-header>
     <ion-toolbar>
-        <div class="topbar">
+        <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
-            <ion-title>{{ 'EVENT_EDIT.TITLE' | translate }}</ion-title>
-        </div>
+        </ion-buttons>
+        <ion-title>{{ 'EVENT_EDIT.TITLE' | translate }}</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -25,7 +25,7 @@
                 <ion-input type="text" [disabled]="true" [value]="event.name">
                 </ion-input>
                 <ion-icon mode="md" slot="start" name="information-circle-outline"
-                          class="ion-align-self-end input-icon-margin"></ion-icon>
+                          class="ion-align-self-end"></ion-icon>
             </ion-item>
 
             <ion-item mode="md">
@@ -66,7 +66,7 @@
                            [disabled]="true" [value]="event.type.name">
                 </ion-input>
                 <ion-icon mode="md" slot="start" name="paw-outline"
-                          class="ion-align-self-end input-icon-margin"></ion-icon>
+                          class="ion-align-self-end"></ion-icon>
             </ion-item>
 
             <div class="button-center">
