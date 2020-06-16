@@ -1,7 +1,7 @@
-import {Component, NgZone} from '@angular/core';
-import {MenuController} from '@ionic/angular';
-import {EventService} from "../../services/event/event.service";
-import {EventInterface} from "../../interfaces/event/event-interface";
+import { Component, NgZone } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { EventService } from "../../services/event/event.service";
+import { EventInterface } from "../../interfaces/event/event-interface";
 
 @Component({
     selector: 'app-events',
@@ -11,39 +11,7 @@ import {EventInterface} from "../../interfaces/event/event-interface";
 export class EventsPage {
 
     events: EventInterface[] = [];
-    filters = [
-        {
-            name: '',
-            label: 'Randonnée',
-            value: false
-        },
-        {
-            name: '',
-            label: 'Promenade',
-            value: false
-        },
-        {
-            name: '',
-            label: 'Rencontre',
-            value: false
-        },
-        {
-            name: '',
-            label: 'Jeux',
-            value: false
-        },
-        {
-            name: '',
-            label: 'Pique nique',
-            value: false
-        },
-        {
-            name: '',
-            label: 'Sortie en mer',
-            value: false
-        }
-    ];
-
+    filters = [];
     filterArgs = [];
 
     constructor(
@@ -55,6 +23,7 @@ export class EventsPage {
 
     ngOnInit() {
         this.getEvents();
+        this.getTypes();
     }
 
     ionViewDidEnter() {
@@ -96,5 +65,21 @@ export class EventsPage {
                 this.filterArgs.push(filter.label);
             }
         });
+    }
+
+    getTypes(): void {
+        this.eventService.getEventType().subscribe(
+            val => {
+                val.forEach((type) => {
+                        const filter = {
+                            name: '',
+                            label: type.name,
+                            value: false
+                        };
+                        this.filters.push(filter);
+                    }
+                );
+            }
+        );
     }
 }

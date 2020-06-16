@@ -24,7 +24,7 @@
             <ion-item>Type d'événement</ion-item>
             -->
             <ion-item *ngFor="let filter of filters">
-                <ion-label>{{filter.label}}</ion-label>
+                <ion-label>{{ filter.label }}</ion-label>
                 <ion-checkbox [(ngModel)]="filter.value" (ionChange)="updateArgs()"></ion-checkbox>
             </ion-item>
             <!-- Order by
