@@ -9,6 +9,7 @@ import { EventType } from "../../interfaces/event/event-type";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { EventEdit } from "../../interfaces/event/event-edit";
 import { HttpErrorResponse } from "@angular/common/http";
+import { GeolocationService } from "../../services/geolocation.service";
 
 @Component({
     selector: 'app-event-edit',
@@ -42,7 +43,8 @@ export class EventEditPage implements OnInit {
         public router: Router,
         private activatedRoute: ActivatedRoute,
         public toastController: ToastController,
-        public translate: TranslateService
+        public translate: TranslateService,
+        private geolocationService: GeolocationService
     ) {
         this.eventId = +this.activatedRoute.snapshot.paramMap.get('id');
         if (!this.eventId)
@@ -72,7 +74,7 @@ export class EventEditPage implements OnInit {
                 ]
             }),
 
-            localisation: new FormControl({value: this.event.localisation, disabled: false}, {
+            localisation: new FormControl({disabled: false}, {
                 validators: [
                     Validators.required
                 ]

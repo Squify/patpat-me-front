@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { AnimalPageRoutingModule } from './animal-routing.module';
 
 import { AnimalPage } from './animal.page';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    AnimalPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        AnimalPageRoutingModule,
+        TranslateModule
+    ],
   declarations: [AnimalPage]
 })
 export class AnimalPageModule {}
