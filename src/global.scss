@@ -50,7 +50,7 @@ ion-fab-button {
   --background: #fbf2e5;
 }
 
-.topbar {
+.topbar-align-center {
   display: flex;
   flex-direction: row;
   text-align: center;
@@ -90,4 +90,47 @@ ion-list {
     margin-left: 10%;
     margin-right: 10%;
   }
+}
+
+// Event banner
+#balade-banner {
+  background: url('/assets/images/event-type/balade.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#rando-banner {
+  background: url('/assets/images/event-type/rando.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#jouer-banner {
+  background: url('/assets/images/event-type/jouer.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#concours-banner {
+  background: url('/assets/images/event-type/concours.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#picnic-banner {
+  background: url('/assets/images/event-type/picnic.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#plage-banner {
+  background: url('/assets/images/event-type/plage.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#default-banner {
+  background: url('/assets/images/event-type/rando.jpg') center;
+  height: 150px;
+  background-size: cover;
 }

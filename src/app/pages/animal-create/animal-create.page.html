@@ -20,7 +20,7 @@
           </ion-input>
           <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
           <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('name')">
+            class="ion-align-self-end error-message" (click)="presentToast('name')">
           </ion-icon>
         </ion-item>
 
@@ -29,9 +29,9 @@
           <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
             placeholder="{{ 'ANIMAL_CREATE.SELECT_DATE' | translate }}">
           </ion-datetime>
-          <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end"></ion-icon>
           <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('birthday')">
+            class="ion-align-self-end error-message" (click)="presentToast('birthday')">
           </ion-icon>
         </ion-item>
 
@@ -42,9 +42,9 @@
               {{ type.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end input-icon-margin"></ion-icon>
+          <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end"></ion-icon>
           <ion-icon *ngIf="typeError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_type')">
+            class="ion-align-self-end error-message" (click)="presentToast('fk_id_type')">
           </ion-icon>
         </ion-item>
 
@@ -55,10 +55,10 @@
               {{ breed.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end input-icon-margin">
+          <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end">
           </ion-icon>
           <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
-                    class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_breed')">
+                    class="ion-align-self-end error-message" (click)="presentToast('fk_id_breed')">
           </ion-icon>
         </ion-item>
 
@@ -69,10 +69,10 @@
               {{ gender.name }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end input-icon-margin">
+          <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end">
           </ion-icon>
           <ion-icon *ngIf="genderError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_gender')">
+            class="ion-align-self-end error-message" (click)="presentToast('fk_id_gender')">
           </ion-icon>
         </ion-item>
 
@@ -83,15 +83,18 @@
               {{ 'TEMPER.' + temper.name | translate }}
             </ion-select-option>
           </ion-select>
-          <ion-icon mode="md" slot="start" name="american-football-outline" class="ion-align-self-end input-icon-margin">
+          <ion-icon mode="md" slot="start" name="american-football-outline" class="ion-align-self-end">
           </ion-icon>
           <ion-icon *ngIf="temperError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('fk_id_temper')">
+            class="ion-align-self-end error-message" (click)="presentToast('fk_id_temper')">
           </ion-icon>
         </ion-item>
       </ion-list>
 
-      <ion-button slot="end" class="submit-button" (click)="submit()">{{ 'ANIMAL_CREATE.SUBMIT' | translate }}</ion-button>
+      <div class="button-center">
+        <ion-button slot="end" class="validation-button"
+                    (click)="submit()">{{ 'ANIMAL_CREATE.SUBMIT' | translate }}</ion-button>
+      </div>
     </form>
   </div>
 </ion-content>
