@@ -14,9 +14,9 @@
                     <ion-label position="floating">{{ 'CONNEXION.EMAIL' | translate }}</ion-label>
                     <ion-input type="text" formControlName="email">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
+                    <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end"></ion-icon>
                     <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
-                              class="ion-align-self-end input-icon-margin error-message"
+                              class="ion-align-self-end error-message"
                               (click)="presentToast('email')"></ion-icon>
                 </ion-item>
 
@@ -25,12 +25,12 @@
                     <ion-input [type]="'password'" formControlName="password" maxlength="32">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="key"
-                              class="ion-align-self-end input-icon-margin"></ion-icon>
+                              class="ion-align-self-end"></ion-icon>
                     <!--                    <ion-button slot="end" class="ion-align-self-end"-->
                     <!--                                color="medium" fill="clear">-->
                     <!--                    </ion-button>-->
                     <ion-icon *ngIf="passwordInputError" mode="md" slot="end"
-                              name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message"
+                              name="alert-circle-outline" class="ion-align-self-end error-message"
                               (click)="presentToast('password')"></ion-icon>
                 </ion-item>
             </ion-list>

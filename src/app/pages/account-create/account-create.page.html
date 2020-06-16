@@ -9,10 +9,10 @@
 
         <!--        <div class="button-center">-->
         <!--            <ion-button fill="clear" id="google" style="color:#5d4d4c;">-->
-        <!--                <ion-icon mode="md" slot="start" name="logo-google" class="input-icon-margin"></ion-icon>-->
+        <!--                <ion-icon mode="md" slot="start" name="logo-google"></ion-icon>-->
         <!--            </ion-button>-->
         <!--            <ion-button fill="clear" id="facebook" style="color:#5d4d4c;">-->
-        <!--                <ion-icon mode="md" slot="start" name="logo-facebook" class="input-icon-margin"></ion-icon>-->
+        <!--                <ion-icon mode="md" slot="start" name="logo-facebook"></ion-icon>-->
         <!--            </ion-button>-->
         <!--        </div>-->
 
@@ -23,10 +23,10 @@
                     <ion-label position="floating">{{ 'ACCOUNT_CREATE.PSEUDO' | translate }}</ion-label>
                     <ion-input type="text" formControlName="pseudo">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end input-icon-margin">
+                    <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end">
                     </ion-icon>
                     <ion-icon *ngIf="pseudoInputError" mode="md" slot="end" name="alert-circle-outline"
-                        class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('pseudo')">
+                        class="ion-align-self-end error-message" (click)="presentToast('pseudo')">
                     </ion-icon>
                 </ion-item>
 
@@ -34,12 +34,12 @@
                     <ion-label position="floating">{{ 'ACCOUNT_CREATE.PASSWORD' | translate }}</ion-label>
                     <ion-input [type]="'password'" formControlName="password" maxlength="32">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end input-icon-margin"></ion-icon>
+                    <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
                     <!--                    <ion-button slot="end" class="ion-align-self-end"-->
                     <!--                                color="medium" fill="clear">-->
                     <!--                    </ion-button>-->
                     <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
-                        name="alert-circle-outline" class="ion-align-self-end input-icon-margin error-message"
+                        name="alert-circle-outline" class="ion-align-self-end error-message"
                         (click)="presentToast('password')"></ion-icon>
                 </ion-item>
 
@@ -47,9 +47,9 @@
                     <ion-label position="floating">{{ 'ACCOUNT_CREATE.EMAIL' | translate }}</ion-label>
                     <ion-input type="text" formControlName="email">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end input-icon-margin"></ion-icon>
+                    <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end"></ion-icon>
                     <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
-                        class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('email')">
+                        class="ion-align-self-end error-message" (click)="presentToast('email')">
                     </ion-icon>
                 </ion-item>
 
@@ -60,9 +60,9 @@
                             <ion-input type="text" formControlName="lastname">
                             </ion-input>
                             <ion-icon mode="md" slot="start" name="finger-print-outline"
-                                class="ion-align-self-end input-icon-margin"></ion-icon>
+                                class="ion-align-self-end"></ion-icon>
                             <ion-icon *ngIf="lastnameInputError" mode="md" slot="end" name="alert-circle-outline"
-                                class="ion-align-self-end input-icon-margin error-message"
+                                class="ion-align-self-end error-message"
                                 (click)="presentToast('lastname')"></ion-icon>
                         </ion-item>
                     </ion-col>
@@ -72,7 +72,7 @@
                             <ion-input type="text" formControlName="firstname">
                             </ion-input>
                             <ion-icon *ngIf="firstnameInputError" mode="md" slot="end" name="alert-circle-outline"
-                                class="ion-align-self-end input-icon-margin error-message"
+                                class="ion-align-self-end error-message"
                                 (click)="presentToast('firstname')"></ion-icon>
                         </ion-item>
                     </ion-col>
@@ -86,17 +86,17 @@
                         </ion-select-option>
                     </ion-select>
                     <ion-icon mode="md" slot="start" name="male-female-outline"
-                        class="ion-align-self-end input-icon-margin"></ion-icon>
+                        class="ion-align-self-end"></ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
                     <ion-label position="floating">{{ 'ACCOUNT_CREATE.PHONE' | translate }}</ion-label>
                     <ion-input type="tel" formControlName="phone">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end input-icon-margin">
+                    <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end">
                     </ion-icon>
                     <ion-icon *ngIf="phoneInputError" mode="md" slot="end" name="alert-circle-outline"
-                        class="ion-align-self-end input-icon-margin error-message" (click)="presentToast('phone')">
+                        class="ion-align-self-end error-message" (click)="presentToast('phone')">
                     </ion-icon>
                 </ion-item>
 
@@ -106,7 +106,7 @@
                                   display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
                                   placeholder="{{ 'ACCOUNT_CREATE.SELECT_DATE' | translate }}">
                     </ion-datetime>
-                    <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end input-icon-margin">
+                    <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">
                     </ion-icon>
                 </ion-item>
 
