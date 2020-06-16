@@ -25,9 +25,41 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-ion-header {
-  --ion-background-color: #f5e1c2;
+/*********************/
+/* Header and footer */
+/*********************/
+ion-header, ion-tab-bar {
+  --ion-background-color: #E5BD80;
+  --ion-border-color: none;
 }
+
+ion-tab-bar > ion-tab-button {
+  color: #FBF2E5;
+}
+
+/*********************/
+/***** Useful for ****/
+/*** events filters **/
+/*********************/
+
+ion-toolbar {
+  --ion-color-base: #E5BD80;
+}
+
+ion-item {
+  --background: #D39841;
+}
+
+ion-checkbox {
+  --background: #492F0B;
+  --border-color-checked: #E5BD80;
+  --background-checked: #FBF2E5;
+  --checkmark-color: #D39841;
+}
+
+/*********************/
+/**** Main content ***/
+/*********************/
 
 ion-content {
   --ion-background-color: #f6f6f6;
@@ -50,14 +82,14 @@ ion-fab-button {
   --background: #fbf2e5;
 }
 
-.topbar-align-center {
+.topbar {
   display: flex;
   flex-direction: row;
   text-align: center;
 }
 
 ion-list {
-  border-radius: 25px;
+  //border-radius: 25px;
   padding-bottom: 0 !important;
   padding-top: 0 !important;
   margin-bottom: 16px;
@@ -90,47 +122,4 @@ ion-list {
     margin-left: 10%;
     margin-right: 10%;
   }
-}
-
-// Event banner
-#balade-banner {
-  background: url('/assets/images/event-type/balade.jpg') center;
-  height: 150px;
-  background-size: cover;
-}
-
-#rando-banner {
-  background: url('/assets/images/event-type/rando.jpg') center;
-  height: 150px;
-  background-size: cover;
-}
-
-#jouer-banner {
-  background: url('/assets/images/event-type/jouer.jpg') center;
-  height: 150px;
-  background-size: cover;
-}
-
-#concours-banner {
-  background: url('/assets/images/event-type/concours.jpg') center;
-  height: 150px;
-  background-size: cover;
-}
-
-#picnic-banner {
-  background: url('/assets/images/event-type/picnic.jpg') center;
-  height: 150px;
-  background-size: cover;
-}
-
-#plage-banner {
-  background: url('/assets/images/event-type/plage.jpg') center;
-  height: 150px;
-  background-size: cover;
-}
-
-#default-banner {
-  background: url('/assets/images/event-type/rando.jpg') center;
-  height: 150px;
-  background-size: cover;
 }
