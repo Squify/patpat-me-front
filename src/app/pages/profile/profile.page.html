@@ -1,14 +1,14 @@
 <ion-header>
     <ion-toolbar>
-        <div class="topbar">
+        <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
-            <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
-            <ion-buttons slot="end">
-                <ion-button fill="clear" [routerLink]="'edit-profile'">
-                    <ion-icon name="pencil-outline" slot="end"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-        </div>
+        </ion-buttons>
+        <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" [routerLink]="'edit-profile'">
+                <ion-icon name="pencil-outline" slot="end"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -20,13 +20,16 @@
     </ion-fab>
 
     <div class="userContainer" *ngIf="user">
-        <h3>
-            {{ user.firstname }}
-            {{ user.lastname | uppercase }}
-        </h3>
-        <p>
-            {{ user.pseudo }}
-        </p>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+            <h3 class="remove-margin" style="margin-top: 15px">
+                {{ user.firstname }}
+                {{ user.lastname | uppercase }}
+            </h3>
+            <p class="remove-margin" style="margin-bottom: 15px">
+                <b>{{ 'PROFILE_EDIT.PSEUDO' | translate }} :</b> {{ user.pseudo }}
+            </p>
+        </div>
 
         <ion-segment (ionChange)="segmentChanged($event)" value="informationSegment"
                      style="margin: unset; border-bottom-left-radius: 0;border-bottom-right-radius: 0">
@@ -45,37 +48,37 @@
                       style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
                 <ion-list>
                     <ion-item>
-                        <ion-icon mode="md" name="at" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="at" color="medium"></ion-icon>
                         <ion-label>{{ user.email | lowercase }} </ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon mode="md" name="call" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="call" color="medium"></ion-icon>
                         <ion-label *ngIf="user.phone">{{ user.phone }}</ion-label>
                         <ion-label *ngIf="!user.phone">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon mode="md" name="gift" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="gift" color="medium"></ion-icon>
                         <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy à HH:mm' }}</ion-label>
                         <ion-label *ngIf="!user.birthday">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon mode="md" name="male-female-outline" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="male-female-outline" color="medium"></ion-icon>
                         <ion-label *ngIf="user.gender">{{ user.gender.name }}</ion-label>
                         <ion-label *ngIf="!user.gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon mode="md" name="notifications" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="notifications" color="medium"></ion-icon>
                         <ion-label>{{ 'PROFILE.NOTIFICATIONS' | translate }}
                             <p>{{ user.push_notification ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}</p>
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon mode="md" name="location-outline" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="location-outline" color="medium"></ion-icon>
                         <ion-label>{{ 'PROFILE.GEOLOCATION' | translate }}
                             <p>{{ user.active_localisation ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}</p>
                         </ion-label>

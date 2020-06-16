@@ -1,13 +1,3 @@
-.banner {
-  height: 150px;
-  background: url('/assets/images/grumpy.jpg') center;
-  background-size: cover;
-}
-
-#rando {
-  background: url('/assets/images/event-type/rando.jpg') center !important;
-}
-
 .parts-list {
   .part-card {
     padding: 10px 0;
@@ -16,11 +6,14 @@
       --border-radius: 50%;
     }
   }
-
 }
 
 .join-event {
   position: absolute;
   bottom: 5px;
   Right: 5px;
+}
+
+.information-list-title {
+  width: 40% !important;
 }
