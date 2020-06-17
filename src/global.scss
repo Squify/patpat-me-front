@@ -118,6 +118,49 @@ ion-list {
   border-radius: 0;
 }
 
+// Event banner
+#balade-banner {
+  background: url('/assets/images/event-type/balade.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#rando-banner {
+  background: url('/assets/images/event-type/rando.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#jouer-banner {
+  background: url('/assets/images/event-type/jouer.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#concours-banner {
+  background: url('/assets/images/event-type/concours.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#picnic-banner {
+  background: url('/assets/images/event-type/picnic.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#plage-banner {
+  background: url('/assets/images/event-type/plage.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
+#default-banner {
+  background: url('/assets/images/event-type/rando.jpg') center;
+  height: 150px;
+  background-size: cover;
+}
+
 // Quand l'écran fait plus de 820px (tablettes / grands téléphones / pc)
 @media (min-width: 820px) {
   .create-account-img {
