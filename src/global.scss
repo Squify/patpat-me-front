@@ -71,11 +71,11 @@ ion-content * {
 }
 
 ion-item {
-  --background: #D39841;
+  --background: #FEE8C7;
 }
 
 ion-item * {
-  color: #FBF2E5 !important;
+  color: #72480F !important;
 }
 
 ion-fab-button {
@@ -83,13 +83,21 @@ ion-fab-button {
   --ion-color-primary: #E5BD80;
 }
 
+ion-button { 
+  --ion-color-primary: #E5BD80;
+}
+
+ion-segment-button {
+  --ion-color-primary: #72480F;
+}
+
+ion-select {
+  min-width: 100%;
+}
+
 .button-center {
   display: flex;
   justify-content: space-around;
-}
-
-.validation-button {
-  --background: #e3a851;
 }
 
 .warning-card {
