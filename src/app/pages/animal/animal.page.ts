@@ -9,6 +9,7 @@ import { TypeService } from 'src/app/services/type/type.service';
 import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
     selector: 'app-animal',
@@ -33,6 +34,7 @@ export class AnimalPage implements OnInit {
         private typeService: TypeService,
         private animalService: AnimalService,
         private userService: UserService,
+        public alertController: AlertController
     ) {
     }
 
@@ -140,5 +142,32 @@ export class AnimalPage implements OnInit {
         }
         );
     }
-    
+
+/* En cours
+    async deleteAlertConfirm() {
+        const alert = await this.alertController.create({
+          header: 'Confirmation',
+          message: 'Etes-vous sûr de vouloir supprimer votre animal ?',
+          buttons: [
+            {
+              text: 'Non',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {
+                console.log('Confirm Cancel: blah');
+              }
+            }, {
+              text: 'Oui',
+              handler: () => {
+                this.deleteAnimal();
+              }
+            }
+          ]
+        });
+      
+        await alert.present();
+        let result = await alert.onDidDismiss();
+        console.log(result);
+    }
+*/
 }
