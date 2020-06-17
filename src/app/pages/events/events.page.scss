@@ -10,6 +10,16 @@ ion-icon {
 
 ion-item {
   --background: #FBF2E5;
-  color: #D39841;
+}
 
+ion-item * {
+  color: #D39841 !important;
+}
+
+ion-content * {
+  color: #D39841;
+}
+
+ion-fab-button * {
+  color: #72480F;
 }
