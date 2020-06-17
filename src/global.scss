@@ -28,13 +28,18 @@
 /*********************/
 /* Header and footer */
 /*********************/
+
 ion-header, ion-tab-bar {
   --ion-background-color: #E5BD80;
   --ion-border-color: none;
 }
 
 ion-tab-bar > ion-tab-button {
-  color: #FBF2E5;
+  color: #72480F;
+}
+
+ion-title {
+  color: #72480F;
 }
 
 /*********************/
@@ -44,10 +49,6 @@ ion-tab-bar > ion-tab-button {
 
 ion-toolbar {
   --ion-color-base: #E5BD80;
-}
-
-ion-item {
-  --background: #D39841;
 }
 
 ion-checkbox {
@@ -62,7 +63,19 @@ ion-checkbox {
 /*********************/
 
 ion-content {
-  --ion-background-color: #f6f6f6;
+  --ion-background-color: #FBF2E5;
+}
+
+ion-content * {
+  color: #72480F;
+}
+
+ion-item {
+  --background: #D39841;
+}
+
+ion-item * {
+  color: #FBF2E5 !important;
 }
 
 ion-fab-button {
@@ -89,7 +102,6 @@ ion-fab-button {
 }
 
 ion-list {
-  //border-radius: 25px;
   padding-bottom: 0 !important;
   padding-top: 0 !important;
   margin-bottom: 16px;
