@@ -12,54 +12,52 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="animal">
-    <ion-grid class="padding0">
-        <ion-row>
-            <ion-col class="banner">
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-list class="noRoundedBorder">
-        <!-- Animal name-->
-        <ion-item>
-            <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
-            {{ animal.name }}
-        </ion-item>
-        <!-- Animal birthday -->
-        <ion-item>
-            <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon>
-            {{ animal.birthday | date: 'dd/MM/yyyy' }}
-        </ion-item>
-        <!-- Animal species -->
-        <ion-item>
-            <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
-            {{ animal.type.name }}
-        </ion-item>
-        <!-- Animal breed -->
-        <ion-item>
-            <ion-icon mode="md" slot="start" name="paw"></ion-icon>
-            {{ animal.breed.name }}
-        </ion-item>
-        <!-- Animal genre -->
-        <ion-item>
-            <ion-icon mode="md" slot="start" name="male-female-outline"></ion-icon>
-            {{ animal.gender.name }}
-        </ion-item>
-        <!-- Animal nature -->
-        <ion-item>
-            <ion-icon mode="md" slot="start" name="happy-outline"></ion-icon>
-            <div *ngFor="let temper of animal.tempers">
-              {{ 'TEMPER.' + temper.name | translate }} ;
-            </div>
-        </ion-item>
-    </ion-list>
+<ion-content>
+    <div class="form-container" *ngIf="animal">
+        <ion-grid class="padding0">
+            <ion-row>
+                <ion-col class="banner">
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-list class="noRoundedBorder">
+            <ion-item>
+                <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
+                {{ animal.name }}
+            </ion-item>
 
-    <div class="button-center"  (click)="deleteAnimal()">
-      <ion-row>
-        <ion-col size="auto" class="join-event">
-            <ion-button>{{ 'ANIMAL.DELETE' | translate }}</ion-button>
-        </ion-col>
-    </ion-row>
+            <ion-item>
+                <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon>
+                {{ animal.birthday | date: 'dd/MM/yyyy' }}
+            </ion-item>
+
+            <ion-item>
+                <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
+                {{ animal.type.name }}
+            </ion-item>
+
+            <ion-item>
+                <ion-icon mode="md" slot="start" name="paw"></ion-icon>
+                {{ animal.breed.name }}
+            </ion-item>
+
+            <ion-item>
+                <ion-icon mode="md" slot="start" name="male-female-outline"></ion-icon>
+                {{ animal.gender.name }}
+            </ion-item>
+
+            <ion-item>
+                <ion-icon mode="md" slot="start" name="happy-outline"></ion-icon>
+                <div *ngFor="let temper of animal.tempers">
+                    {{ 'TEMPER.' + temper.name | translate }} ;
+                </div>
+            </ion-item>
+        </ion-list>
+
+        <div class="button-center">
+            <ion-button slot="end" class="validation-button" (click)="deleteAlert()">
+                {{ 'ANIMAL.DELETE' | translate }}
+            </ion-button>
+        </div>
     </div>
-   
 </ion-content>
