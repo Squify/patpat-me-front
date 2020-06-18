@@ -16,14 +16,11 @@
                     <ion-input type="text" [disabled]="true" value="{{animal.name}}">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
-                    <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
-                              class="ion-align-self-end error-message" (click)="presentToast('name')">
-                    </ion-icon>
                 </ion-item>
 
                 <ion-item>
                     <ion-label position="floating">{{ 'ANIMAL_EDIT.BIRTHDAY' | translate }}</ion-label>
-                    <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY"
+                    <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm"
                                   mode="md"
                                   placeholder="{{ 'ANIMAL_EDIT.SELECT_DATE' | translate }}">
                     </ion-datetime>
@@ -102,7 +99,7 @@
 
             <div class="button-center">
                 <ion-button slot="end" class="validation-button" (click)="submit()">
-                  {{ 'ANIMAL_EDIT.SUBMIT' | translate }}
+                    {{ 'ANIMAL_EDIT.SUBMIT' | translate }}
                 </ion-button>
             </div>
         </form>
