@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { EventService } from "../../services/event/event.service";
 import { UserService } from "../../services/user/user.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -17,6 +17,10 @@ import { GeolocationService } from "../../services/geolocation.service";
     styleUrls: ['./event-edit.page.scss'],
 })
 export class EventEditPage implements OnInit {
+    public data: string = null;
+
+    @ViewChild("input", null) input;
+    location: string = null;
 
     event: EventInterface;
     types: EventType[] = [];
@@ -46,6 +50,12 @@ export class EventEditPage implements OnInit {
         public translate: TranslateService,
         private geolocationService: GeolocationService
     ) {
+        this.geolocationService.myMethod$.subscribe((data) => {
+                this.data = data; // And he have data here too!
+                this.location = this.data;
+            }
+        );
+
         this.eventId = +this.activatedRoute.snapshot.paramMap.get('id');
         if (!this.eventId)
             this.router.navigateByUrl('/tabs/events');
@@ -74,12 +84,6 @@ export class EventEditPage implements OnInit {
                 ]
             }),
 
-            localisation: new FormControl({disabled: false}, {
-                validators: [
-                    Validators.required
-                ]
-            }),
-
             date: new FormControl({value: this.event.date, disabled: false}, {
                 validators: [
                     Validators.required
@@ -100,7 +104,7 @@ export class EventEditPage implements OnInit {
         this.eventEditInterface = {
             id: this.eventId,
             description: this.eventEditForm.value.description,
-            localisation: this.eventEditForm.value.localisation,
+            localisation: this.location,
             date: this.eventEditForm.value.date,
         };
 
@@ -133,7 +137,7 @@ export class EventEditPage implements OnInit {
         if (this.eventEditForm.controls.description.errors) {
             this.descriptionError = true;
         }
-        if (this.eventEditForm.controls.localisation.errors) {
+        if (this.location == null || this.location == '') {
             this.localisationError = true;
         }
         if (this.eventEditForm.controls.date.errors) {

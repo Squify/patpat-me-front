@@ -18,7 +18,7 @@
     "TITLE": "Inscription sur l'application"
   },
   "ANIMAL": {
-    "DELETE": "Supprimer l'animal",
+    "DELETE": "Retirer l'animal",
     "TITLE": "Mon animal"
   },
   "ANIMAL_CREATE": {
