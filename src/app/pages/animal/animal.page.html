@@ -36,9 +36,14 @@
                 {{ animal.type.name }}
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="animal.breed">
                 <ion-icon mode="md" slot="start" name="paw"></ion-icon>
                 {{ animal.breed.name }}
+            </ion-item>
+
+            <ion-item *ngIf="!animal.breed">
+                <ion-icon mode="md" slot="start" name="paw"></ion-icon>
+                {{ 'PROFILE.N/A' | translate }}
             </ion-item>
 
             <ion-item>
@@ -50,6 +55,9 @@
                 <ion-icon mode="md" slot="start" name="happy-outline"></ion-icon>
                 <div *ngFor="let temper of animal.tempers">
                     {{ 'TEMPER.' + temper.name | translate }} ;
+                </div>
+                <div *ngIf="animal.tempers.length == 0">
+                    {{ 'PROFILE.N/A' | translate }}
                 </div>
             </ion-item>
         </ion-list>
