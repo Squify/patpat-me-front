@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserGender } from '../../interfaces/user/user-gender';
 import { GenderService } from '../../services/gender/gender.service';
 import { ToastController } from '@ionic/angular';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { User } from '../../interfaces/user/user';
 import { Router } from '@angular/router';
 import { Credentials } from '../../interfaces/user/credentials';

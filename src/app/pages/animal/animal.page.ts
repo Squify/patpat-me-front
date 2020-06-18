@@ -10,7 +10,7 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
-import { EventsService } from "../../services/events.service";
+import { EventsService } from "../../services/eventsObs/events.service";
 
 @Component({
     selector: 'app-animal',

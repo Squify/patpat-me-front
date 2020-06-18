@@ -7,8 +7,8 @@ import { EventService } from '../../services/event/event.service';
 import { EventType } from '../../interfaces/event/event-type';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
-import { GeolocationService } from "../../services/geolocation.service";
-import { EventsService } from "../../services/events.service";
+import { GeolocationService } from "../../services/geolocation/geolocation.service";
+import { EventsService } from "../../services/eventsObs/events.service";
 
 @Component({
     selector: 'app-event-create',
@@ -36,6 +36,9 @@ export class EventCreatePage implements OnInit {
     dateError: boolean;
     typeError: boolean;
 
+    minDate: string;
+    maxDate: string;
+
     constructor(
         public toastController: ToastController,
         private eventService: EventService,
@@ -51,9 +54,27 @@ export class EventCreatePage implements OnInit {
         );
 
         this.buildForm();
+        this.getMinDate();
+        this.getMaxDate();
     }
 
     ngOnInit() {
+    }
+
+    getMinDate() {
+        const today = new Date();
+        if (today.getMonth()+1 < 10)
+            this.minDate = today.getFullYear()+'-'+0+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+'.'+today.getMilliseconds();
+        else
+            this.minDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+'.'+today.getMilliseconds();
+    }
+
+    getMaxDate() {
+        const today = new Date();
+        if (today.getMonth()+1 < 10)
+            this.maxDate =  (today.getFullYear() + 10)+'-'+0+(today.getMonth()+1)+'-'+today.getDate()+'T'+23+':'+59+':'+59;
+        else
+            this.maxDate = (today.getFullYear() + 10)+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+23+':'+59+':'+59;
     }
 
     buildForm(): void {

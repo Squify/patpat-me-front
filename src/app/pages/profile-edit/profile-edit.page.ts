@@ -9,6 +9,7 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AccountEdit } from "../../interfaces/user/account-edit";
+import { EventsService } from "../../services/eventsObs/events.service";
 
 @Component({
     selector: 'app-profile-edit',
@@ -39,7 +40,8 @@ export class ProfileEditPage implements OnInit {
         private userService: UserService,
         private genderService: GenderService,
         public toastController: ToastController,
-        private router: Router
+        private router: Router,
+        public events: EventsService,
     ) {
 
     }
@@ -123,9 +125,12 @@ export class ProfileEditPage implements OnInit {
         };
 
         this.userService.updateUser(this.accountEditInterface).subscribe(
-          _ => this.router.navigateByUrl('/tabs/profile'),
-          error => this.processError(error))
-          ;
+            _ => {
+                this.events.publishSomeData('updateProfile')
+                this.router.navigateByUrl('/tabs/profile')
+            },
+            error => this.processError(error))
+        ;
     }
 
     processError(error: HttpErrorResponse) {
