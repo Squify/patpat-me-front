@@ -94,8 +94,6 @@ export class AnimalEditPage implements OnInit {
 
         this.isTypeSelected = !!this.animal.type;
 
-        // if (this.animal.birthday) this.updateAnimalForm.value.birthday = this.animal.birthday
-
         this.updateAnimalForm = new FormGroup({
             birthday: new FormControl({value: this.animal.birthday ? this.animal.birthday : null, disabled: false}),
             fk_id_temper: new FormControl({value: this.animal.tempers.map(temper => temper.name), disabled: false}, {
