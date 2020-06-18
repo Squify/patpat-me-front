@@ -26,9 +26,13 @@
                 {{ animal.name }}
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="animal.birthday">
                 <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon>
                 {{ animal.birthday | date: 'dd/MM/yyyy' }}
+            </ion-item>
+            <ion-item *ngIf="!animal.birthday">
+                <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon>
+                {{ 'PROFILE.N/A' | translate }}
             </ion-item>
 
             <ion-item>

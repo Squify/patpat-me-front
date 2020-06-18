@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Animal } from "../../interfaces/animal/animal";
+import { EventsService } from "../../services/events.service";
 
 @Component({
     selector: 'app-profile',
@@ -24,14 +25,28 @@ export class ProfilePage implements OnInit, OnDestroy {
         private userService: UserService,
         private authService: AuthenticationService,
         private router: Router,
-        private ngZone: NgZone,
+        public events: EventsService,
     ) {
     }
 
     ngOnInit() {
-        this.ngZone.run(() => {
-            this.getUserDetail();
-            this.getUserAnimals();
+
+        this.getUserDetail();
+        this.getUserAnimals();
+        this.events.getObservable().subscribe((data) => {
+            switch (data) {
+                case 'createAnimal':
+                    this.getUserAnimals();
+                    break;
+                case 'updateAnimal':
+                    this.getUserAnimals();
+                    break;
+                case 'updateProfile':
+                    this.getUserDetail();
+                    break;
+                default:
+                    break;
+            }
         });
     }
 
@@ -40,10 +55,12 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     getUserDetail(): void {
-        this.ngZone.run(() => this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user));
+        this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
     }
 
     getUserAnimals(): void {
+
+        this.animals = [];
         this.userService.getUserAnimals().subscribe(animals => {
             animals.forEach(animal => {
                 this.animals.push(animal);
@@ -52,7 +69,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     segmentChanged(ev: any) {
-
         this.selectedSegment = ev.detail.value;
     }
 
@@ -75,42 +91,43 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     calculateAge(birthday) { // birthday is a date
 
-        const date = birthday.split("-", 2);
-        const dateMonth: number = date[1];
-        const dateYear: number = date[0];
+        if (birthday) {
+            const date = birthday.split("-", 2);
+            const dateMonth: number = date[1];
+            const dateYear: number = date[0];
 
-        const today = new Date().toLocaleString().split("/", 3);
-        const todayMonth: number = +today[1];
-        const todayYear: number = +today[2].split(" ", 1)[0];
+            const today = new Date().toLocaleString().split("/", 3);
+            const todayMonth: number = +today[1];
+            const todayYear: number = +today[2].split(" ", 1)[0];
 
-        var age = 0;
+            var age = 0;
 
-        if (todayYear > dateYear) {
-            if (todayMonth <= dateMonth) {
-                age = todayYear - dateYear;
-                if (age == 1) {
-                    return age + " an";
-                } else if (age > 1) {
+            if (todayYear > dateYear) {
+                if (todayMonth <= dateMonth) {
+                    age = todayYear - dateYear;
+                    if (age == 1) {
+                        return age + " an";
+                    } else if (age > 1) {
+                        return age + " ans";
+                    }
+                } else {
+                    age = todayYear - dateYear + 1;
                     return age + " ans";
                 }
-            } else {
-                age = todayYear - dateYear + 1;
-                return age + " ans";
-            }
-        }
-
-        else if (todayYear <= dateYear) {
-            if (todayMonth <= dateMonth) {
-                age = todayMonth - dateMonth;
-                if (age >= 1) {
+            } else if (todayYear <= dateYear) {
+                if (todayMonth <= dateMonth) {
+                    age = todayMonth - dateMonth;
+                    if (age >= 1) {
+                        return age + " mois";
+                    } else if (age == 0) {
+                        return "Quelques semaines";
+                    }
+                } else {
+                    age = todayMonth - dateMonth;
                     return age + " mois";
-                } else if (age == 0) {
-                    return "Quelques semaines";
                 }
-            } else {
-                age = todayMonth - dateMonth;
-                return age + " mois";
             }
         }
+        return "Non renseigné";
     }
 }

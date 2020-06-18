@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
+import { EventsService } from "../../services/events.service";
 
 @Component({
     selector: 'app-create-animal',
@@ -47,47 +48,46 @@ export class AnimalCreatePage implements OnInit {
         public toastController: ToastController,
         public translate: TranslateService,
         public router: Router,
+        public events: EventsService,
     ) {
-
-        this.buildForm();
     }
 
     ngOnInit() {
-    }
 
-    buildForm(): void {
-
+        this.buildForm();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
+    }
+
+    buildForm(): void {
+
         this.isTypeSelected = false;
 
         // Create account form
         this.createAnimalForm = new FormGroup({
-
             name: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             birthday: new FormControl(''),
-
-            fk_id_temper: new FormControl(''),
-
+            fk_id_temper: new FormControl('', {
+                validators: [
+                    Validators.required
+                ]
+            }),
             fk_id_gender: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             fk_id_type: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             fk_id_breed: new FormControl(''),
 
         });
@@ -193,7 +193,10 @@ export class AnimalCreatePage implements OnInit {
         };
 
         this.animalService.createAnimal(this.createAnimalInterface).subscribe(
-            _ => this.router.navigate(['tabs/profile']),
+            _ => {
+                this.events.publishSomeData('createAnimal')
+                this.router.navigate(['tabs/profile'])
+            },
             error => this.processError(error));
     }
 

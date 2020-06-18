@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
 import { AnimalType } from 'src/app/interfaces/animal/animal-type';
 import { GenderService } from 'src/app/services/gender/gender.service';
@@ -13,6 +13,7 @@ import { ToastController } from '@ionic/angular';
 import { Animal } from "../../interfaces/animal/animal";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "../../services/user/user.service";
+import { EventsService } from "../../services/events.service";
 
 @Component({
     selector: 'app-update-animal',
@@ -37,7 +38,6 @@ export class AnimalEditPage implements OnInit {
     unknownError: boolean;
     serverError: boolean;
     inputsError: boolean;
-    nameInputError: boolean;
     birthdayError: boolean;
     typeError: boolean;
     breedError: boolean;
@@ -52,6 +52,7 @@ export class AnimalEditPage implements OnInit {
         public router: Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
+        public events: EventsService,
     ) {
     }
 
@@ -61,11 +62,11 @@ export class AnimalEditPage implements OnInit {
         if (!this.animalId)
             this.router.navigateByUrl('/tabs/profile');
 
-        this.getAnimal();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
+        this.getAnimal();
     }
 
     getAnimal(): void {
@@ -91,16 +92,34 @@ export class AnimalEditPage implements OnInit {
 
     buildForm(): void {
 
-        this.isTypeSelected = false;
+        this.isTypeSelected = !!this.animal.type;
+
+        // if (this.animal.birthday) this.updateAnimalForm.value.birthday = this.animal.birthday
 
         this.updateAnimalForm = new FormGroup({
-
-            birthday: new FormControl({value: this.animal.birthday, disabled: false}),
-            fk_id_temper: new FormControl({value: this.animal.tempers.map(temper => temper.name), disabled: false}),
-            fk_id_gender: new FormControl({value: this.animal.gender.name, disabled: false}),
-            fk_id_type: new FormControl({value: this.animal.type.name, disabled: false}),
-            fk_id_breed: new FormControl({value: this.animal.breed.name, disabled: false}),
+            birthday: new FormControl({value: this.animal.birthday ? this.animal.birthday : null, disabled: false}),
+            fk_id_temper: new FormControl({value: this.animal.tempers.map(temper => temper.name), disabled: false}, {
+                validators: [
+                    Validators.required
+                ]
+            }),
+            fk_id_gender: new FormControl({value: this.animal.gender.name, disabled: false}, {
+                validators: [
+                    Validators.required
+                ]
+            }),
+            fk_id_type: new FormControl({value: this.animal.type.name, disabled: false}, {
+                validators: [
+                    Validators.required
+                ]
+            }),
+            fk_id_breed: new FormControl({value: this.animal.breed ? this.animal.breed.name : null, disabled: false}),
         });
+
+
+        if (this.isTypeSelected == true) {
+            this.typeChange();
+        }
     }
 
     typeChange(): void {
@@ -205,7 +224,10 @@ export class AnimalEditPage implements OnInit {
         };
 
         this.animalService.updateAnimal(this.updateAnimalInterface).subscribe(
-            _ => this.router.navigateByUrl('/tabs/profile/animal/' + this.animalId, {state: {comingFromEdition: true}}),
+            _ => {
+                this.events.publishSomeData('updateAnimal')
+                this.router.navigateByUrl('/tabs/profile/animal/' + this.animalId, {state: {comingFromEdition: true}})
+            },
             e => this.processError(e)
         );
     }

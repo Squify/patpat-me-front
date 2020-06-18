@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { EventEdit } from "../../interfaces/event/event-edit";
 import { HttpErrorResponse } from "@angular/common/http";
 import { GeolocationService } from "../../services/geolocation.service";
+import { EventsService } from "../../services/events.service";
 
 @Component({
     selector: 'app-event-edit',
@@ -48,7 +49,8 @@ export class EventEditPage implements OnInit {
         private activatedRoute: ActivatedRoute,
         public toastController: ToastController,
         public translate: TranslateService,
-        private geolocationService: GeolocationService
+        private geolocationService: GeolocationService,
+        public events: EventsService
     ) {
         this.geolocationService.myMethod$.subscribe((data) => {
                 this.data = data; // And he have data here too!
@@ -66,7 +68,6 @@ export class EventEditPage implements OnInit {
     }
 
     ngOnInit() {
-
     }
 
     buildForm(): void {
@@ -90,6 +91,7 @@ export class EventEditPage implements OnInit {
                 ]
             }),
         });
+        this.location = this.event.localisation;
     }
 
     submit(): void {
@@ -109,7 +111,10 @@ export class EventEditPage implements OnInit {
         };
 
         this.eventService.editEvent(this.eventEditInterface).subscribe(
-            _ => this.router.navigateByUrl('/tabs/events/event/' + this.eventId, {state: {comingFromEdition: true}}),
+            _ => {
+                this.events.publishSomeData('updateEvent')
+                this.router.navigateByUrl('/tabs/events/event/' + this.eventId, {state: {comingFromEdition: true}})
+            },
             error => this.processError(error))
         ;
     }

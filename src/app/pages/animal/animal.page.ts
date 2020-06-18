@@ -10,6 +10,7 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
+import { EventsService } from "../../services/events.service";
 
 @Component({
     selector: 'app-animal',
@@ -25,7 +26,7 @@ export class AnimalPage implements OnInit {
     breeds: Breed[] = [];
     breedsToDisplay: Breed[] = [];
     tempers: Temper[] = [];
-   
+
     constructor(
         public router: Router,
         private activatedRoute: ActivatedRoute,
@@ -34,7 +35,8 @@ export class AnimalPage implements OnInit {
         private typeService: TypeService,
         private animalService: AnimalService,
         private userService: UserService,
-        public alertController: AlertController
+        public alertController: AlertController,
+        public events: EventsService,
     ) {
     }
 
@@ -42,12 +44,22 @@ export class AnimalPage implements OnInit {
         this.animalId = +this.activatedRoute.snapshot.paramMap.get('id');
         if (!this.animalId)
             this.router.navigateByUrl('/tabs/profile');
-            
+
         this.getAnimal();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
+
+        this.events.getObservable().subscribe((data) => {
+            switch (data) {
+                case 'updateAnimal':
+                    this.getAnimal();
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     ionViewDidEnter() {
@@ -55,14 +67,14 @@ export class AnimalPage implements OnInit {
             //this.ngZone.run(() => this.getAnimal())
         }
     }
-    
+
     getAnimal(): void {
 
         this.animalService.getAnimalById(this.animalId).subscribe(
             value => {
                 this.animal = value;
                 if (!this.isOwner())
-                this.router.navigateByUrl('/tabs/events');
+                    this.router.navigateByUrl('/tabs/events');
             },
         );
     }
@@ -137,38 +149,34 @@ export class AnimalPage implements OnInit {
 
     deleteAnimal(): void {
         this.animalService.deleteAnimal(this.animalId).subscribe(
-            _=> {console.log("animal suprimer");
+            _ => {
                 this.router.navigateByUrl('/tabs/profile')
-        }
+            }
         );
     }
 
 
     async deleteAlert() {
         const alert = await this.alertController.create({
-          header: 'Confirmation',
-          message: 'Etes-vous sûr de vouloir supprimer votre animal ?',
-          buttons: [
-            {
-              text: 'Annuler',
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: (blah) => {
-                console.log('Annulation');
-              }
-            }, {
-              text: 'Confirmer',
-              handler: () => {
-                console.log('Suppression faite');
-                this.deleteAnimal();
-              }
-            }
-          ]
+            header: 'Confirmation',
+            message: 'Etes-vous sûr de vouloir retirer cet animal ?',
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Confirmer',
+                    handler: () => {
+                        this.events.publishSomeData('updateAnimal')
+                        this.deleteAnimal();
+                    }
+                }
+            ]
         });
-      
+
         await alert.present();
-        let result = await alert.onDidDismiss();
-        console.log(result);
+        await alert.onDidDismiss();
     }
 
 }
