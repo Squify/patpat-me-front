@@ -150,6 +150,7 @@ export class AnimalPage implements OnInit {
     deleteAnimal(): void {
         this.animalService.deleteAnimal(this.animalId).subscribe(
             _ => {
+                this.events.publishSomeData('updateAnimal')
                 this.router.navigateByUrl('/tabs/profile')
             }
         );
@@ -168,7 +169,6 @@ export class AnimalPage implements OnInit {
                 }, {
                     text: 'Confirmer',
                     handler: () => {
-                        this.events.publishSomeData('updateAnimal')
                         this.deleteAnimal();
                     }
                 }
