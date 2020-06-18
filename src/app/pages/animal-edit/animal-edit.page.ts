@@ -13,7 +13,7 @@ import { ToastController } from '@ionic/angular';
 import { Animal } from "../../interfaces/animal/animal";
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "../../services/user/user.service";
-import { EventsService } from "../../services/events.service";
+import { EventsService } from "../../services/eventsObs/events.service";
 
 @Component({
     selector: 'app-update-animal',

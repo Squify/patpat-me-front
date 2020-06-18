@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
-import { EventsService } from "../../services/events.service";
+import { EventsService } from "../../services/eventsObs/events.service";
 
 @Component({
     selector: 'app-create-animal',
