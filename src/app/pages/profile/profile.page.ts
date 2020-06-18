@@ -29,8 +29,10 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.getUserDetail();
-        this.getUserAnimals();
+        this.ngZone.run(() => {
+            this.getUserDetail();
+            this.getUserAnimals();
+        });
     }
 
     ngOnDestroy() {
