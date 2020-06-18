@@ -143,22 +143,23 @@ export class AnimalPage implements OnInit {
         );
     }
 
-/* En cours
-    async deleteAlertConfirm() {
+
+    async deleteAlert() {
         const alert = await this.alertController.create({
           header: 'Confirmation',
           message: 'Etes-vous sûr de vouloir supprimer votre animal ?',
           buttons: [
             {
-              text: 'Non',
+              text: 'Annuler',
               role: 'cancel',
               cssClass: 'secondary',
               handler: (blah) => {
-                console.log('Confirm Cancel: blah');
+                console.log('Annulation');
               }
             }, {
-              text: 'Oui',
+              text: 'Confirmer',
               handler: () => {
+                console.log('Suppression faite');
                 this.deleteAnimal();
               }
             }
@@ -169,5 +170,5 @@ export class AnimalPage implements OnInit {
         let result = await alert.onDidDismiss();
         console.log(result);
     }
-*/
+
 }
