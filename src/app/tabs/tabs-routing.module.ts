@@ -38,16 +38,16 @@ const routes: Routes = [
                     }
                 ]
             },
-            {
-                path: 'tab2',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () =>
-                            import('../pages/tab2/tab2.module').then(m => m.Tab2PageModule)
-                    }
-                ]
-            },
+            // {
+            //     path: 'tab2',
+            //     children: [
+            //         {
+            //             path: '',
+            //             loadChildren: () =>
+            //                 import('../pages/tab2/tab2.module').then(m => m.Tab2PageModule)
+            //         }
+            //     ]
+            // },
             {
                 path: 'profile',
                 children: [

@@ -5,4 +5,5 @@ export interface CreateAnimal {
     gender: string;
     breed: string;
     tempers: string[];
+    image_path: string;
 }

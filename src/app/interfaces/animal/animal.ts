@@ -13,4 +13,5 @@ export interface Animal {
     gender: AnimalGender;
     breed: Breed;
     tempers: Temper[];
+    image_path: string;
 }

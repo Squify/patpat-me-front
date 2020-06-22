@@ -19,7 +19,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     animals: Animal[] = [];
     subscriptionUser: Subscription;
     selectedSegment = 'informationSegment';
-    private img = '/assets/images/grumpy.jpg';
 
     constructor(
         private userService: UserService,
@@ -66,6 +65,7 @@ export class ProfilePage implements OnInit, OnDestroy {
                 this.animals.push(animal);
             })
         });
+        this.animals.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     segmentChanged(ev: any) {

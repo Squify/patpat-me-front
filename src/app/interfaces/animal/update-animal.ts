@@ -6,4 +6,5 @@ export interface UpdateAnimal {
     gender: string;
     breed: string;
     tempers: string[];
+    image_path: string;
 }

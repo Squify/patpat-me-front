@@ -4,3 +4,17 @@
     height: 150px;
     padding: 0px;
 }
+
+.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ion-avatar {
+    background-color: #FEE8C7;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    width: 100px;
+    height: 100px;
+}

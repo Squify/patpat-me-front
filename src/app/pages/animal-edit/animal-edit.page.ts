@@ -9,11 +9,11 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { Temper } from 'src/app/interfaces/animal/temper';
 import { Breed } from 'src/app/interfaces/animal/breed';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
-import { Animal } from "../../interfaces/animal/animal";
-import { ActivatedRoute, Router } from "@angular/router";
-import { UserService } from "../../services/user/user.service";
-import { EventsService } from "../../services/eventsObs/events.service";
+import { Platform, ToastController } from '@ionic/angular';
+import { Animal } from '../../interfaces/animal/animal';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
+import { EventsService } from '../../services/eventsObs/events.service';
 
 @Component({
     selector: 'app-update-animal',
@@ -44,6 +44,10 @@ export class AnimalEditPage implements OnInit {
     temperError: boolean;
     genderError: boolean;
 
+    dogPicPaths: string[] = [];
+    catPicPaths: string[] = [];
+    selectedPic: string;
+
     constructor(
         private genderService: GenderService,
         private typeService: TypeService,
@@ -53,6 +57,7 @@ export class AnimalEditPage implements OnInit {
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
         public events: EventsService,
+        public platform: Platform
     ) {
     }
 
@@ -67,6 +72,24 @@ export class AnimalEditPage implements OnInit {
         this.getTemper();
         this.getBreed();
         this.getAnimal();
+    }
+
+    loadCatPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.catPicPaths.push('/assets/images/cat_pic/cat_' + i + '.png')
+        }
+    }
+
+    loadDogPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.dogPicPaths.push('/assets/images/dog_pic/dog_' + i + '.png')
+        }
+    }
+
+    getPicPath(path): void {
+        this.selectedPic = path;
     }
 
     getAnimal(): void {
@@ -92,6 +115,9 @@ export class AnimalEditPage implements OnInit {
 
     buildForm(): void {
 
+        this.selectedPic = this.animal.image_path;
+        this.loadCatPics();
+        this.loadDogPics();
         this.isTypeSelected = !!this.animal.type;
 
         this.updateAnimalForm = new FormGroup({
@@ -122,6 +148,11 @@ export class AnimalEditPage implements OnInit {
 
     typeChange(): void {
         this.isTypeSelected = true;
+
+        if (this.updateAnimalForm.value.fk_id_type == 'Chien')
+            this.loadDogPics();
+        if (this.updateAnimalForm.value.fk_id_type == 'Chat')
+            this.loadCatPics();
 
         this.types.forEach((type) => {
             if (type.name === this.updateAnimalForm.value.fk_id_type) {
@@ -219,6 +250,7 @@ export class AnimalEditPage implements OnInit {
             gender: this.updateAnimalForm.value.fk_id_gender,
             type: this.updateAnimalForm.value.fk_id_type,
             breed: this.updateAnimalForm.value.fk_id_breed,
+            image_path: this.setPicture()
         };
 
         this.animalService.updateAnimal(this.updateAnimalInterface).subscribe(
@@ -228,6 +260,19 @@ export class AnimalEditPage implements OnInit {
             },
             e => this.processError(e)
         );
+    }
+
+    setPicture(): string {
+        if (!this.selectedPic) {
+            if (this.updateAnimalForm.value.fk_id_type == 'Chat') {
+                return '/assets/images/cat_pic/cat_1.png'
+            }
+            else if (this.updateAnimalForm.value.fk_id_type == 'Chat') {
+                return '/assets/images/dog_pic/dog_6.png'
+            }
+        }
+        else
+            return this.selectedPic;
     }
 
     formIsValid(): boolean {
