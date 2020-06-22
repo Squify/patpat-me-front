@@ -14,12 +14,12 @@
 
 <ion-content>
     <div class="form-container" *ngIf="animal">
-        <ion-grid class="padding0">
-            <ion-row>
-                <ion-col class="banner">
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <div class="flex-column-center">
+            <ion-avatar slot="center">
+                <img src="{{ animal.image_path }}">
+            </ion-avatar>
+        </div>
+
         <ion-list class="noRoundedBorder">
             <ion-item>
                 <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>

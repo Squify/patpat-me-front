@@ -26,7 +26,6 @@ export class EventPage implements OnInit {
     userIsOwnerError: boolean;
 
     selectedSegment = 'informationSegment';
-    defaultProfilePic = '/assets/images/grumpy.jpg';
 
     constructor(
         private eventService: EventService,

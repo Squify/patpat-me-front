@@ -9,7 +9,7 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { Temper } from 'src/app/interfaces/animal/temper';
 import { Breed } from 'src/app/interfaces/animal/breed';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
 import { EventsService } from "../../services/eventsObs/events.service";
@@ -41,6 +41,10 @@ export class AnimalCreatePage implements OnInit {
     temperError: boolean;
     genderError: boolean;
 
+    dogPicPaths: string[] = [];
+    catPicPaths: string[] = [];
+    selectedPic: string;
+
     constructor(
         private genderService: GenderService,
         private typeService: TypeService,
@@ -49,6 +53,7 @@ export class AnimalCreatePage implements OnInit {
         public translate: TranslateService,
         public router: Router,
         public events: EventsService,
+        public platform: Platform
     ) {
     }
 
@@ -61,8 +66,30 @@ export class AnimalCreatePage implements OnInit {
         this.getBreed();
     }
 
+    loadCatPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.catPicPaths.push('/assets/images/cat_pic/cat_' + i + '.png')
+        }
+        this.catPicPaths.push('/assets/images/animal_default.png')
+    }
+
+    loadDogPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.dogPicPaths.push('/assets/images/dog_pic/dog_' + i + '.png')
+        }
+        this.dogPicPaths.push('/assets/images/animal_default.png')
+    }
+
+    getPicPath(path): void {
+        this.selectedPic = path;
+    }
+
     buildForm(): void {
 
+        this.loadCatPics();
+        this.loadDogPics();
         this.isTypeSelected = false;
 
         // Create account form
@@ -95,6 +122,11 @@ export class AnimalCreatePage implements OnInit {
 
     typeChange(): void {
         this.isTypeSelected = true;
+
+        if (this.createAnimalForm.value.fk_id_type == 'Chien')
+            this.loadDogPics();
+        if (this.createAnimalForm.value.fk_id_type == 'Chat')
+            this.loadCatPics();
 
         this.types.forEach((type) => {
             if (type.name === this.createAnimalForm.value.fk_id_type) {
@@ -190,6 +222,7 @@ export class AnimalCreatePage implements OnInit {
             gender: this.createAnimalForm.value.fk_id_gender,
             type: this.createAnimalForm.value.fk_id_type,
             breed: this.createAnimalForm.value.fk_id_breed,
+            image_path: this.selectedPic
         };
 
         this.animalService.createAnimal(this.createAnimalInterface).subscribe(
