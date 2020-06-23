@@ -67,12 +67,12 @@
                   </p>
               </ion-list>
               <ion-list class="parts-list" *ngIf="animals.length > 0">
-                  <ion-item *ngFor="let animal of animals" class="part-card" [routerLink]="'animal/'+ animal.id">
+                  <ion-item *ngFor="let animal of animals" class="part-card"> <!--  [routerLink]="'animal/'+ animal.id" -->
                       <ion-thumbnail class="part-avatar">
                           <ion-img [src]="animal.image_path"></ion-img>
                       </ion-thumbnail>
                       <ion-col>
-                          {{ animal.name }}<br>
+                          {{ animal.name }}, {{ animal.type.name }}, {{ animal.breed.name }}<br> <!-- ajouter type et race -->
                           {{ calculateAge(animal.birthday) }}
                       </ion-col>
                   </ion-item>

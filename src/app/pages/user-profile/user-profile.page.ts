@@ -7,6 +7,10 @@ import { UserService } from 'src/app/services/user/user.service';
 import { Subscription } from 'rxjs';
 import { Animal } from 'src/app/interfaces/animal/animal';
 import { User } from 'src/app/interfaces/user/user';
+import { AnimalService } from 'src/app/services/animal/animal.service';
+import { TypeService } from 'src/app/services/type/type.service';
+import { AnimalType } from 'src/app/interfaces/animal/animal-type';
+import { Breed } from 'src/app/interfaces/animal/breed';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,6 +21,8 @@ export class UserProfilePage implements OnInit {
 
     user: User;
     animals: Animal[] = [];
+    types: AnimalType[] = [];
+    breeds: Breed[] = [];
     subscriptionUser: Subscription;
     selectedSegment = 'informationSegment';
 
@@ -25,6 +31,8 @@ export class UserProfilePage implements OnInit {
         private authService: AuthenticationService,
         private router: Router,
         public events: EventsService,
+        private animalService: AnimalService,
+        private typeService: TypeService,
     ) {
     }
 
@@ -32,6 +40,8 @@ export class UserProfilePage implements OnInit {
 
         this.getUserDetail();
         this.getUserAnimals();
+        this.getTypes();
+        this.getBreed();
         this.events.getObservable().subscribe((data) => {
             switch (data) {
                 case 'createAnimal':
@@ -116,5 +126,35 @@ export class UserProfilePage implements OnInit {
             }
         }
         return "Non renseigné";
+    }
+
+    getTypes(): void {
+        this.typeService.getAnimalType().subscribe(
+            val => {
+                val.forEach((type) => {
+                        const typeToAdd: AnimalType = {
+                            id: type.id,
+                            name: type.name
+                        };
+                        this.types.push(typeToAdd);
+                    }
+                );
+            }
+        );
+    }
+
+    getBreed(): void {
+        this.animalService.getAnimalBreed().subscribe(
+            val => {
+                val.forEach((breed) => {
+                        const breedToAdd: Breed = {
+                            name: breed.name,
+                            type: breed.type
+                        };
+                        this.breeds.push(breedToAdd);
+                    }
+                );
+            }
+        );
     }
 }
