@@ -38,16 +38,16 @@ const routes: Routes = [
                     }
                 ]
             },
-            // {
-            //     path: 'tab2',
-            //     children: [
-            //         {
-            //             path: '',
-            //             loadChildren: () =>
-            //                 import('../pages/tab2/tab2.module').then(m => m.Tab2PageModule)
-            //         }
-            //     ]
-            // },
+            {
+                path: 'rencontre',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () =>
+                            import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+                    },
+                ]
+            },
             {
                 path: 'profile',
                 children: [
@@ -70,7 +70,7 @@ const routes: Routes = [
                             {
                                 path: '',
                                 loadChildren: () =>
-                                    import('../pages/animal/animal.module').then( m => m.AnimalPageModule)
+                                    import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
                             },
                             {
                                 path: 'edit-animal',
