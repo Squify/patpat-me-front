@@ -4,23 +4,11 @@
           <ion-back-button></ion-back-button>
       </ion-buttons>
       <ion-title>{{ 'USER-PROFILE.TITLE' | translate }}</ion-title>
-      <ion-buttons slot="end">
-          <ion-button fill="clear" [routerLink]="'edit-profile'">
-              <ion-icon name="pencil-outline" slot="end"></ion-icon>
-          </ion-button>
-      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge *ngIf="this.selectedSegment == 'animalSegment'">
-      <ion-fab-button [routerLink]="'create-animal'">
-          <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-  </ion-fab>
-
-  <div class="userContainer" *ngIf="user">
-
+    <div class="userContainer" *ngIf="user">
       <div class="flex-column-center">
           <h3 class="remove-margin flex-column-center" style="margin-top: 15px;">
               <ion-avatar>
