@@ -146,6 +146,15 @@
     "SUBMIT": "Valider le formulaire",
     "TITLE": "Modification du profil"
   },
+  "USER-PROFILE": {
+    "ANIMALS": "Animaux",
+    "ANY_ANIMAL": "L'utilisateur n'avez pas encore ajouté d'animal",
+    "ANY_INFORMATIONS": "Aucune information a afficher.",
+    "INFORMATIONS": "Informations",
+    "N/A": "Non renseigné",
+    "PSEUDO": "Pseudo",
+    "TITLE": "Profil d'un utilisateur"
+  },
   "TABBAR": {
     "EVENTS": "Événements",
     "MEET": "Rencontres",
