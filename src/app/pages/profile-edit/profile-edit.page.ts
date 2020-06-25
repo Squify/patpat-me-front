@@ -117,9 +117,9 @@ export class ProfileEditPage implements OnInit {
                 ]
             }),
 
-            // push_notification: new FormControl({value: this.user.push_notification, disabled: false}),
+            display_email: new FormControl({value: this.user.display_email, disabled: false}),
 
-            // active_localisation: new FormControl({value: this.user.active_localisation, disabled: false}),
+            display_phone: new FormControl({value: this.user.display_phone, disabled: false}),
 
             display_real_name: new FormControl({value: this.user.display_real_name, disabled: false}),
 
@@ -149,8 +149,8 @@ export class ProfileEditPage implements OnInit {
             password: this.editPersonForm.value.password,
             profile_pic_path: this.selectedPic,
             phone: this.editPersonForm.value.phone,
-            push_notification: false,
-            active_localisation: false,
+            display_email: this.editPersonForm.value.display_email,
+            display_phone: this.editPersonForm.value.display_phone,
             display_real_name: this.editPersonForm.value.display_real_name,
             gender: this.editPersonForm.value.fk_id_gender,
         };

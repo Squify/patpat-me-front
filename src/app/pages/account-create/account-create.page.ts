@@ -112,9 +112,9 @@ export class AccountCreatePage implements OnInit {
 
             birthday: new FormControl(''),
 
-            // push_notification: new FormControl(false),
+            display_email: new FormControl(false),
 
-            // active_localisation: new FormControl(false),
+            display_phone: new FormControl(false),
 
             display_real_name: new FormControl(false),
 
@@ -166,8 +166,8 @@ export class AccountCreatePage implements OnInit {
             lastname: this.createPersonForm.value.lastname,
             phone: this.createPersonForm.value.phone,
             birthday: this.createPersonForm.value.birthday,
-            push_notification: false,
-            active_localisation: false,
+            display_email: this.createPersonForm.value.display_email,
+            display_phone: this.createPersonForm.value.display_phone,
             display_real_name: this.createPersonForm.value.display_real_name,
             gender: this.createPersonForm.value.fk_id_gender,
         };
