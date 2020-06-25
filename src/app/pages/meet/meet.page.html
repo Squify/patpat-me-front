@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{ 'MEET.TITLE' | translate }}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngIf="users.length > 0">
+        <ion-item *ngFor="let user of users">
+            <ion-col>
+                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length <= 1">
+                    {{ 'MEET.ONE_EVENT' | translate }} :
+                    <ul class="remove-margin" *ngFor="let event of user.events">
+                        <li><b>{{ event }}</b></li>
+                    </ul>
+                </ion-row>
+                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length > 1">
+                    {{ 'MEET.MULTI_EVENT_EVENT' | translate }} :
+                    <ul class="remove-margin" *ngFor="let event of user.events">
+                        <li><b>{{ event }}</b></li>
+                    </ul>
+                </ion-row>
+
+                <ion-row class="align-center">
+                    <ion-col size="11" class="flex-row align-center">
+                        <ion-avatar>
+                            <img src="{{ user.user.profile_pic_path }}">
+                        </ion-avatar>
+                        <div class="flex-column align-start">
+                            {{ user.user.pseudo }}
+                            <div>
+                                <ion-icon class="information-icon" mode="md" name="male-female-outline"></ion-icon>
+                                {{ user.user.gender.name }}
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col size="1">
+                        <ion-icon size="large" name="heart-circle-outline"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-item>
+    </ion-list>
+</ion-content>

@@ -190,5 +190,10 @@
     "SUSCEPTIBLE": "Susceptible",
     "SUSPICIOUS": "Méfiant",
     "TALKATIVE": "Bavard"
+  },
+  "MEET": {
+    "TITLE": "Rencontres",
+    "MULTI_EVENT_EVENT": "Rencontré lors des événements",
+    "ONE_EVENT": "Rencontré lors de l'événement"
   }
 }
