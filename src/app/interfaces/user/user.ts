@@ -13,4 +13,5 @@ export interface User {
     display_phone: boolean;
     display_real_name: boolean;
     gender: UserGender;
+    friends: User[];
 }
