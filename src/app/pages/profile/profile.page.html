@@ -51,6 +51,18 @@
                       style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
                 <ion-list>
                     <ion-item>
+                        <ion-icon class="information-icon" mode="md" name="man-outline"></ion-icon>
+                        <ion-label>
+                            Vos amis peuvent voir les informations suivantes :
+                            <ul>
+                                <li *ngIf="user.display_real_name">Votre nom et prénom</li>
+                                <li *ngIf="user.display_email">Votre adresse e-mail</li>
+                                <li *ngIf="user.display_phone">Votre Numéro de téléphone</li>
+                            </ul>
+                        </ion-label>
+                    </ion-item>
+
+                    <ion-item>
                         <ion-icon class="information-icon" mode="md" name="at"></ion-icon>
                         <ion-label>{{ user.email | lowercase }} </ion-label>
                     </ion-item>
@@ -73,22 +85,6 @@
                         <ion-label *ngIf="user.gender">{{ user.gender.name }}</ion-label>
                         <ion-label *ngIf="!user.gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
-
-                    <!--                    <ion-item>-->
-                    <!--                        <ion-icon class="information-icon" mode="md" name="notifications"></ion-icon>-->
-                    <!--                        <ion-label>{{ 'PROFILE.NOTIFICATIONS' | translate }}-->
-                    <!--                            <p>{{ user.push_notification ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}-->
-                    <!--                            </p>-->
-                    <!--                        </ion-label>-->
-                    <!--                    </ion-item>-->
-
-                    <!--                    <ion-item>-->
-                    <!--                        <ion-icon class="information-icon" mode="md" name="location-outline"></ion-icon>-->
-                    <!--                        <ion-label>{{ 'PROFILE.GEOLOCATION' | translate }}-->
-                    <!--                            <p>{{ user.active_localisation ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}-->
-                    <!--                            </p>-->
-                    <!--                        </ion-label>-->
-                    <!--                    </ion-item>-->
                 </ion-list>
             </ion-card>
 

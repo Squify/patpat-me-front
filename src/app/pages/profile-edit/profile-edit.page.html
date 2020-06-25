@@ -94,25 +94,23 @@
             <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">
             </ion-icon>
           </ion-item>
-
         </ion-list>
 
         <ion-col class="checkbox-part">
-<!--          <ion-row>-->
-<!--            <ion-checkbox formControlName="push_notification" [checked]="user.push_notification"></ion-checkbox>-->
-<!--            <ion-label>{{ 'PROFILE_EDIT.PUSH' | translate }}</ion-label>-->
-<!--          </ion-row>-->
-
-<!--          <ion-row>-->
-<!--            <ion-checkbox formControlName="active_localisation" [checked]="user.active_localisation"></ion-checkbox>-->
-<!--            <ion-label>{{ 'PROFILE_EDIT.GEOLOC' | translate }}</ion-label>-->
-<!--          </ion-row>-->
-
           <ion-row>
             <ion-checkbox formControlName="display_real_name" [checked]="user.display_real_name"></ion-checkbox>
             <ion-label>{{ 'PROFILE_EDIT.DISPLAY_NAME' | translate }}</ion-label>
           </ion-row>
 
+          <ion-row>
+            <ion-checkbox formControlName="display_email" [checked]="user.display_email"></ion-checkbox>
+            <ion-label>{{ 'PROFILE_EDIT.DISPLAY_MAIL' | translate }}</ion-label>
+          </ion-row>
+
+          <ion-row>
+            <ion-checkbox formControlName="display_phone" [checked]="user.display_phone"></ion-checkbox>
+            <ion-label>{{ 'PROFILE_EDIT.DISPLAY_PHONE' | translate }}</ion-label>
+          </ion-row>
         </ion-col>
       </form>
     </ion-row>
