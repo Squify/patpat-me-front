@@ -64,9 +64,9 @@ export class EventCreatePage implements OnInit {
     getMinDate() {
         const today = new Date();
         if (today.getMonth()+1 < 10)
-            this.minDate = today.getFullYear()+'-'+0+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+'.'+today.getMilliseconds();
+            this.minDate = today.getFullYear() + '-' + 0 + (today.getMonth()+1) + '-' + (today.getDate() + 1) + 'T00:00:00+02:00';
         else
-            this.minDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+'.'+today.getMilliseconds();
+            this.minDate = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + (today.getDate() + 1) + 'T00:00:00+02:00';
     }
 
     getMaxDate() {
