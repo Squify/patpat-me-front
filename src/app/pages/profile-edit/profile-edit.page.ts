@@ -39,6 +39,9 @@ export class ProfileEditPage implements OnInit {
     passwordSecurityError: boolean;
     phoneInputError: boolean;
 
+    passwordIcon = 'eye-outline';
+    passwordInputType= 'password';
+
     constructor(
         private userService: UserService,
         private genderService: GenderService,
@@ -53,6 +56,17 @@ export class ProfileEditPage implements OnInit {
         this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
         this.getGenders();
         this.buildForm();
+    }
+
+    changePasswordView(): void {
+        if (this.passwordInputType === 'password') {
+            this.passwordInputType = 'input';
+            this.passwordIcon = 'eye-off-outline';
+        }
+        else if (this.passwordInputType === 'input') {
+            this.passwordInputType = 'password';
+            this.passwordIcon = 'eye-outline';
+        }
     }
 
     loadProfilePics(): void {

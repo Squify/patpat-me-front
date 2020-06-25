@@ -30,12 +30,14 @@
 
           <ion-item mode="md">
             <ion-label position="floating">{{ 'PROFILE_EDIT.PASSWORD' | translate }}</ion-label>
-            <ion-input [type]="'password'" formControlName="password" maxlength="32">
+            <ion-input [type]="passwordInputType" formControlName="password" maxlength="32">
             </ion-input>
             <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
             <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
               name="alert-circle-outline" class="ion-align-self-end error-message" (click)="presentToast('password')">
             </ion-icon>
+            <ion-icon (click)="changePasswordView()" mode="md" slot="end"
+                      name="{{ passwordIcon }}" class="ion-align-self-end"></ion-icon>
           </ion-item>
 
           <ion-item mode="md">

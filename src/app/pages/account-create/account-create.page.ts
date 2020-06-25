@@ -37,6 +37,9 @@ export class AccountCreatePage implements OnInit {
     firstnameInputError: boolean;
     phoneInputError: boolean;
 
+    passwordIcon = 'eye-outline';
+    passwordInputType= 'password';
+
     constructor(
         private userService: UserService,
         private genderService: GenderService,
@@ -51,6 +54,17 @@ export class AccountCreatePage implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    changePasswordView(): void {
+        if (this.passwordInputType === 'password') {
+            this.passwordInputType = 'input';
+            this.passwordIcon = 'eye-off-outline';
+        }
+        else if (this.passwordInputType === 'input') {
+            this.passwordInputType = 'password';
+            this.passwordIcon = 'eye-outline';
+        }
     }
 
     buildForm(): void {
@@ -137,7 +151,6 @@ export class AccountCreatePage implements OnInit {
     submit(): void {
         if (this.formIsValid()) {
             this.createAccount();
-            this.connectUser();
         } else {
             this.presentToast('general');
         }
@@ -148,7 +161,7 @@ export class AccountCreatePage implements OnInit {
             email: this.createPersonForm.value.email,
             password: this.createPersonForm.value.password,
             pseudo: this.createPersonForm.value.pseudo,
-            profile_pic_path: null,
+            profile_pic_path: '/assets/images/profile_pic/profile_default.png',
             firstname: this.createPersonForm.value.firstname,
             lastname: this.createPersonForm.value.lastname,
             phone: this.createPersonForm.value.phone,
