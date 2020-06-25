@@ -47,17 +47,16 @@
 
 
         <div [ngSwitch]="selectedSegment">
-            <ion-card *ngSwitchCase="'informationSegment'"
-                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+            <ion-card *ngSwitchCase="'informationSegment'" class="switch-case">
                 <ion-list>
                     <ion-item>
                         <ion-icon class="information-icon" mode="md" name="man-outline"></ion-icon>
                         <ion-label>
-                            Vos amis peuvent voir les informations suivantes :
+                            {{ 'PROFILE.FRIENDS_VIEW' | translate }} :
                             <ul>
-                                <li *ngIf="user.display_real_name">Votre nom et prénom</li>
-                                <li *ngIf="user.display_email">Votre adresse e-mail</li>
-                                <li *ngIf="user.display_phone">Votre Numéro de téléphone</li>
+                                <li *ngIf="user.display_real_name">{{ 'PROFILE.DISPLAY_NAME' | translate }}</li>
+                                <li *ngIf="user.display_email">{{ 'PROFILE.DISPLAY_EMAIL' | translate }}</li>
+                                <li *ngIf="user.display_phone">{{ 'PROFILE.DISPLAY_PHONE' | translate }}</li>
                             </ul>
                         </ion-label>
                     </ion-item>
@@ -75,7 +74,7 @@
 
                     <ion-item>
                         <ion-icon class="information-icon" mode="md" name="gift"></ion-icon>
-                        <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy à HH:mm' }}</ion-label>
+                        <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy' }}</ion-label>
                         <ion-label *ngIf="!user.birthday">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
@@ -88,8 +87,7 @@
                 </ion-list>
             </ion-card>
 
-            <ion-card *ngSwitchCase="'animalSegment'"
-                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+            <ion-card *ngSwitchCase="'animalSegment'" class="switch-case">
                 <ion-list *ngIf="animals.length == 0">
                     <p style="margin: 16px">
                         {{ 'PROFILE.ANY_ANIMAL' | translate }}
