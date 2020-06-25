@@ -85,7 +85,6 @@ export class EventEditPage implements OnInit {
             this.maxDate = (today.getFullYear() + 10) + '-' + 0 + (today.getMonth() + 1) + '-' + today.getDate() + 'T' + 23 + ':' + 59 + ':' + 59;
         else
             this.maxDate = (today.getFullYear() + 10) + '-' + (today.getMonth() + 1) + '-' + today.getDate() + 'T' + 23 + ':' + 59 + ':' + 59;
-        console.log(this.maxDate)
     }
 
     buildForm(): void {
@@ -116,13 +115,16 @@ export class EventEditPage implements OnInit {
 
     submit(): void {
         if (this.formIsValid()) {
-            this.createEvent();
+            this.editEvent();
         } else {
             this.presentToast('general');
         }
     }
 
-    createEvent(): void {
+    editEvent(): void {
+
+        this.eventEditForm.value.date = this.eventEditForm.value.date.replace("+0000", "+02:00");
+
         this.eventEditInterface = {
             id: this.eventId,
             description: this.eventEditForm.value.description,

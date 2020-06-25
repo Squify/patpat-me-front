@@ -242,6 +242,9 @@ export class AnimalEditPage implements OnInit {
     }
 
     updateAnimal(): void {
+
+        this.updateAnimalForm.value.birthday = this.updateAnimalForm.value.birthday.replace("+0000", "+02:00");
+
         this.updateAnimalInterface = {
             id: this.animal.id,
             owner: this.animal.owner.id,
