@@ -3,8 +3,8 @@
     "ALREADY_ACCOUNT": "Déjà un compte ? ",
     "BIRTHDAY": "Date d'anniversaire",
     "CONNEXION": "Connectez-vous !",
-    "DISPLAY_NAME": "Afficher le nom réel",
     "DISPLAY_MAIL": "Afficher l'adresse e-mail",
+    "DISPLAY_NAME": "Afficher le nom réel",
     "DISPLAY_PHONE": "Afficher le numéro de téléphone",
     "EMAIL": "Adresse e-mail",
     "FIRSTNAME": "Prénom",
@@ -88,10 +88,10 @@
     "INFO": "Information",
     "LOCATION": "Localisation",
     "MAPS": "Voir dans maps",
+    "OWNER_MESSAGE": "Cet utilisateur à créé l'événement",
     "PARTICIPANTS": "Participants",
     "TITLE": "Événement",
-    "TYPE": "Type/Mots clés",
-    "OWNER_MESSAGE": "Cet utilisateur à créé l'événement"
+    "TYPE": "Type/Mots clés"
   },
   "EVENT_CREATE": {
     "DATE": "Date",
@@ -116,6 +116,11 @@
     "MORE_DETAILS": "Plus de détails",
     "TITLE": "Événements"
   },
+  "MEET": {
+    "MULTI_EVENT_EVENT": "Rencontré lors des événements",
+    "ONE_EVENT": "Rencontré lors de l'événement",
+    "TITLE": "Rencontres"
+  },
   "PROFILE": {
     "ACTIVATED": "Activé",
     "ADD_ANIMAL": "Ajouter un animal",
@@ -123,17 +128,19 @@
     "ANY_ANIMAL": "Vous n'avez pas encore ajouté d'animal, cliquez sur le bouton en bas de page pour en ajouter un.",
     "ANY_INFORMATIONS": "Aucune information a afficher.",
     "DEACTIVATED": "Désactivé",
-    "GEOLOCATION": "Partage de géolocalisation",
+    "DISPLAY_EMAIL": "Votre adresse e-mail",
+    "DISPLAY_NAME": "Votre nom et prénom",
+    "DISPLAY_PHONE": "Votre numéro de téléphone",
+    "FRIENDS_VIEW": "Vos amis peuvent voir les informations suivantes",
     "INFORMATIONS": "Informations",
     "LOGOUT": "Déconnexion",
     "N/A": "Non renseigné",
-    "NOTIFICATIONS": "Envoi de notifications",
     "TITLE": "Profil"
   },
   "PROFILE_EDIT": {
     "BIRTHDAY": "Date d'anniversaire",
-    "DISPLAY_NAME": "Afficher le nom réel",
     "DISPLAY_MAIL": "Afficher l'adresse e-mail",
+    "DISPLAY_NAME": "Afficher le nom réel",
     "DISPLAY_PHONE": "Afficher le numéro de téléphone",
     "EMAIL": "Adresse e-mail",
     "FIRSTNAME": "Prénom",
@@ -190,10 +197,5 @@
     "SUSCEPTIBLE": "Susceptible",
     "SUSPICIOUS": "Méfiant",
     "TALKATIVE": "Bavard"
-  },
-  "MEET": {
-    "TITLE": "Rencontres",
-    "MULTI_EVENT_EVENT": "Rencontré lors des événements",
-    "ONE_EVENT": "Rencontré lors de l'événement"
   }
 }

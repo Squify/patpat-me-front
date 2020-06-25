@@ -117,6 +117,8 @@ export class ProfileEditPage implements OnInit {
                 ]
             }),
 
+            birthday: new FormControl({value: this.user.birthday, disabled: !!this.user.birthday}),
+
             display_email: new FormControl({value: this.user.display_email, disabled: false}),
 
             display_phone: new FormControl({value: this.user.display_phone, disabled: false}),
@@ -149,6 +151,7 @@ export class ProfileEditPage implements OnInit {
             password: this.editPersonForm.value.password,
             profile_pic_path: this.selectedPic,
             phone: this.editPersonForm.value.phone,
+            birthday: this.editPersonForm.value.birthday,
             display_email: this.editPersonForm.value.display_email,
             display_phone: this.editPersonForm.value.display_phone,
             display_real_name: this.editPersonForm.value.display_real_name,

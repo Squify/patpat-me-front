@@ -88,7 +88,7 @@
 
           <ion-item>
             <ion-label position="floating">{{ 'PROFILE_EDIT.BIRTHDAY' | translate }}</ion-label>
-            <ion-datetime [disabled]="true" [value]="user.birthday" display-format="DD MMMM YYYY"
+            <ion-datetime formControlName="birthday" [value]="user.birthday" display-format="DD MMMM YYYY"
               pickerFormat="DD MMMM YYYY" mode="md" placeholder="{{ 'PROFILE_EDIT.SELECT_DATE' | translate }}">
             </ion-datetime>
             <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">
