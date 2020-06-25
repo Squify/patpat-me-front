@@ -23,7 +23,6 @@ export class MeetPage implements OnInit {
     getUsers() {
         this.meetService.getMetUsers().subscribe(
             result => {
-                console.log(result)
                 result.forEach(user => {
                     this.users.push(user);
                 })
