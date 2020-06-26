@@ -67,6 +67,10 @@ export class UserProfilePage implements OnInit {
         this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
     }
 
+    getUserById(): void {
+       this.userService.getUserById(this.user.id);
+    }
+
     getUserAnimals(): void {
 
         this.animals = [];
