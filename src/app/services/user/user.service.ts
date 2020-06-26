@@ -48,4 +48,8 @@ export class UserService {
     getUserAnimals(): Observable<Animal[]> {
         return this.http.get<Animal[]>(environment.BACKEND_URL + '/api/animals');
     }
+
+    getUserById(id: number): Observable<any> {
+        return this.http.post<any>(environment.BACKEND_URL + '/api/user', id);
+    }
 }
