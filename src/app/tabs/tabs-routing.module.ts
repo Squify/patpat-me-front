@@ -50,16 +50,12 @@ const routes: Routes = [
             },
             {
                 path: 'friends',
-                loadChildren: () => import('../pages/friends/friends.module').then( m => m.FriendsPageModule)
-            },
-            {
-                path: 'rencontre',
                 children: [
                     {
                         path: '',
                         loadChildren: () =>
-                            import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
-                    },
+                            import('../pages/friends/friends.module').then(m => m.FriendsPageModule)
+                    }
                 ]
             },
             {
@@ -89,6 +85,26 @@ const routes: Routes = [
                             {
                                 path: 'edit-animal',
                                 loadChildren: () => import('../pages/animal-edit/animal-edit.module').then(m => m.AnimalEditModule)
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                path: 'user/:id',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () =>
+                            import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+                    },
+                    {
+                        path: 'animal/:id',
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
                             },
                         ]
                     }

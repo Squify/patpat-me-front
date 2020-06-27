@@ -8,8 +8,7 @@
 
 <ion-content>
     <ion-list *ngIf="metUsers.length > 0">
-        <ion-item *ngFor="let user of metUsers">
-
+        <ion-item *ngFor="let user of metUsers" [routerLink]="'../../user/'+ user.id">
             <!-- Event -->
             <ion-col>
                 <ion-row class="flex-column align-start event-name" *ngIf="user.events.length <= 1">
@@ -48,7 +47,6 @@
                     </ion-col>
                 </ion-row>
                 <!-- End user informations -->
-
             </ion-col>
         </ion-item>
     </ion-list>

@@ -9,7 +9,7 @@ import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AccountEdit } from '../../interfaces/user/account-edit';
-import { UpdateService } from '../../services/eventsObs/update.service';
+import { UpdateService } from '../../services/update/update.service';
 
 @Component({
     selector: 'app-profile-edit',

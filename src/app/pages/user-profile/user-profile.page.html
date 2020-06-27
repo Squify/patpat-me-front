@@ -1,86 +1,94 @@
 <ion-header>
-  <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{ 'USER-PROFILE.TITLE' | translate }}</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ 'USER_PROFILE.TITLE' | translate }}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <div class="userContainer" *ngIf="user">
-      <div class="flex-column-center">
-          <h3 class="remove-margin flex-column-center" style="margin-top: 15px;">
-              <ion-avatar>
-                  <img src="{{ user.profile_pic_path }}">
-              </ion-avatar>
-              {{ user.firstname }}
-              {{ user.lastname | uppercase }}
-          </h3>
-          <p class="remove-margin" style="margin-bottom: 15px">
-              <b>{{ 'USER-PROFILE.PSEUDO' | translate }} :</b> {{ user.pseudo }}
-          </p>
-      </div>
+        <div class="flex-column-center">
+            <h3 class="remove-margin flex-column-center" style="margin-top: 15px;">
+                <ion-avatar>
+                    <img src="{{ user.user.profile_pic_path }}">
+                </ion-avatar>
+                <span *ngIf="user.friendOf">
+                    {{ user.user.firstname }}
+                    {{ user.user.lastname | uppercase }}
+                </span>
+            </h3>
+            <p class="remove-margin" style="margin-bottom: 15px">
+                <b>{{ 'USER_PROFILE.PSEUDO' | translate }} :</b> {{ user.user.pseudo }}
+            </p>
+        </div>
 
-      <ion-segment (ionChange)="segmentChanged($event)" value="informationSegment"
-                   style="margin: unset; border-bottom-left-radius: 0;border-bottom-right-radius: 0">
+        <ion-segment (ionChange)="segmentChanged($event)" value="informationSegment"
+                     style="margin: unset; border-bottom-left-radius: 0;border-bottom-right-radius: 0">
 
-          <ion-segment-button value="informationSegment">
-              {{ 'USER-PROFILE.INFORMATIONS' | translate }}
-          </ion-segment-button>
-          <ion-segment-button value="animalSegment">
-              {{ 'USER-PROFILE.ANIMALS' | translate }}
-          </ion-segment-button>
-      </ion-segment>
+            <ion-segment-button value="informationSegment">
+                {{ 'USER_PROFILE.INFORMATIONS' | translate }}
+            </ion-segment-button>
+            <ion-segment-button value="animalSegment">
+                {{ 'USER_PROFILE.ANIMALS' | translate }}
+            </ion-segment-button>
+        </ion-segment>
 
 
-      <div [ngSwitch]="selectedSegment">
-          <ion-card *ngSwitchCase="'informationSegment'"
-                    style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
-              <ion-list>
-                  <ion-item>
-                      <ion-icon class="information-icon" mode="md" name="call"></ion-icon>
-                      <ion-label *ngIf="user.phone">{{ user.phone }}</ion-label>
-                      <ion-label *ngIf="!user.phone">{{ 'USER-PROFILE.N/A' | translate }}</ion-label>
-                  </ion-item>
+        <div [ngSwitch]="selectedSegment">
+            <ion-card *ngSwitchCase="'informationSegment'"
+                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+                <ion-list>
+                    <ion-item *ngIf="user.friendOf">
+                        <ion-icon class="information-icon" mode="md" name="at"></ion-icon>
+                        <ion-label>{{ user.user.email | lowercase }} </ion-label>
+                    </ion-item>
 
-                  <ion-item>
-                      <ion-icon class="information-icon" mode="md" name="gift"></ion-icon>
-                      <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy à HH:mm' }}</ion-label>
-                      <ion-label *ngIf="!user.birthday">{{ 'USER-PROFILE.N/A' | translate }}</ion-label>
-                  </ion-item>
+                    <ion-item *ngIf="user.friendOf">
+                        <ion-icon class="information-icon" mode="md" name="call"></ion-icon>
+                        <ion-label *ngIf="user.user.phone">{{ user.user.phone }}</ion-label>
+                        <ion-label *ngIf="!user.user.phone">{{ 'USER_PROFILE.N/A' | translate }}</ion-label>
+                    </ion-item>
 
-                  <ion-item>
-                      <ion-icon class="information-icon" mode="md" name="male-female-outline">
-                      </ion-icon>
-                      <ion-label *ngIf="user.gender">{{ user.gender.name }}</ion-label>
-                      <ion-label *ngIf="!user.gender">{{ 'USER-PROFILE.N/A' | translate }}</ion-label>
-                  </ion-item>
-              </ion-list>
-          </ion-card>
+                    <ion-item>
+                        <ion-icon class="information-icon" mode="md" name="gift"></ion-icon>
+                        <ion-label
+                                *ngIf="user.user.birthday">{{ user.user.birthday | date: 'dd/MM/yyyy à HH:mm' }}</ion-label>
+                        <ion-label *ngIf="!user.user.birthday">{{ 'USER_PROFILE.N/A' | translate }}</ion-label>
+                    </ion-item>
 
-          <ion-card *ngSwitchCase="'animalSegment'"
-                    style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
-              <ion-list *ngIf="animals.length == 0">
-                  <p style="margin: 16px">
-                      {{ 'USER-PROFILE.ANY_ANIMAL' | translate }}
-                  </p>
-              </ion-list>
-              <ion-list class="parts-list" *ngIf="animals.length > 0">
-                  <ion-item *ngFor="let animal of animals" class="part-card"> <!--  [routerLink]="'animal/'+ animal.id" -->
-                      <ion-thumbnail class="part-avatar">
-                          <ion-img [src]="animal.image_path"></ion-img>
-                      </ion-thumbnail>
-                      <ion-col>
-                          {{ animal.name }}, {{ animal.type.name }}, {{ animal.breed.name }}<br>
-                          {{ calculateAge(animal.birthday) }}
-                      </ion-col>
-                  </ion-item>
-              </ion-list>
-          </ion-card>
-      </div>
-  </div>
-  <div *ngIf="!user">
-      {{ 'USER-PROFILE.ANY_INFORMATIONS' | translate }}
-  </div>
+                    <ion-item>
+                        <ion-icon class="information-icon" mode="md" name="male-female-outline">
+                        </ion-icon>
+                        <ion-label *ngIf="user.user.gender">{{ user.user.gender.name }}</ion-label>
+                        <ion-label *ngIf="!user.user.gender">{{ 'USER_PROFILE.N/A' | translate }}</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+
+            <ion-card *ngSwitchCase="'animalSegment'"
+                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+                <ion-list *ngIf="user.animals.length == 0">
+                    <p style="margin: 16px">
+                        {{ 'USER_PROFILE.ANY_ANIMAL' | translate }}
+                    </p>
+                </ion-list>
+                <ion-list class="parts-list" *ngIf="user.animals.length > 0">
+                    <ion-item *ngFor="let animal of user.animals" class="part-card" [routerLink]="'animal/'+ animal.id">
+                        <ion-thumbnail class="part-avatar">
+                            <ion-img [src]="animal.image_path"></ion-img>
+                        </ion-thumbnail>
+                        <ion-col>
+                            {{ animal.name }}<br>
+                            {{ calculateAge(animal.birthday) }}
+                        </ion-col>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+        </div>
+    </div>
+    <div *ngIf="!user">
+        {{ 'USER_PROFILE.ANY_INFORMATIONS' | translate }}
+    </div>
 </ion-content>

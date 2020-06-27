@@ -6,7 +6,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../interfaces/user/user';
-import { UpdateService } from '../../services/eventsObs/update.service';
+import { UpdateService } from '../../services/update/update.service';
 
 @Component({
     selector: 'app-meet',

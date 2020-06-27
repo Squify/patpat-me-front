@@ -59,7 +59,8 @@
                                 <li *ngIf="user.display_phone">{{ 'PROFILE.DISPLAY_PHONE' | translate }}</li>
                             </ul>
                         </ion-label>
-                        <ion-label *ngIf="!user.display_phone && !user.display_email && !user.display_real_name">{{ 'PROFILE.ANY_DISPLAY' | translate }}</ion-label>
+                        <ion-label
+                                *ngIf="!user.display_phone && !user.display_email && !user.display_real_name">{{ 'PROFILE.ANY_DISPLAY' | translate }}</ion-label>
 
                     </ion-item>
 

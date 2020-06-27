@@ -8,7 +8,7 @@ import { EventType } from '../../interfaces/event/event-type';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
 import { GeolocationService } from "../../services/geolocation/geolocation.service";
-import { UpdateService } from "../../services/eventsObs/update.service";
+import { UpdateService } from "../../services/update/update.service";
 
 @Component({
     selector: 'app-event-create',

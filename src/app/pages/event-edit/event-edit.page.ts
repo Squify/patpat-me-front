@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventEdit } from '../../interfaces/event/event-edit';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GeolocationService } from '../../services/geolocation/geolocation.service';
-import { UpdateService } from '../../services/eventsObs/update.service';
+import { UpdateService } from '../../services/update/update.service';
 
 @Component({
     selector: 'app-event-edit',

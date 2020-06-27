@@ -5,7 +5,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user/user.service';
-import { UpdateService } from '../../services/eventsObs/update.service';
+import { UpdateService } from '../../services/update/update.service';
 import { Friend } from '../../interfaces/user/friend';
 
 @Component({
@@ -53,7 +53,7 @@ export class FriendsPage implements OnInit {
                 this.connectedUser = user;
                 this.friends = [];
                 this.connectedUser.friends.forEach(user => {
-                    let friendToAdd: Friend = {user: user, friendOf: false};
+                    let friendToAdd: Friend = {user: user, animals: null, friendOf: false};
                     if (user.friends.length > 0) {
                         friendToAdd.friendOf = !!user.friends.find(element => element.id === this.connectedUser.id);
                     }
