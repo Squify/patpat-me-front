@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../interfaces/user/user';
 import { MeetService } from '../../services/meet/meet.service';
-import { MetUser } from '../../interfaces/user/met-user';
-import { HttpErrorResponse } from '@angular/common/http';
 import { AlertController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user/user.service';
-import { User } from '../../interfaces/user/user';
 import { UpdateService } from '../../services/eventsObs/update.service';
 
 @Component({
-    selector: 'app-meet',
-    templateUrl: './meet.page.html',
-    styleUrls: ['./meet.page.scss'],
+    selector: 'app-friends',
+    templateUrl: './friends.page.html',
+    styleUrls: ['./friends.page.scss'],
 })
-export class MeetPage implements OnInit {
+export class FriendsPage implements OnInit {
 
-    metUsers: MetUser[] = [];
+    friends: User[] = [];
     connectedUser: User;
 
     // Errors
@@ -38,9 +37,6 @@ export class MeetPage implements OnInit {
 
         this.updateService.getObservable().subscribe((data) => {
             switch (data) {
-                case 'updateEvent':
-                    this.getConnectedUser();
-                    break;
                 case 'updateFriends':
                     this.getConnectedUser();
                     break;
@@ -54,56 +50,17 @@ export class MeetPage implements OnInit {
         this.userService.getRemoteUser().subscribe(
             user => {
                 this.connectedUser = user;
-                this.getMetUsers();
+                this.friends = this.connectedUser.friends;
+                this.friends.sort((a, b) => a.pseudo.localeCompare(b.pseudo));
             },
             e => this.processError(e)
         )
     }
 
-    getMetUsers(): void {
-
-        this.meetService.getMetUsers().subscribe(
-            result => {
-                this.metUsers = [];
-                result.forEach(user => {
-                    let userToAdd = user;
-                    if (this.connectedUser.friends.length > 0) {
-                        userToAdd.isFriend = !!this.connectedUser.friends.find(element => element.id === userToAdd.id);
-                    }
-                    this.metUsers.push(userToAdd);
-                })
-                this.metUsers.sort((a, b) => a.pseudo.localeCompare(b.pseudo));
-            },
-            e => this.processError(e)
-        );
-    }
-
-    async confirmDelete(userId: number) {
+    async confirmChange(userId: number) {
         const alert = await this.alertController.create({
             header: 'Confirmation',
             message: 'Etes-vous sûr de vouloir retirer cet ami ?',
-            buttons: [
-                {
-                    text: 'Annuler',
-                    role: 'cancel',
-                    cssClass: 'secondary'
-                }, {
-                    text: 'Confirmer',
-                    handler: () => {
-                        this.changeRelation(userId);
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
-        await alert.onDidDismiss();
-    }
-
-    async confirmAdd(userId: number) {
-        const alert = await this.alertController.create({
-            header: 'Confirmation',
-            message: 'Etes-vous sûr de vouloir ajouter cette personne en ami ? \nElle aura accès aux informations que vous avez décidé de laisser afficher',
             buttons: [
                 {
                     text: 'Annuler',

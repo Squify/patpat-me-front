@@ -7,8 +7,10 @@
 </ion-header>
 
 <ion-content>
-    <ion-list *ngIf="users.length > 0">
-        <ion-item *ngFor="let user of users">
+    <ion-list *ngIf="metUsers.length > 0">
+        <ion-item *ngFor="let user of metUsers">
+
+            <!-- Event -->
             <ion-col>
                 <ion-row class="flex-column align-start event-name" *ngIf="user.events.length <= 1">
                     {{ 'MEET.ONE_EVENT' | translate }} :
@@ -22,25 +24,37 @@
                         <li><b>{{ event }}</b></li>
                     </ul>
                 </ion-row>
+                <!-- End event -->
 
+                <!-- User informations -->
                 <ion-row class="align-center">
                     <ion-col size="11" class="flex-row align-center">
                         <ion-avatar>
-                            <img src="{{ user.user.profile_pic_path }}">
+                            <img src="{{ user.profile_pic_path }}">
                         </ion-avatar>
                         <div class="flex-column align-start">
-                            {{ user.user.pseudo }}
-                            <div>
+                            {{ user.pseudo }}
+                            <div *ngIf="user.gender">
                                 <ion-icon class="information-icon" mode="md" name="male-female-outline"></ion-icon>
-                                {{ user.user.gender.name }}
+                                {{ user.gender.name }}
                             </div>
                         </div>
                     </ion-col>
                     <ion-col size="1">
-                        <ion-icon (click)="changeRelation(user.user.id)" size="large" name="{{ user.isFriend ? 'heart-dislike-circle-outline' : 'heart-circle-outline' }}"></ion-icon>
+                        <ion-icon size="large"
+                                  (click)="user.isFriend ? confirmDelete(user.id) : confirmAdd(user.id)"
+                                  name="{{ user.isFriend ? 'heart-dislike-circle-outline' : 'heart-circle-outline' }}">
+                        </ion-icon>
                     </ion-col>
                 </ion-row>
+                <!-- End user informations -->
+
             </ion-col>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="metUsers.length <= 0">
+        <ion-item>
+            {{ 'MEET.ANY_USER' | translate }}
         </ion-item>
     </ion-list>
 </ion-content>

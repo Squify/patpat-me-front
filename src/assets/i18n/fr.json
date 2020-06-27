@@ -119,7 +119,8 @@
   "MEET": {
     "MULTI_EVENT_EVENT": "Rencontré lors des événements",
     "ONE_EVENT": "Rencontré lors de l'événement",
-    "TITLE": "Rencontres"
+    "TITLE": "Rencontres",
+    "ANY_USER": "Vous n'avez aucune rencontre à découvrir"
   },
   "PROFILE": {
     "ACTIVATED": "Activé",
@@ -131,6 +132,7 @@
     "DISPLAY_EMAIL": "Votre adresse e-mail",
     "DISPLAY_NAME": "Votre nom et prénom",
     "DISPLAY_PHONE": "Votre numéro de téléphone",
+    "ANY_DISPLAY": "Vous n'affichez aucune information à vos amis",
     "FRIENDS_VIEW": "Vos amis peuvent voir les informations suivantes",
     "INFORMATIONS": "Informations",
     "LOGOUT": "Déconnexion",
@@ -197,5 +199,9 @@
     "SUSCEPTIBLE": "Susceptible",
     "SUSPICIOUS": "Méfiant",
     "TALKATIVE": "Bavard"
+  },
+  "FRIENDS": {
+    "TITLE": "Amis",
+    "ANY_FRIENDS": "Vous n'avez pas encore d'amis, rendez vous sur la page des rencontres"
   }
 }

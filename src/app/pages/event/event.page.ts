@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { GeolocationService } from '../../services/geolocation/geolocation.service';
+import { UpdateService } from '../../services/eventsObs/update.service';
 
 @Component({
     selector: 'app-event',
@@ -35,7 +37,8 @@ export class EventPage implements OnInit {
         public router: Router,
         private activatedRoute: ActivatedRoute,
         public toastController: ToastController,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public updateService: UpdateService
     ) {
     }
 
@@ -74,7 +77,10 @@ export class EventPage implements OnInit {
     changeEventParticipation(): void {
 
         this.eventService.changeEventParticipation(this.event.id).subscribe(
-            _ => this.getEvent(),
+            _ => {
+                this.getEvent();
+                this.updateService.publishSomeData('updateEvent');
+            },
             e => this.processError(e)
         );
         this.ngZone.run(() => this.getEvent())
