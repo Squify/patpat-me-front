@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user/user.service';
 import { UpdateService } from '../../services/eventsObs/update.service';
+import { Friend } from '../../interfaces/user/friend';
 
 @Component({
     selector: 'app-friends',
@@ -14,7 +15,7 @@ import { UpdateService } from '../../services/eventsObs/update.service';
 })
 export class FriendsPage implements OnInit {
 
-    friends: User[] = [];
+    friends: Friend[] = [];
     connectedUser: User;
 
     // Errors
@@ -50,8 +51,15 @@ export class FriendsPage implements OnInit {
         this.userService.getRemoteUser().subscribe(
             user => {
                 this.connectedUser = user;
-                this.friends = this.connectedUser.friends;
-                this.friends.sort((a, b) => a.pseudo.localeCompare(b.pseudo));
+                this.friends = [];
+                this.connectedUser.friends.forEach(user => {
+                    let friendToAdd: Friend = {user: user, friendOf: false};
+                    if (user.friends.length > 0) {
+                        friendToAdd.friendOf = !!user.friends.find(element => element.id === this.connectedUser.id);
+                    }
+                    this.friends.push(friendToAdd);
+                })
+                this.friends.sort((a, b) => a.user.pseudo.localeCompare(b.user.pseudo));
             },
             e => this.processError(e)
         )
