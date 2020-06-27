@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{ 'FRIENDS.TITLE' | translate }}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngIf="friends.length > 0">
+        <ion-item *ngFor="let friend of friends" [routerLink]="'../../user/'+ friend.user.id">
+            <ion-col>
+                <ion-row class="align-center">
+                    <ion-col size="11" class="flex-row align-center">
+                        <ion-avatar>
+                            <img src="{{ friend.user.profile_pic_path }}">
+                        </ion-avatar>
+                        <div class="flex-column align-start">
+                            <div>
+                                <b>{{ friend.user.pseudo }}</b>
+                                <ion-label
+                                        *ngIf="friend.user.display_real_name && friend.friendOf">{{ friend.user.firstname}} {{ friend.user.lastname}}</ion-label>
+                            </div>
+                            <div *ngIf="friend.user.display_phone && friend.user.phone && friend.friendOf">
+                                <ion-icon class="information-icon" mode="md" name="call"></ion-icon>
+                                {{ friend.user.phone }}
+                            </div>
+                            <div *ngIf="friend.user.display_email && friend.user.email && friend.friendOf">
+                                <ion-icon class="information-icon" mode="md" name="at"></ion-icon>
+                                {{ friend.user.email }}
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col size="1">
+                        <ion-icon (click)="confirmChange(friend.user.id)" size="large"
+                                  name="heart-dislike-circle-outline"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="friends.length == 0">
+        <ion-item>
+            {{ 'FRIENDS.ANY_FRIENDS' | translate }}
+        </ion-item>
+    </ion-list>
+</ion-content>

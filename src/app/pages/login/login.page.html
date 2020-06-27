@@ -22,26 +22,26 @@
 
                 <ion-item mode="md">
                     <ion-label position="floating">{{ 'CONNEXION.PASSWORD' | translate }}</ion-label>
-                    <ion-input [type]="'password'" formControlName="password" maxlength="32">
+                    <ion-input [type]="passwordInputType" formControlName="password" maxlength="32">
                     </ion-input>
-                    <ion-icon mode="md" slot="start" name="key"
-                              class="ion-align-self-end"></ion-icon>
-                    <!--                    <ion-button slot="end" class="ion-align-self-end"-->
-                    <!--                                color="medium" fill="clear">-->
-                    <!--                    </ion-button>-->
+                    <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
                     <ion-icon *ngIf="passwordInputError" mode="md" slot="end"
                               name="alert-circle-outline" class="ion-align-self-end error-message"
                               (click)="presentToast('password')"></ion-icon>
+                    <ion-icon (click)="changePasswordView()" mode="md" slot="end"
+                              name="{{ passwordIcon }}" class="ion-align-self-end"></ion-icon>
                 </ion-item>
             </ion-list>
         </form>
 
         <div class="button-center">
-            <ion-button slot="end" class="validation-button" (click)="login()">{{ 'CONNEXION.CONNEXION' | translate }}</ion-button>
+            <ion-button slot="end" class="validation-button"
+                        (click)="login()">{{ 'CONNEXION.CONNEXION' | translate }}</ion-button>
         </div>
 
         <div class="button-center">
-            <p>{{ 'CONNEXION.ANY_ACCOUNT' | translate }}<a [routerLink]="'/account-create'">{{ 'CONNEXION.CREATE' | translate }}</a></p>
+            <p>{{ 'CONNEXION.ANY_ACCOUNT' | translate }}<a
+                    [routerLink]="'/account-create'">{{ 'CONNEXION.CREATE' | translate }}</a></p>
         </div>
     </div>
 </ion-content>

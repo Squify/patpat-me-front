@@ -17,8 +17,7 @@
 
         <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge *ngIf="!isOwner()">
             <ion-fab-button (click)="changeEventParticipation()">
-                <ion-icon *ngIf="event.members.length > 0" name="person-remove-outline"></ion-icon>
-                <ion-icon *ngIf="event.members.length == 0" name="person-add-outline"></ion-icon>
+                <ion-icon name="{{ participationIcon ? participationIcon : 'person-add-outline'}}"></ion-icon>
             </ion-fab-button>
         </ion-fab>
 
@@ -111,7 +110,7 @@
                                 <ion-item class="part-card">
                                     <ion-col style="max-width: 20%">
                                         <ion-thumbnail class="part-avatar">
-                                            <ion-img [src]="defaultProfilePic"></ion-img>
+                                            <ion-img [src]="event.owner.profile_pic_path"></ion-img>
                                         </ion-thumbnail>
                                     </ion-col>
                                     <ion-col style="max-width: 70%">{{event.owner.pseudo}}</ion-col>
@@ -122,7 +121,7 @@
                                 <ion-item *ngFor="let member of event.members" class="part-card">
                                     <ion-col style="max-width: 20%">
                                         <ion-thumbnail class="part-avatar">
-                                            <ion-img [src]="defaultProfilePic"></ion-img>
+                                            <ion-img [src]="member.profile_pic_path"></ion-img>
                                         </ion-thumbnail>
                                     </ion-col>
                                     <ion-col style="max-width: 80%">{{member.pseudo}}</ion-col>

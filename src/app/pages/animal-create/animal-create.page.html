@@ -11,9 +11,7 @@
     <div class="form-container">
 
         <form [formGroup]="createAnimalForm" (keyup.enter)="submit()">
-
             <ion-list>
-
                 <ion-item mode="md">
                     <ion-label position="floating">{{ 'ANIMAL_CREATE.NAME' | translate }}</ion-label>
                     <ion-input type="text" formControlName="name">
@@ -93,6 +91,21 @@
                     </ion-icon>
                 </ion-item>
             </ion-list>
+
+            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'" *ngIf="this.createAnimalForm.value.fk_id_type == 'Chat'">
+                <div *ngFor="let path of catPicPaths">
+                    <ion-avatar (click)="getPicPath(path)" [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
+                        <img src="{{ path }}">
+                    </ion-avatar>
+                </div>
+            </div>
+            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'" *ngIf="this.createAnimalForm.value.fk_id_type == 'Chien'">
+                <div *ngFor="let path of dogPicPaths">
+                    <ion-avatar (click)="getPicPath(path)" [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
+                        <img src="{{ path }}">
+                    </ion-avatar>
+                </div>
+            </div>
 
             <div class="button-center">
                 <ion-button slot="end" class="validation-button"

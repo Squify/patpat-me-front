@@ -9,3 +9,20 @@
 .remove-margin {
   margin: unset;
 }
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-avatar {
+  background-color: #FEE8C7;
+  margin-bottom: 16px;
+}
+
+.switch-case {
+  margin: unset;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
