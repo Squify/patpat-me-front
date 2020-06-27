@@ -7,8 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { GeolocationService } from '../../services/geolocation/geolocation.service';
-import { UpdateService } from '../../services/eventsObs/update.service';
+import { UpdateService } from '../../services/update/update.service';
 
 @Component({
     selector: 'app-event',
@@ -93,7 +92,7 @@ export class EventPage implements OnInit {
 
         if (this.event.members.find(element => element.id == connectedUser.id)) {
             this.participationIcon = 'person-remove-outline';
-        }else {
+        } else {
             this.participationIcon = 'person-add-outline';
         }
     }

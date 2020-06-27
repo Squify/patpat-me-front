@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { EventService } from "../../services/event/event.service";
 import { EventInterface } from "../../interfaces/event/event-interface";
-import { UpdateService } from "../../services/eventsObs/update.service";
+import { UpdateService } from "../../services/update/update.service";
 
 @Component({
     selector: 'app-events',

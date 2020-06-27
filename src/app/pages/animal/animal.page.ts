@@ -10,7 +10,8 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
-import { UpdateService } from "../../services/eventsObs/update.service";
+import { UpdateService } from "../../services/update/update.service";
+import { User } from '../../interfaces/user/user';
 
 @Component({
     selector: 'app-animal',
@@ -19,8 +20,11 @@ import { UpdateService } from "../../services/eventsObs/update.service";
 })
 export class AnimalPage implements OnInit {
 
+    connectedUser: User;
+
     animalId: number;
     animal: Animal;
+
     genders: AnimalGender[] = [];
     types: AnimalType[] = [];
     breeds: Breed[] = [];
@@ -41,10 +45,12 @@ export class AnimalPage implements OnInit {
     }
 
     ngOnInit() {
+
         this.animalId = +this.activatedRoute.snapshot.paramMap.get('id');
         if (!this.animalId)
             this.router.navigateByUrl('/tabs/profile');
 
+        this.getConnectedUser();
         this.getAnimal();
         this.getGenders();
         this.getTypes();
@@ -67,17 +73,20 @@ export class AnimalPage implements OnInit {
         this.animalService.getAnimalById(this.animalId).subscribe(
             value => {
                 this.animal = value;
-                if (!this.isOwner())
-                    this.router.navigateByUrl('/tabs/events');
             },
         );
     }
 
+    getConnectedUser(): void {
+        this.userService.getRemoteUser().subscribe(
+            user => this.connectedUser = user
+            // e => this.processError(e)
+        )
+    }
+
     isOwner(): boolean {
 
-        let connectedUserId;
-        this.userService.getUser().subscribe(connectedUser => connectedUserId = connectedUser.id)
-        return this.animal.owner.id == connectedUserId;
+        return this.animal.owner.id == this.connectedUser.id;
     }
 
     getGenders(): void {

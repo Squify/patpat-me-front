@@ -6,7 +6,7 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Animal } from "../../interfaces/animal/animal";
-import { UpdateService } from "../../services/eventsObs/update.service";
+import { UpdateService } from "../../services/update/update.service";
 
 @Component({
     selector: 'app-profile',
