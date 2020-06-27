@@ -32,3 +32,22 @@ form {
     }
   }
 }
+
+ion-avatar {
+  background-color: #FEE8C7;
+  margin: 8px 4px;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  div {
+    display: inline-block;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

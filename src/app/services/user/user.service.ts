@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AccountCreate } from '../../interfaces/user/account-create';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../../interfaces/user/user';
 import { catchError, share } from 'rxjs/operators';
 import { AccountEdit } from "../../interfaces/user/account-edit";
 import { Animal } from "../../interfaces/animal/animal";
+import { EventInterface } from '../../interfaces/event/event-interface';
+import { Friend } from '../../interfaces/user/friend';
 
 
 @Injectable({
@@ -47,5 +49,11 @@ export class UserService {
 
     getUserAnimals(): Observable<Animal[]> {
         return this.http.get<Animal[]>(environment.BACKEND_URL + '/api/animals');
+    }
+
+    getUserInformationsById(userId: number): Observable<Friend> {
+
+        const params: HttpParams = new HttpParams().set('userId', userId.toString());
+        return this.http.get<Friend>(environment.BACKEND_URL + '/api/user', {params});
     }
 }

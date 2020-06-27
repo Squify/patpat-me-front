@@ -6,7 +6,7 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Animal } from "../../interfaces/animal/animal";
-import { EventsService } from "../../services/eventsObs/events.service";
+import { UpdateService } from "../../services/update/update.service";
 
 @Component({
     selector: 'app-profile',
@@ -19,13 +19,12 @@ export class ProfilePage implements OnInit, OnDestroy {
     animals: Animal[] = [];
     subscriptionUser: Subscription;
     selectedSegment = 'informationSegment';
-    private img = '/assets/images/grumpy.jpg';
 
     constructor(
         private userService: UserService,
         private authService: AuthenticationService,
         private router: Router,
-        public events: EventsService,
+        public updateService: UpdateService,
     ) {
     }
 
@@ -33,7 +32,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
         this.getUserDetail();
         this.getUserAnimals();
-        this.events.getObservable().subscribe((data) => {
+        this.updateService.getObservable().subscribe((data) => {
             switch (data) {
                 case 'createAnimal':
                     this.getUserAnimals();
@@ -55,7 +54,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     getUserDetail(): void {
-        this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
+        this.subscriptionUser = this.userService.getRemoteUser().subscribe(user => this.user = user);
     }
 
     getUserAnimals(): void {
@@ -66,6 +65,7 @@ export class ProfilePage implements OnInit, OnDestroy {
                 this.animals.push(animal);
             })
         });
+        this.animals.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     segmentChanged(ev: any) {

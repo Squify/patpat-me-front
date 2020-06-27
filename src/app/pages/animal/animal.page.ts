@@ -10,7 +10,8 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
-import { EventsService } from "../../services/eventsObs/events.service";
+import { UpdateService } from "../../services/update/update.service";
+import { User } from '../../interfaces/user/user';
 
 @Component({
     selector: 'app-animal',
@@ -19,8 +20,11 @@ import { EventsService } from "../../services/eventsObs/events.service";
 })
 export class AnimalPage implements OnInit {
 
+    connectedUser: User;
+
     animalId: number;
     animal: Animal;
+
     genders: AnimalGender[] = [];
     types: AnimalType[] = [];
     breeds: Breed[] = [];
@@ -36,22 +40,24 @@ export class AnimalPage implements OnInit {
         private animalService: AnimalService,
         private userService: UserService,
         public alertController: AlertController,
-        public events: EventsService,
+        public updateService: UpdateService,
     ) {
     }
 
     ngOnInit() {
+
         this.animalId = +this.activatedRoute.snapshot.paramMap.get('id');
         if (!this.animalId)
             this.router.navigateByUrl('/tabs/profile');
 
+        this.getConnectedUser();
         this.getAnimal();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
 
-        this.events.getObservable().subscribe((data) => {
+        this.updateService.getObservable().subscribe((data) => {
             switch (data) {
                 case 'updateAnimal':
                     this.getAnimal();
@@ -62,28 +68,25 @@ export class AnimalPage implements OnInit {
         });
     }
 
-    ionViewDidEnter() {
-        if (history.state.comingFromEdition) {
-            //this.ngZone.run(() => this.getAnimal())
-        }
-    }
-
     getAnimal(): void {
 
         this.animalService.getAnimalById(this.animalId).subscribe(
             value => {
                 this.animal = value;
-                if (!this.isOwner())
-                    this.router.navigateByUrl('/tabs/events');
             },
         );
     }
 
+    getConnectedUser(): void {
+        this.userService.getRemoteUser().subscribe(
+            user => this.connectedUser = user
+            // e => this.processError(e)
+        )
+    }
+
     isOwner(): boolean {
 
-        let connectedUserId;
-        this.userService.getUser().subscribe(connectedUser => connectedUserId = connectedUser.id)
-        return this.animal.owner.id == connectedUserId;
+        return this.animal.owner.id == this.connectedUser.id;
     }
 
     getGenders(): void {
@@ -150,7 +153,7 @@ export class AnimalPage implements OnInit {
     deleteAnimal(): void {
         this.animalService.deleteAnimal(this.animalId).subscribe(
             _ => {
-                this.events.publishSomeData('updateAnimal')
+                this.updateService.publishSomeData('updateAnimal')
                 this.router.navigateByUrl('/tabs/profile')
             }
         );

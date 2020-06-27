@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { GenderService } from '../../services/gender/gender.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserGender } from '../../interfaces/user/user-gender';
-import { ToastController } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AccountEdit } from "../../interfaces/user/account-edit";
-import { EventsService } from "../../services/eventsObs/events.service";
+import { AccountEdit } from '../../interfaces/user/account-edit';
+import { UpdateService } from '../../services/update/update.service';
 
 @Component({
     selector: 'app-profile-edit',
@@ -22,6 +22,9 @@ export class ProfileEditPage implements OnInit {
     user: User;
 
     genders: UserGender[] = [];
+
+    picPaths: string[] = [];
+    selectedPic: string;
 
     accountEditInterface: AccountEdit;
     editPersonForm: FormGroup;
@@ -36,20 +39,44 @@ export class ProfileEditPage implements OnInit {
     passwordSecurityError: boolean;
     phoneInputError: boolean;
 
+    passwordIcon = 'eye-outline';
+    passwordInputType = 'password';
+
     constructor(
         private userService: UserService,
         private genderService: GenderService,
         public toastController: ToastController,
         private router: Router,
-        public events: EventsService,
+        public updateService: UpdateService,
+        public platform: Platform
     ) {
-
     }
 
     ngOnInit() {
         this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
         this.getGenders();
         this.buildForm();
+    }
+
+    changePasswordView(): void {
+        if (this.passwordInputType === 'password') {
+            this.passwordInputType = 'input';
+            this.passwordIcon = 'eye-off-outline';
+        } else if (this.passwordInputType === 'input') {
+            this.passwordInputType = 'password';
+            this.passwordIcon = 'eye-outline';
+        }
+    }
+
+    loadProfilePics(): void {
+        this.picPaths.push('/assets/images/profile_pic/profile_default.png')
+        for (let i = 1; i <= 24; i++) {
+            this.picPaths.push('/assets/images/profile_pic/profile_' + i + '.png')
+        }
+    }
+
+    getPicPath(path): void {
+        this.selectedPic = path;
     }
 
     getGenders(): void {
@@ -66,6 +93,8 @@ export class ProfileEditPage implements OnInit {
 
     buildForm(): void {
 
+        this.selectedPic = this.user.profile_pic_path;
+        this.loadProfilePics();
         this.editPersonForm = new FormGroup({
 
             email: new FormControl({value: this.user.email, disabled: false}, {
@@ -87,13 +116,15 @@ export class ProfileEditPage implements OnInit {
                 ]
             }),
 
-            push_notification: new FormControl({value: this.user.push_notification, disabled: false}),
+            birthday: new FormControl({value: this.user.birthday, disabled: !!this.user.birthday}),
 
-            active_localisation: new FormControl({value: this.user.active_localisation, disabled: false}),
+            display_email: new FormControl({value: this.user.display_email, disabled: false}),
+
+            display_phone: new FormControl({value: this.user.display_phone, disabled: false}),
 
             display_real_name: new FormControl({value: this.user.display_real_name, disabled: false}),
 
-            fk_id_gender: new FormControl({value: this.user.gender.name, disabled: false}),
+            fk_id_gender: new FormControl({value: this.user.gender ? this.user.gender.name : null, disabled: false}),
         });
     }
 
@@ -114,19 +145,41 @@ export class ProfileEditPage implements OnInit {
     }
 
     updateAccount(): void {
+
+        let birthday = this.user.birthday;
+        if (!this.user.birthday) {
+            if (this.editPersonForm.value.birthday) {
+                this.editPersonForm.value.birthday = this.editPersonForm.value.birthday.replace('+0000', '+02:00');
+                birthday = this.editPersonForm.value.birthday;
+            }
+        }
+        if ((this.user.birthday == null) && (this.editPersonForm.value.birthday == null))
+            birthday = '';
+
+        let gender = '';
+        if (this.user.gender)
+            gender = this.user.gender.name;
+        else if (!this.user.gender) {
+            gender = this.editPersonForm.value.gender;
+        }
+        if ((this.user.gender == null) && (this.editPersonForm.value.gender == null))
+            gender = '';
+
         this.accountEditInterface = {
             email: this.editPersonForm.value.email,
             password: this.editPersonForm.value.password,
+            profile_pic_path: this.selectedPic,
             phone: this.editPersonForm.value.phone,
-            push_notification: this.editPersonForm.value.push_notification,
-            active_localisation: this.editPersonForm.value.active_localisation,
+            birthday: birthday,
+            display_email: this.editPersonForm.value.display_email,
+            display_phone: this.editPersonForm.value.display_phone,
             display_real_name: this.editPersonForm.value.display_real_name,
-            gender: this.editPersonForm.value.fk_id_gender,
+            gender: gender,
         };
 
         this.userService.updateUser(this.accountEditInterface).subscribe(
             _ => {
-                this.events.publishSomeData('updateProfile')
+                this.updateService.publishSomeData('updateProfile')
                 this.router.navigateByUrl('/tabs/profile')
             },
             error => this.processError(error))

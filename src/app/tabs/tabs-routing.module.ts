@@ -39,12 +39,22 @@ const routes: Routes = [
                 ]
             },
             {
-                path: 'tab2',
+                path: 'meet',
                 children: [
                     {
                         path: '',
                         loadChildren: () =>
-                            import('../pages/tab2/tab2.module').then(m => m.Tab2PageModule)
+                            import('../pages/meet/meet.module').then(m => m.MeetPageModule)
+                    }
+                ]
+            },
+            {
+                path: 'friends',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () =>
+                            import('../pages/friends/friends.module').then(m => m.FriendsPageModule)
                     }
                 ]
             },
@@ -70,11 +80,31 @@ const routes: Routes = [
                             {
                                 path: '',
                                 loadChildren: () =>
-                                    import('../pages/animal/animal.module').then( m => m.AnimalPageModule)
+                                    import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
                             },
                             {
                                 path: 'edit-animal',
                                 loadChildren: () => import('../pages/animal-edit/animal-edit.module').then(m => m.AnimalEditModule)
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                path: 'user/:id',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () =>
+                            import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+                    },
+                    {
+                        path: 'animal/:id',
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
                             },
                         ]
                     }

@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { EventService } from "../../services/event/event.service";
 import { EventInterface } from "../../interfaces/event/event-interface";
-import { EventsService } from "../../services/eventsObs/events.service";
+import { UpdateService } from "../../services/update/update.service";
 
 @Component({
     selector: 'app-events',
@@ -19,7 +19,7 @@ export class EventsPage {
         private menu: MenuController,
         private eventService: EventService,
         private ngZone: NgZone,
-        public event: EventsService,
+        public updateService: UpdateService,
     ) {
     }
 
@@ -27,7 +27,7 @@ export class EventsPage {
         this.getEvents();
         this.getTypes();
 
-        this.event.getObservable().subscribe((data) => {
+        this.updateService.getObservable().subscribe((data) => {
             switch (data) {
                 case 'createEvent':
                     this.getEvents();

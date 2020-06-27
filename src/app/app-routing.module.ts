@@ -18,13 +18,10 @@ const routes: Routes = [
         path: 'account-create',
         loadChildren: () =>
             import('./pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
-  },
-  {
-    path: 'animal-profile',
-    loadChildren: () => import('./pages/animal-profile/animal-profile.module').then(m => m.AnimalProfilePageModule)
-  }
+    },
 
 ];
+
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
