@@ -2,11 +2,13 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { EventService } from '../../services/event/event.service';
 import { EventInterface } from '../../interfaces/event/event-interface';
 import { EventType } from '../../interfaces/event/event-type';
-import { UserService } from "../../services/user/user.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ToastController } from "@ionic/angular";
-import { TranslateService } from "@ngx-translate/core";
+import { UserService } from '../../services/user/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { GeolocationService } from '../../services/geolocation/geolocation.service';
+import { UpdateService } from '../../services/eventsObs/update.service';
 
 @Component({
     selector: 'app-event',
@@ -26,6 +28,7 @@ export class EventPage implements OnInit {
     userIsOwnerError: boolean;
 
     selectedSegment = 'informationSegment';
+    participationIcon = '';
 
     constructor(
         private eventService: EventService,
@@ -34,7 +37,8 @@ export class EventPage implements OnInit {
         public router: Router,
         private activatedRoute: ActivatedRoute,
         public toastController: ToastController,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public updateService: UpdateService
     ) {
     }
 
@@ -56,7 +60,7 @@ export class EventPage implements OnInit {
     }
 
     openMaps() {
-        window.open("https://maps.google.com/?q=" + this.event.localisation)
+        window.open('https://maps.google.com/?q=' + this.event.localisation)
     }
 
     getEvent(): void {
@@ -64,6 +68,7 @@ export class EventPage implements OnInit {
         this.eventService.getEventById(this.eventId).subscribe(
             value => {
                 this.event = value;
+                this.isMember();
             },
             e => this.processError(e)
         );
@@ -72,10 +77,25 @@ export class EventPage implements OnInit {
     changeEventParticipation(): void {
 
         this.eventService.changeEventParticipation(this.event.id).subscribe(
-            _ =>
-                e => this.processError(e)
+            _ => {
+                this.getEvent();
+                this.updateService.publishSomeData('updateEvent');
+            },
+            e => this.processError(e)
         );
         this.ngZone.run(() => this.getEvent())
+    }
+
+    isMember(): void {
+
+        let connectedUser;
+        this.userService.getUser().subscribe(user => connectedUser = user)
+
+        if (this.event.members.find(element => element.id == connectedUser.id)) {
+            this.participationIcon = 'person-remove-outline';
+        }else {
+            this.participationIcon = 'person-add-outline';
+        }
     }
 
     getTypes(): void {

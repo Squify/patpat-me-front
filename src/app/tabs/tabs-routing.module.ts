@@ -39,6 +39,20 @@ const routes: Routes = [
                 ]
             },
             {
+                path: 'meet',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () =>
+                            import('../pages/meet/meet.module').then(m => m.MeetPageModule)
+                    }
+                ]
+            },
+            {
+                path: 'friends',
+                loadChildren: () => import('../pages/friends/friends.module').then( m => m.FriendsPageModule)
+            },
+            {
                 path: 'rencontre',
                 children: [
                     {

@@ -28,6 +28,9 @@ export class LoginPage implements OnInit {
     emailInputError: boolean;
     passwordInputError: boolean;
 
+    passwordIcon = 'eye-outline';
+    passwordInputType= 'password';
+
     constructor(
         public loginFormBuilder: FormBuilder,
         private authService: AuthenticationService,
@@ -72,6 +75,17 @@ export class LoginPage implements OnInit {
 
         this.loginForm.controls.email.reset();
         this.loginForm.controls.password.reset();
+    }
+
+    changePasswordView(): void {
+        if (this.passwordInputType === 'password') {
+            this.passwordInputType = 'input';
+            this.passwordIcon = 'eye-off-outline';
+        }
+        else if (this.passwordInputType === 'input') {
+            this.passwordInputType = 'password';
+            this.passwordIcon = 'eye-outline';
+        }
     }
 
     buildForm(): void {
