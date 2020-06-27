@@ -103,12 +103,16 @@
     "TITLE": "Création d'évènement",
     "TYPE": "Sélectionnez un type",
     "WARNING": {
-      "TEXT": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>\n            Duis egestas accumsan scelerisque. Morbi dapibus nisi sit amet dui vulputate, eu accumsan ante placerat. Sed velit ante, porttitor nec justo tincidunt, viverra consectetur ligula.<br>\n            <br>\n            Praesent non nisl at quam dictum viverra sit amet ut orci. Cras vitae odio arcu. Cras pulvinar lacus est, non feugiat est commodo non. Ut iaculis id.",
+      "TEXT": "En créant un événement vous vous engagez à être présent.e le jour du déroulement. Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champs \"localisation\").",
       "TITLE": "Informations sur la création d'un évènement"
     }
   },
   "EVENT_EDIT": {
-    "TITLE": "Editer mon événement"
+    "TITLE": "Editer mon événement",
+    "WARNING": {
+      "TEXT": "En éditant un événement vous vous engagez à être présent.e le jour du déroulement. Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champs \"localisation\").",
+      "TITLE": "Informations sur l'édition d'un évènement"
+    }
   },
   "EVENTS": {
     "ANY_EVENT": "Aucun événement près de chez vous.",
