@@ -51,7 +51,7 @@
             <ion-item mode="md">
                 <ion-label position="floating">{{ 'EVENT_CREATE.DATE' | translate }}</ion-label>
                 <ion-datetime formControlName="date" display-format="DD MMMM YYYY HH:mm"
-                              pickerFormat="HH:mm" mode="md" min="{{ this.minDate }}" max="{{ this.maxDate }}"
+                              pickerFormat="DD MMMM YYYY HH:mm" mode="md" min="{{ this.minDate }}" max="{{ this.maxDate }}"
                               placeholder="{{ 'EVENT_CREATE.SELECT_DATE' | translate }}">
                 </ion-datetime>
                 <ion-icon mode="md" slot="start" name="calendar-outline"

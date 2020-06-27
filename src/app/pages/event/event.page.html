@@ -17,8 +17,7 @@
 
         <ion-fab horizontal="end" vertical="bottom" slot="fixed" edge *ngIf="!isOwner()">
             <ion-fab-button (click)="changeEventParticipation()">
-                <ion-icon *ngIf="event.members.length > 0" name="person-remove-outline"></ion-icon>
-                <ion-icon *ngIf="event.members.length == 0" name="person-add-outline"></ion-icon>
+                <ion-icon name="{{ participationIcon ? participationIcon : 'person-add-outline'}}"></ion-icon>
             </ion-fab-button>
         </ion-fab>
 

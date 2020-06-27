@@ -1,16 +1,16 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { EventService } from "../../services/event/event.service";
-import { UserService } from "../../services/user/user.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ToastController } from "@ionic/angular";
-import { TranslateService } from "@ngx-translate/core";
-import { EventInterface } from "../../interfaces/event/event-interface";
-import { EventType } from "../../interfaces/event/event-type";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { EventEdit } from "../../interfaces/event/event-edit";
-import { HttpErrorResponse } from "@angular/common/http";
-import { GeolocationService } from "../../services/geolocation/geolocation.service";
-import { EventsService } from "../../services/eventsObs/events.service";
+import { EventService } from '../../services/event/event.service';
+import { UserService } from '../../services/user/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { EventInterface } from '../../interfaces/event/event-interface';
+import { EventType } from '../../interfaces/event/event-type';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EventEdit } from '../../interfaces/event/event-edit';
+import { HttpErrorResponse } from '@angular/common/http';
+import { GeolocationService } from '../../services/geolocation/geolocation.service';
+import { UpdateService } from '../../services/eventsObs/update.service';
 
 @Component({
     selector: 'app-event-edit',
@@ -20,7 +20,7 @@ import { EventsService } from "../../services/eventsObs/events.service";
 export class EventEditPage implements OnInit {
     public data: string = null;
 
-    @ViewChild("input", null) input;
+    @ViewChild('input', null) input;
     location: string = null;
 
     event: EventInterface;
@@ -53,7 +53,7 @@ export class EventEditPage implements OnInit {
         public toastController: ToastController,
         public translate: TranslateService,
         private geolocationService: GeolocationService,
-        public events: EventsService
+        public updateService: UpdateService
     ) {
         this.geolocationService.myMethod$.subscribe((data) => {
                 this.data = data; // And he have data here too!
@@ -73,18 +73,18 @@ export class EventEditPage implements OnInit {
 
     getMinDate() {
         const today = new Date();
-        if (today.getMonth()+1 < 10)
-            this.minDate = today.getFullYear()+'-'+0+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+'.'+today.getMilliseconds();
+        if (today.getMonth() + 1 < 10)
+            this.minDate = today.getFullYear() + '-' + 0 + (today.getMonth() + 1) + '-' + (today.getDate() + 1) + 'T00:00:00+02:00';
         else
-            this.minDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+'.'+today.getMilliseconds();
+            this.minDate = today.getFullYear() + '-' + 0 + (today.getMonth() + 1) + '-' + (today.getDate() + 1) + 'T00:00:00+02:00';
     }
 
     getMaxDate() {
         const today = new Date();
-        if (today.getMonth()+1 < 10)
-            this.maxDate =  (today.getFullYear() + 10)+'-'+0+(today.getMonth()+1)+'-'+today.getDate()+'T'+23+':'+59+':'+59;
+        if (today.getMonth() + 1 < 10)
+            this.maxDate = (today.getFullYear() + 10) + '-' + 0 + (today.getMonth() + 1) + '-' + today.getDate() + 'T' + 23 + ':' + 59 + ':' + 59;
         else
-            this.maxDate = (today.getFullYear() + 10)+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+23+':'+59+':'+59;
+            this.maxDate = (today.getFullYear() + 10) + '-' + (today.getMonth() + 1) + '-' + today.getDate() + 'T' + 23 + ':' + 59 + ':' + 59;
     }
 
     buildForm(): void {
@@ -115,13 +115,16 @@ export class EventEditPage implements OnInit {
 
     submit(): void {
         if (this.formIsValid()) {
-            this.createEvent();
+            this.editEvent();
         } else {
             this.presentToast('general');
         }
     }
 
-    createEvent(): void {
+    editEvent(): void {
+
+        this.eventEditForm.value.date = this.eventEditForm.value.date.replace("+0000", "+02:00");
+
         this.eventEditInterface = {
             id: this.eventId,
             description: this.eventEditForm.value.description,
@@ -131,7 +134,7 @@ export class EventEditPage implements OnInit {
 
         this.eventService.editEvent(this.eventEditInterface).subscribe(
             _ => {
-                this.events.publishSomeData('updateEvent')
+                this.updateService.publishSomeData('updateEvent')
                 this.router.navigateByUrl('/tabs/events/event/' + this.eventId, {state: {comingFromEdition: true}})
             },
             error => this.processError(error))

@@ -7,15 +7,6 @@
     <div class="form-container">
         <h2>{{ 'ACCOUNT_CREATE.TITLE' | translate }}</h2>
 
-        <!--        <div class="button-center">-->
-        <!--            <ion-button fill="clear" id="google" style="color:#5d4d4c;">-->
-        <!--                <ion-icon mode="md" slot="start" name="logo-google"></ion-icon>-->
-        <!--            </ion-button>-->
-        <!--            <ion-button fill="clear" id="facebook" style="color:#5d4d4c;">-->
-        <!--                <ion-icon mode="md" slot="start" name="logo-facebook"></ion-icon>-->
-        <!--            </ion-button>-->
-        <!--        </div>-->
-
         <form *ngIf="createPersonForm" [formGroup]="createPersonForm" (keyup.enter)="submit()">
 
             <ion-list>
@@ -32,15 +23,14 @@
 
                 <ion-item mode="md">
                     <ion-label position="floating">{{ 'ACCOUNT_CREATE.PASSWORD' | translate }}</ion-label>
-                    <ion-input [type]="'password'" formControlName="password" maxlength="32">
+                    <ion-input [type]="passwordInputType" formControlName="password" maxlength="32">
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
-                    <!--                    <ion-button slot="end" class="ion-align-self-end"-->
-                    <!--                                color="medium" fill="clear">-->
-                    <!--                    </ion-button>-->
                     <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
                         name="alert-circle-outline" class="ion-align-self-end error-message"
                         (click)="presentToast('password')"></ion-icon>
+                    <ion-icon (click)="changePasswordView()" mode="md" slot="end"
+                              name="{{ passwordIcon }}" class="ion-align-self-end"></ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
@@ -109,22 +99,21 @@
                     <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">
                     </ion-icon>
                 </ion-item>
-
             </ion-list>
-
-<!--            <div class="checkbox">-->
-<!--                <ion-checkbox formControlName="push_notification" checked="false"></ion-checkbox>-->
-<!--                <ion-label>{{ 'ACCOUNT_CREATE.PUSH' | translate }}</ion-label>-->
-<!--            </div>-->
-
-<!--            <div class="checkbox">-->
-<!--                <ion-checkbox formControlName="active_localisation" checked="false"></ion-checkbox>-->
-<!--                <ion-label>{{ 'ACCOUNT_CREATE.GEOLOC' | translate }}</ion-label>-->
-<!--            </div>-->
 
             <div class="checkbox">
                 <ion-checkbox formControlName="display_real_name" checked="false"></ion-checkbox>
                 <ion-label>{{ 'ACCOUNT_CREATE.DISPLAY_NAME' | translate }}</ion-label>
+            </div>
+
+            <div class="checkbox">
+                <ion-checkbox formControlName="display_email" checked="false"></ion-checkbox>
+                <ion-label>{{ 'ACCOUNT_CREATE.DISPLAY_MAIL' | translate }}</ion-label>
+            </div>
+
+            <div class="checkbox">
+                <ion-checkbox formControlName="display_phone" checked="false"></ion-checkbox>
+                <ion-label>{{ 'ACCOUNT_CREATE.DISPLAY_PHONE' | translate }}</ion-label>
             </div>
         </form>
 
