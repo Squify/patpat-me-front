@@ -13,7 +13,7 @@ import { Platform, ToastController } from '@ionic/angular';
 import { Animal } from '../../interfaces/animal/animal';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
-import { EventsService } from '../../services/eventsObs/events.service';
+import { UpdateService } from '../../services/eventsObs/update.service';
 
 @Component({
     selector: 'app-update-animal',
@@ -56,7 +56,7 @@ export class AnimalEditPage implements OnInit {
         public router: Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
-        public events: EventsService,
+        public updateService: UpdateService,
         public platform: Platform
     ) {
     }
@@ -258,7 +258,7 @@ export class AnimalEditPage implements OnInit {
 
         this.animalService.updateAnimal(this.updateAnimalInterface).subscribe(
             _ => {
-                this.events.publishSomeData('updateAnimal')
+                this.updateService.publishSomeData('updateAnimal')
                 this.router.navigateByUrl('/tabs/profile/animal/' + this.animalId, {state: {comingFromEdition: true}})
             },
             e => this.processError(e)

@@ -10,7 +10,7 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
-import { EventsService } from "../../services/eventsObs/events.service";
+import { UpdateService } from "../../services/eventsObs/update.service";
 
 @Component({
     selector: 'app-animal',
@@ -36,7 +36,7 @@ export class AnimalPage implements OnInit {
         private animalService: AnimalService,
         private userService: UserService,
         public alertController: AlertController,
-        public events: EventsService,
+        public updateService: UpdateService,
     ) {
     }
 
@@ -51,7 +51,7 @@ export class AnimalPage implements OnInit {
         this.getTemper();
         this.getBreed();
 
-        this.events.getObservable().subscribe((data) => {
+        this.updateService.getObservable().subscribe((data) => {
             switch (data) {
                 case 'updateAnimal':
                     this.getAnimal();
@@ -60,12 +60,6 @@ export class AnimalPage implements OnInit {
                     break;
             }
         });
-    }
-
-    ionViewDidEnter() {
-        if (history.state.comingFromEdition) {
-            //this.ngZone.run(() => this.getAnimal())
-        }
     }
 
     getAnimal(): void {
@@ -150,7 +144,7 @@ export class AnimalPage implements OnInit {
     deleteAnimal(): void {
         this.animalService.deleteAnimal(this.animalId).subscribe(
             _ => {
-                this.events.publishSomeData('updateAnimal')
+                this.updateService.publishSomeData('updateAnimal')
                 this.router.navigateByUrl('/tabs/profile')
             }
         );

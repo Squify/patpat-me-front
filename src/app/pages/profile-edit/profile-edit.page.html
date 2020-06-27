@@ -68,7 +68,7 @@
 
           <ion-item mode="md">
             <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
-              placeholder="{{ 'PROFILE_EDIT.GENDER' | translate }}" [value]="user.gender.name">
+              placeholder="{{ 'PROFILE_EDIT.GENDER' | translate }}" [value]="user.gender ? user.gender.name : null">
               <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
                 {{ gender.name }}
               </ion-select-option>
@@ -88,7 +88,7 @@
 
           <ion-item>
             <ion-label position="floating">{{ 'PROFILE_EDIT.BIRTHDAY' | translate }}</ion-label>
-            <ion-datetime formControlName="birthday" [value]="user.birthday" display-format="DD MMMM YYYY"
+            <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY"
               pickerFormat="DD MMMM YYYY" mode="md" placeholder="{{ 'PROFILE_EDIT.SELECT_DATE' | translate }}">
             </ion-datetime>
             <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">

@@ -8,7 +8,7 @@ import { EventType } from '../../interfaces/event/event-type';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
 import { GeolocationService } from "../../services/geolocation/geolocation.service";
-import { EventsService } from "../../services/eventsObs/events.service";
+import { UpdateService } from "../../services/eventsObs/update.service";
 
 @Component({
     selector: 'app-event-create',
@@ -45,7 +45,7 @@ export class EventCreatePage implements OnInit {
         public translate: TranslateService,
         public router: Router,
         private geolocationService: GeolocationService,
-        public events: EventsService
+        public updateService: UpdateService
     ) {
         this.geolocationService.myMethod$.subscribe((data) => {
                 this.data = data; // And he have data here too!
@@ -160,7 +160,7 @@ export class EventCreatePage implements OnInit {
         this.eventService.createEvent(this.createEventInterface).subscribe(
             _ => {
                 this.createEventForm.reset();
-                this.events.publishSomeData('createEvent')
+                this.updateService.publishSomeData('createEvent')
                 this.router.navigateByUrl('');
             },
             error => this.processError(error))

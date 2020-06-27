@@ -18,11 +18,7 @@ const routes: Routes = [
         path: 'account-create',
         loadChildren: () =>
             import('./pages/account-create/account-create.module').then(m => m.AccountCreatePageModule)
-    },  {
-    path: 'meet',
-    loadChildren: () => import('./pages/meet/meet.module').then( m => m.MeetPageModule)
-  }
-
+    }
 ];
 
 @NgModule({

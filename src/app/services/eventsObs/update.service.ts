@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class EventsService {
+export class UpdateService {
 
   private fooSubject = new Subject<any>();
 

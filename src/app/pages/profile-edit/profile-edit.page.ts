@@ -9,7 +9,7 @@ import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AccountEdit } from '../../interfaces/user/account-edit';
-import { EventsService } from '../../services/eventsObs/events.service';
+import { UpdateService } from '../../services/eventsObs/update.service';
 
 @Component({
     selector: 'app-profile-edit',
@@ -40,14 +40,14 @@ export class ProfileEditPage implements OnInit {
     phoneInputError: boolean;
 
     passwordIcon = 'eye-outline';
-    passwordInputType= 'password';
+    passwordInputType = 'password';
 
     constructor(
         private userService: UserService,
         private genderService: GenderService,
         public toastController: ToastController,
         private router: Router,
-        public events: EventsService,
+        public updateService: UpdateService,
         public platform: Platform
     ) {
     }
@@ -62,8 +62,7 @@ export class ProfileEditPage implements OnInit {
         if (this.passwordInputType === 'password') {
             this.passwordInputType = 'input';
             this.passwordIcon = 'eye-off-outline';
-        }
-        else if (this.passwordInputType === 'input') {
+        } else if (this.passwordInputType === 'input') {
             this.passwordInputType = 'password';
             this.passwordIcon = 'eye-outline';
         }
@@ -125,7 +124,7 @@ export class ProfileEditPage implements OnInit {
 
             display_real_name: new FormControl({value: this.user.display_real_name, disabled: false}),
 
-            fk_id_gender: new FormControl({value: this.user.gender.name, disabled: false}),
+            fk_id_gender: new FormControl({value: this.user.gender ? this.user.gender.name : null, disabled: false}),
         });
     }
 
@@ -146,21 +145,41 @@ export class ProfileEditPage implements OnInit {
     }
 
     updateAccount(): void {
+
+        let birthday = this.user.birthday;
+        if (!this.user.birthday) {
+            if (this.editPersonForm.value.birthday) {
+                this.editPersonForm.value.birthday = this.editPersonForm.value.birthday.replace('+0000', '+02:00');
+                birthday = this.editPersonForm.value.birthday;
+            }
+        }
+        if ((this.user.birthday == null) && (this.editPersonForm.value.birthday == null))
+            birthday = '';
+
+        let gender = '';
+        if (this.user.gender)
+            gender = this.user.gender.name;
+        else if (!this.user.gender) {
+            gender = this.editPersonForm.value.gender;
+        }
+        if ((this.user.gender == null) && (this.editPersonForm.value.gender == null))
+            gender = '';
+
         this.accountEditInterface = {
             email: this.editPersonForm.value.email,
             password: this.editPersonForm.value.password,
             profile_pic_path: this.selectedPic,
             phone: this.editPersonForm.value.phone,
-            birthday: this.editPersonForm.value.birthday,
+            birthday: birthday,
             display_email: this.editPersonForm.value.display_email,
             display_phone: this.editPersonForm.value.display_phone,
             display_real_name: this.editPersonForm.value.display_real_name,
-            gender: this.editPersonForm.value.fk_id_gender,
+            gender: gender,
         };
 
         this.userService.updateUser(this.accountEditInterface).subscribe(
             _ => {
-                this.events.publishSomeData('updateProfile')
+                this.updateService.publishSomeData('updateProfile')
                 this.router.navigateByUrl('/tabs/profile')
             },
             error => this.processError(error))

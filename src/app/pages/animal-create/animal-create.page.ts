@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
-import { EventsService } from "../../services/eventsObs/events.service";
+import { UpdateService } from "../../services/eventsObs/update.service";
 
 @Component({
     selector: 'app-create-animal',
@@ -52,7 +52,7 @@ export class AnimalCreatePage implements OnInit {
         public toastController: ToastController,
         public translate: TranslateService,
         public router: Router,
-        public events: EventsService,
+        public updateService: UpdateService,
         public platform: Platform
     ) {
     }
@@ -227,7 +227,7 @@ export class AnimalCreatePage implements OnInit {
 
         this.animalService.createAnimal(this.createAnimalInterface).subscribe(
             _ => {
-                this.events.publishSomeData('createAnimal')
+                this.updateService.publishSomeData('createAnimal')
                 this.router.navigate(['tabs/profile'])
             },
             error => this.processError(error));
