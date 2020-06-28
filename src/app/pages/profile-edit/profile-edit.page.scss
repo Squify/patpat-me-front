@@ -1,4 +1,4 @@
-form {
+/*form {
   width: 100%;
   margin-top: 50px;
 
@@ -21,4 +21,33 @@ form {
       margin-left: 10px;
     }
   }
+}*/
+
+form {
+  .checkbox-part ion-row {
+    padding-bottom: 10px;
+
+    ion-label {
+      padding-left: 3px;
+    }
+  }
+}
+
+ion-avatar {
+  background-color: #FEE8C7;
+  margin: 8px 4px;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  div {
+    display: inline-block;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

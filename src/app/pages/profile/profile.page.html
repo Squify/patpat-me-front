@@ -21,8 +21,11 @@
 
     <div class="userContainer" *ngIf="user">
 
-        <div style="display: flex; flex-direction: column; align-items: center">
-            <h3 class="remove-margin" style="margin-top: 15px">
+        <div class="flex-column-center">
+            <h3 class="remove-margin flex-column-center">
+                <ion-avatar>
+                    <img src="{{ user.profile_pic_path }}">
+                </ion-avatar>
                 {{ user.firstname }}
                 {{ user.lastname | uppercase }}
             </h3>
@@ -44,50 +47,50 @@
 
 
         <div [ngSwitch]="selectedSegment">
-            <ion-card *ngSwitchCase="'informationSegment'"
-                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+            <ion-card *ngSwitchCase="'informationSegment'" class="switch-case">
                 <ion-list>
                     <ion-item>
-                        <ion-icon class="information-icon" mode="md" name="at" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="man-outline"></ion-icon>
+                        <ion-label *ngIf="user.display_phone && user.display_email && user.display_real_name">
+                            {{ 'PROFILE.FRIENDS_VIEW' | translate }} :
+                            <ul>
+                                <li *ngIf="user.display_real_name">{{ 'PROFILE.DISPLAY_NAME' | translate }}</li>
+                                <li *ngIf="user.display_email">{{ 'PROFILE.DISPLAY_EMAIL' | translate }}</li>
+                                <li *ngIf="user.display_phone">{{ 'PROFILE.DISPLAY_PHONE' | translate }}</li>
+                            </ul>
+                        </ion-label>
+                        <ion-label
+                                *ngIf="!user.display_phone && !user.display_email && !user.display_real_name">{{ 'PROFILE.ANY_DISPLAY' | translate }}</ion-label>
+
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-icon class="information-icon" mode="md" name="at"></ion-icon>
                         <ion-label>{{ user.email | lowercase }} </ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon class="information-icon" mode="md" name="call" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="call"></ion-icon>
                         <ion-label *ngIf="user.phone">{{ user.phone }}</ion-label>
                         <ion-label *ngIf="!user.phone">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon class="information-icon" mode="md" name="gift" color="medium"></ion-icon>
-                        <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy à HH:mm' }}</ion-label>
+                        <ion-icon class="information-icon" mode="md" name="gift"></ion-icon>
+                        <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy' }}</ion-label>
                         <ion-label *ngIf="!user.birthday">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-icon class="information-icon" mode="md" name="male-female-outline" color="medium"></ion-icon>
+                        <ion-icon class="information-icon" mode="md" name="male-female-outline">
+                        </ion-icon>
                         <ion-label *ngIf="user.gender">{{ user.gender.name }}</ion-label>
                         <ion-label *ngIf="!user.gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-icon class="information-icon" mode="md" name="notifications" color="medium"></ion-icon>
-                        <ion-label>{{ 'PROFILE.NOTIFICATIONS' | translate }}
-                            <p>{{ user.push_notification ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}</p>
-                        </ion-label>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-icon class="information-icon" mode="md" name="location-outline" color="medium"></ion-icon>
-                        <ion-label>{{ 'PROFILE.GEOLOCATION' | translate }}
-                            <p>{{ user.active_localisation ? ('PROFILE.ACTIVATED' | translate) : ('PROFILE.DEACTIVATED' | translate) }}</p>
-                        </ion-label>
                     </ion-item>
                 </ion-list>
             </ion-card>
 
-            <ion-card *ngSwitchCase="'animalSegment'"
-                      style="margin: unset; border-top-left-radius: 0;border-top-right-radius: 0">
+            <ion-card *ngSwitchCase="'animalSegment'" class="switch-case">
                 <ion-list *ngIf="animals.length == 0">
                     <p style="margin: 16px">
                         {{ 'PROFILE.ANY_ANIMAL' | translate }}
@@ -96,7 +99,7 @@
                 <ion-list class="parts-list" *ngIf="animals.length > 0">
                     <ion-item *ngFor="let animal of animals" class="part-card" [routerLink]="'animal/'+ animal.id">
                         <ion-thumbnail class="part-avatar">
-                            <ion-img [src]="img"></ion-img>
+                            <ion-img [src]="animal.image_path"></ion-img>
                         </ion-thumbnail>
                         <ion-col>
                             {{ animal.name }}<br>

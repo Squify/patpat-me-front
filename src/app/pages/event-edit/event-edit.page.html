@@ -10,10 +10,10 @@
 <ion-content>
     <ion-card class="warning-card">
         <ion-card-header>
-            <ion-card-title>{{ 'EVENT_CREATE.WARNING.TITLE' | translate }}</ion-card-title>
+            <ion-card-title>{{ 'EVENT_EDIT.WARNING.TITLE' | translate }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            {{ 'EVENT_CREATE.WARNING.TEXT' | translate }}
+            {{ 'EVENT_EDIT.WARNING.TEXT' | translate }}
         </ion-card-content>
     </ion-card>
 
@@ -50,8 +50,8 @@
 
             <ion-item mode="md">
                 <ion-label position="floating">{{ 'EVENT_CREATE.DATE' | translate }}</ion-label>
-                <ion-datetime formControlName="date"
-                              display-format="DD MMMM YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" mode="md"
+                <ion-datetime formControlName="date" display-format="DD MMMM YYYY HH:mm"
+                              pickerFormat="DD MMMM YYYY HH:mm" mode="md" min="{{ this.minDate }}" max="{{ this.maxDate }}"
                               placeholder="{{ 'EVENT_CREATE.SELECT_DATE' | translate }}">
                 </ion-datetime>
                 <ion-icon mode="md" slot="start" name="calendar-outline"

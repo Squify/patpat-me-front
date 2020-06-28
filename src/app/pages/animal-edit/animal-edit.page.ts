@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
 import { AnimalType } from 'src/app/interfaces/animal/animal-type';
 import { GenderService } from 'src/app/services/gender/gender.service';
@@ -9,10 +9,11 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { Temper } from 'src/app/interfaces/animal/temper';
 import { Breed } from 'src/app/interfaces/animal/breed';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
-import { Animal } from "../../interfaces/animal/animal";
-import { ActivatedRoute, Router } from "@angular/router";
-import { UserService } from "../../services/user/user.service";
+import { Platform, ToastController } from '@ionic/angular';
+import { Animal } from '../../interfaces/animal/animal';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
+import { UpdateService } from '../../services/update/update.service';
 
 @Component({
     selector: 'app-update-animal',
@@ -37,12 +38,15 @@ export class AnimalEditPage implements OnInit {
     unknownError: boolean;
     serverError: boolean;
     inputsError: boolean;
-    nameInputError: boolean;
     birthdayError: boolean;
     typeError: boolean;
     breedError: boolean;
     temperError: boolean;
     genderError: boolean;
+
+    dogPicPaths: string[] = [];
+    catPicPaths: string[] = [];
+    selectedPic: string;
 
     constructor(
         private genderService: GenderService,
@@ -52,6 +56,8 @@ export class AnimalEditPage implements OnInit {
         public router: Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
+        public updateService: UpdateService,
+        public platform: Platform
     ) {
     }
 
@@ -61,11 +67,29 @@ export class AnimalEditPage implements OnInit {
         if (!this.animalId)
             this.router.navigateByUrl('/tabs/profile');
 
-        this.getAnimal();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
+        this.getAnimal();
+    }
+
+    loadCatPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.catPicPaths.push('/assets/images/cat_pic/cat_' + i + '.png')
+        }
+    }
+
+    loadDogPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.dogPicPaths.push('/assets/images/dog_pic/dog_' + i + '.png')
+        }
+    }
+
+    getPicPath(path): void {
+        this.selectedPic = path;
     }
 
     getAnimal(): void {
@@ -91,20 +115,44 @@ export class AnimalEditPage implements OnInit {
 
     buildForm(): void {
 
-        this.isTypeSelected = false;
+        this.selectedPic = this.animal.image_path;
+        this.loadCatPics();
+        this.loadDogPics();
+        this.isTypeSelected = !!this.animal.type;
 
         this.updateAnimalForm = new FormGroup({
-
-            birthday: new FormControl({value: this.animal.birthday, disabled: false}),
-            fk_id_temper: new FormControl({value: this.animal.tempers.map(temper => temper.name), disabled: false}),
-            fk_id_gender: new FormControl({value: this.animal.gender.name, disabled: false}),
-            fk_id_type: new FormControl({value: this.animal.type.name, disabled: false}),
-            fk_id_breed: new FormControl({value: this.animal.breed.name, disabled: false}),
+            birthday: new FormControl({value: this.animal.birthday ? this.animal.birthday : null, disabled: false}),
+            fk_id_temper: new FormControl({value: this.animal.tempers.map(temper => temper.name), disabled: false}, {
+                validators: [
+                    Validators.required
+                ]
+            }),
+            fk_id_gender: new FormControl({value: this.animal.gender.name, disabled: false}, {
+                validators: [
+                    Validators.required
+                ]
+            }),
+            fk_id_type: new FormControl({value: this.animal.type.name, disabled: false}, {
+                validators: [
+                    Validators.required
+                ]
+            }),
+            fk_id_breed: new FormControl({value: this.animal.breed ? this.animal.breed.name : null, disabled: false}),
         });
+
+
+        if (this.isTypeSelected == true) {
+            this.typeChange();
+        }
     }
 
     typeChange(): void {
         this.isTypeSelected = true;
+
+        if (this.updateAnimalForm.value.fk_id_type == 'Chien')
+            this.loadDogPics();
+        if (this.updateAnimalForm.value.fk_id_type == 'Chat')
+            this.loadCatPics();
 
         this.types.forEach((type) => {
             if (type.name === this.updateAnimalForm.value.fk_id_type) {
@@ -194,6 +242,9 @@ export class AnimalEditPage implements OnInit {
     }
 
     updateAnimal(): void {
+
+        this.updateAnimalForm.value.birthday = this.updateAnimalForm.value.birthday.replace("+0000", "+02:00");
+
         this.updateAnimalInterface = {
             id: this.animal.id,
             owner: this.animal.owner.id,
@@ -202,12 +253,29 @@ export class AnimalEditPage implements OnInit {
             gender: this.updateAnimalForm.value.fk_id_gender,
             type: this.updateAnimalForm.value.fk_id_type,
             breed: this.updateAnimalForm.value.fk_id_breed,
+            image_path: this.setPicture()
         };
 
         this.animalService.updateAnimal(this.updateAnimalInterface).subscribe(
-            _ => this.router.navigateByUrl('/tabs/profile/animal/' + this.animalId, {state: {comingFromEdition: true}}),
+            _ => {
+                this.updateService.publishSomeData('updateAnimal')
+                this.router.navigateByUrl('/tabs/profile/animal/' + this.animalId, {state: {comingFromEdition: true}})
+            },
             e => this.processError(e)
         );
+    }
+
+    setPicture(): string {
+        if (!this.selectedPic) {
+            if (this.updateAnimalForm.value.fk_id_type == 'Chat') {
+                return '/assets/images/cat_pic/cat_1.png'
+            }
+            else if (this.updateAnimalForm.value.fk_id_type == 'Chat') {
+                return '/assets/images/dog_pic/dog_6.png'
+            }
+        }
+        else
+            return this.selectedPic;
     }
 
     formIsValid(): boolean {

@@ -9,9 +9,10 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { Temper } from 'src/app/interfaces/animal/temper';
 import { Breed } from 'src/app/interfaces/animal/breed';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
+import { UpdateService } from "../../services/update/update.service";
 
 @Component({
     selector: 'app-create-animal',
@@ -40,6 +41,10 @@ export class AnimalCreatePage implements OnInit {
     temperError: boolean;
     genderError: boolean;
 
+    dogPicPaths: string[] = [];
+    catPicPaths: string[] = [];
+    selectedPic: string;
+
     constructor(
         private genderService: GenderService,
         private typeService: TypeService,
@@ -47,47 +52,69 @@ export class AnimalCreatePage implements OnInit {
         public toastController: ToastController,
         public translate: TranslateService,
         public router: Router,
+        public updateService: UpdateService,
+        public platform: Platform
     ) {
-
-        this.buildForm();
     }
 
     ngOnInit() {
-    }
 
-    buildForm(): void {
-
+        this.buildForm();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
+    }
+
+    loadCatPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.catPicPaths.push('/assets/images/cat_pic/cat_' + i + '.png')
+        }
+        this.catPicPaths.push('/assets/images/animal_default.png')
+    }
+
+    loadDogPics(): void {
+        this.selectedPic = null;
+        for (let i = 1; i <= 8; i++) {
+            this.dogPicPaths.push('/assets/images/dog_pic/dog_' + i + '.png')
+        }
+        this.dogPicPaths.push('/assets/images/animal_default.png')
+    }
+
+    getPicPath(path): void {
+        this.selectedPic = path;
+    }
+
+    buildForm(): void {
+
+        this.loadCatPics();
+        this.loadDogPics();
         this.isTypeSelected = false;
 
         // Create account form
         this.createAnimalForm = new FormGroup({
-
             name: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             birthday: new FormControl(''),
-
-            fk_id_temper: new FormControl(''),
-
+            fk_id_temper: new FormControl('', {
+                validators: [
+                    Validators.required
+                ]
+            }),
             fk_id_gender: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             fk_id_type: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             fk_id_breed: new FormControl(''),
 
         });
@@ -95,6 +122,11 @@ export class AnimalCreatePage implements OnInit {
 
     typeChange(): void {
         this.isTypeSelected = true;
+
+        if (this.createAnimalForm.value.fk_id_type == 'Chien')
+            this.loadDogPics();
+        if (this.createAnimalForm.value.fk_id_type == 'Chat')
+            this.loadCatPics();
 
         this.types.forEach((type) => {
             if (type.name === this.createAnimalForm.value.fk_id_type) {
@@ -190,10 +222,14 @@ export class AnimalCreatePage implements OnInit {
             gender: this.createAnimalForm.value.fk_id_gender,
             type: this.createAnimalForm.value.fk_id_type,
             breed: this.createAnimalForm.value.fk_id_breed,
+            image_path: this.selectedPic
         };
 
         this.animalService.createAnimal(this.createAnimalInterface).subscribe(
-            _ => this.router.navigate(['tabs/profile']),
+            _ => {
+                this.updateService.publishSomeData('createAnimal')
+                this.router.navigate(['tabs/profile'])
+            },
             error => this.processError(error));
     }
 

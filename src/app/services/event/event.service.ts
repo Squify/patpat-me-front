@@ -29,7 +29,7 @@ export class EventService {
         return this.http.get<EventType[]>(environment.BACKEND_URL + '/api/event/type');
     }
 
-    public getEventById(eventId: number): Observable<EventInterface> {
+    getEventById(eventId: number): Observable<EventInterface> {
 
         const params: HttpParams = new HttpParams().set('eventId', eventId.toString());
         return this.http.get<EventInterface>(environment.BACKEND_URL + '/api/event', {params});

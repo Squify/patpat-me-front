@@ -10,6 +10,9 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
+import { UpdateService } from "../../services/update/update.service";
+import { User } from '../../interfaces/user/user';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-animal',
@@ -18,14 +21,17 @@ import { AlertController } from '@ionic/angular';
 })
 export class AnimalPage implements OnInit {
 
+    connectedUser: User;
+
     animalId: number;
     animal: Animal;
+
     genders: AnimalGender[] = [];
     types: AnimalType[] = [];
     breeds: Breed[] = [];
     breedsToDisplay: Breed[] = [];
     tempers: Temper[] = [];
-   
+
     constructor(
         public router: Router,
         private activatedRoute: ActivatedRoute,
@@ -34,44 +40,55 @@ export class AnimalPage implements OnInit {
         private typeService: TypeService,
         private animalService: AnimalService,
         private userService: UserService,
-        public alertController: AlertController
+        public alertController: AlertController,
+        public updateService: UpdateService,
+        public translate: TranslateService,
     ) {
     }
 
     ngOnInit() {
+
         this.animalId = +this.activatedRoute.snapshot.paramMap.get('id');
         if (!this.animalId)
             this.router.navigateByUrl('/tabs/profile');
-            
+
+        this.getConnectedUser();
         this.getAnimal();
         this.getGenders();
         this.getTypes();
         this.getTemper();
         this.getBreed();
+
+        this.updateService.getObservable().subscribe((data) => {
+            switch (data) {
+                case 'updateAnimal':
+                    this.getAnimal();
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
-    ionViewDidEnter() {
-        if (history.state.comingFromEdition) {
-            //this.ngZone.run(() => this.getAnimal())
-        }
-    }
-    
     getAnimal(): void {
 
         this.animalService.getAnimalById(this.animalId).subscribe(
             value => {
                 this.animal = value;
-                if (!this.isOwner())
-                this.router.navigateByUrl('/tabs/events');
             },
         );
     }
 
+    getConnectedUser(): void {
+        this.userService.getRemoteUser().subscribe(
+            user => this.connectedUser = user
+            // e => this.processError(e)
+        )
+    }
+
     isOwner(): boolean {
 
-        let connectedUserId;
-        this.userService.getUser().subscribe(connectedUser => connectedUserId = connectedUser.id)
-        return this.animal.owner.id == connectedUserId;
+        return this.animal.owner.id == this.connectedUser.id;
     }
 
     getGenders(): void {
@@ -137,38 +154,34 @@ export class AnimalPage implements OnInit {
 
     deleteAnimal(): void {
         this.animalService.deleteAnimal(this.animalId).subscribe(
-            _=> {console.log("animal suprimer");
+            _ => {
+                this.updateService.publishSomeData('updateAnimal')
                 this.router.navigateByUrl('/tabs/profile')
-        }
+            }
         );
     }
 
 
     async deleteAlert() {
         const alert = await this.alertController.create({
-          header: 'Confirmation',
-          message: 'Etes-vous sûr de vouloir supprimer votre animal ?',
-          buttons: [
-            {
-              text: 'Annuler',
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: (blah) => {
-                console.log('Annulation');
-              }
-            }, {
-              text: 'Confirmer',
-              handler: () => {
-                console.log('Suppression faite');
-                this.deleteAnimal();
-              }
-            }
-          ]
+            header: this.translate.instant('ALERT.CONFIRMATION'),
+            message: this.translate.instant('ALERT.REMOVE_ANIMAL'),
+            buttons: [
+                {
+                    text: this.translate.instant('ALERT.CANCEL'),
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: this.translate.instant('ALERT.CONFIRM'),
+                    handler: () => {
+                        this.deleteAnimal();
+                    }
+                }
+            ]
         });
-      
+
         await alert.present();
-        let result = await alert.onDidDismiss();
-        console.log(result);
+        await alert.onDidDismiss();
     }
 
 }
