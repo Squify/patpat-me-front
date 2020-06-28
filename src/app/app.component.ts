@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {TranslateService} from "@ngx-translate/core";
 import * as algoliasearch from 'algoliasearch/lite';
+import { LanguageService } from './services/language/language.service';
 
 const searchClient = algoliasearch(
     '1NYEVZJLJB',
@@ -26,15 +27,12 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private languageService: LanguageService
   ) {
     this.initializeApp();
 
-    // this language will be used as a fallback when a translation isn't found in the current language
-    translate.setDefaultLang('fr');
-
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    translate.use('fr');
+    this.languageService.setLanguage();
   }
 
   initializeApp() {

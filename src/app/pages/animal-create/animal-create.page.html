@@ -1,100 +1,117 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ 'ANIMAL_CREATE.TITLE' | translate }}</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ 'ANIMAL_CREATE.TITLE' | translate }}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="form-container">
+    <div class="form-container">
 
-    <form [formGroup]="createAnimalForm" (keyup.enter)="submit()">
+        <form [formGroup]="createAnimalForm" (keyup.enter)="submit()">
+            <ion-list>
+                <ion-item mode="md">
+                    <ion-label position="floating">{{ 'ANIMAL_CREATE.NAME' | translate }}</ion-label>
+                    <ion-input type="text" formControlName="name">
+                    </ion-input>
+                    <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
+                    <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
+                              class="error-message"
+                              (click)="presentToast('name')">
+                    </ion-icon>
+                </ion-item>
 
-      <ion-list>
+                <ion-item>
+                    <ion-label position="floating">{{ 'ANIMAL_CREATE.BIRTHDAY' | translate }}</ion-label>
+                    <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY"
+                                  mode="md"
+                                  placeholder="{{ 'ANIMAL_CREATE.SELECT_DATE' | translate }}">
+                    </ion-datetime>
+                    <ion-icon mode="md" slot="start" name="gift"></ion-icon>
+                    <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
+                              class="error-message"
+                              (click)="presentToast('birthday')">
+                    </ion-icon>
+                </ion-item>
 
-        <ion-item mode="md">
-          <ion-label position="floating">{{ 'ANIMAL_CREATE.NAME' | translate }}</ion-label>
-          <ion-input type="text" formControlName="name">
-          </ion-input>
-          <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
-          <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end error-message" (click)="presentToast('name')">
-          </ion-icon>
-        </ion-item>
+                <ion-item mode="md">
+                    <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
+                                placeholder="{{ 'ANIMAL_CREATE.TYPE' | translate }}" (ionChange)="typeChange()">
+                        <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
+                            {{ type.name }}
+                        </ion-select-option>
+                    </ion-select>
+                    <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
+                    <ion-icon *ngIf="typeError" mode="md" slot="end" name="alert-circle-outline" class="error-message"
+                              (click)="presentToast('fk_id_type')">
+                    </ion-icon>
+                </ion-item>
 
-        <ion-item>
-          <ion-label position="floating">{{ 'ANIMAL_CREATE.BIRTHDAY' | translate }}</ion-label>
-          <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
-            placeholder="{{ 'ANIMAL_CREATE.SELECT_DATE' | translate }}">
-          </ion-datetime>
-          <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end"></ion-icon>
-          <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end error-message" (click)="presentToast('birthday')">
-          </ion-icon>
-        </ion-item>
+                <ion-item mode="md">
+                    <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
+                                placeholder="{{ 'ANIMAL_CREATE.BREED' | translate }}" disabled="{{ !isTypeSelected }}">
+                        <ion-select-option *ngFor="let breed of breedsToDisplay" value="{{ breed.name }}">
+                            {{ breed.name }}
+                        </ion-select-option>
+                    </ion-select>
+                    <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end">
+                    </ion-icon>
+                    <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
+                              class="ion-align-self-end error-message" (click)="presentToast('fk_id_breed')">
+                    </ion-icon>
+                </ion-item>
 
-        <ion-item mode="md">
-          <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
-            placeholder="{{ 'ANIMAL_CREATE.TYPE' | translate }}" (ionChange)="typeChange()">
-            <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
-              {{ type.name }}
-            </ion-select-option>
-          </ion-select>
-          <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end"></ion-icon>
-          <ion-icon *ngIf="typeError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end error-message" (click)="presentToast('fk_id_type')">
-          </ion-icon>
-        </ion-item>
+                <ion-item mode="md">
+                    <ion-select interface="popover" formControlName="fk_id_gender"
+                                placeholder="{{ 'ANIMAL_CREATE.GENDER' | translate }}">
+                        <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
+                            {{ gender.name }}
+                        </ion-select-option>
+                    </ion-select>
+                    <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end">
+                    </ion-icon>
+                    <ion-icon *ngIf="genderError" mode="md" slot="end" name="alert-circle-outline"
+                              class="ion-align-self-end error-message" (click)="presentToast('fk_id_gender')">
+                    </ion-icon>
+                </ion-item>
 
-        <ion-item mode="md">
-          <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
-                      placeholder="{{ 'ANIMAL_CREATE.BREED' | translate }}" disabled="{{ !isTypeSelected }}">
-            <ion-select-option *ngFor="let breed of breedsToDisplay" value="{{ breed.name }}">
-              {{ breed.name }}
-            </ion-select-option>
-          </ion-select>
-          <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end">
-          </ion-icon>
-          <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
-                    class="ion-align-self-end error-message" (click)="presentToast('fk_id_breed')">
-          </ion-icon>
-        </ion-item>
+                <ion-item mode="md">
+                    <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
+                                placeholder="{{ 'ANIMAL_CREATE.TEMPER' | translate }}" multiple="true">
+                        <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
+                            {{ 'TEMPER.' + temper.name | translate }}
+                        </ion-select-option>
+                    </ion-select>
+                    <ion-icon mode="md" slot="start" name="american-football-outline" class="ion-align-self-end">
+                    </ion-icon>
+                    <ion-icon *ngIf="temperError" mode="md" slot="end" name="alert-circle-outline"
+                              class="ion-align-self-end error-message" (click)="presentToast('fk_id_temper')">
+                    </ion-icon>
+                </ion-item>
+            </ion-list>
 
-        <ion-item mode="md">
-          <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
-            placeholder="{{ 'ANIMAL_CREATE.GENDER' | translate }}">
-            <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
-              {{ gender.name }}
-            </ion-select-option>
-          </ion-select>
-          <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end">
-          </ion-icon>
-          <ion-icon *ngIf="genderError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end error-message" (click)="presentToast('fk_id_gender')">
-          </ion-icon>
-        </ion-item>
+            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'" *ngIf="this.createAnimalForm.value.fk_id_type == 'Chat'">
+                <div *ngFor="let path of catPicPaths">
+                    <ion-avatar (click)="getPicPath(path)" [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
+                        <img src="{{ path }}">
+                    </ion-avatar>
+                </div>
+            </div>
+            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'" *ngIf="this.createAnimalForm.value.fk_id_type == 'Chien'">
+                <div *ngFor="let path of dogPicPaths">
+                    <ion-avatar (click)="getPicPath(path)" [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
+                        <img src="{{ path }}">
+                    </ion-avatar>
+                </div>
+            </div>
 
-        <ion-item mode="md">
-          <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
-            placeholder="{{ 'ANIMAL_CREATE.TEMPER' | translate }}" multiple="true">
-            <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
-              {{ 'TEMPER.' + temper.name | translate }}
-            </ion-select-option>
-          </ion-select>
-          <ion-icon mode="md" slot="start" name="american-football-outline" class="ion-align-self-end">
-          </ion-icon>
-          <ion-icon *ngIf="temperError" mode="md" slot="end" name="alert-circle-outline"
-            class="ion-align-self-end error-message" (click)="presentToast('fk_id_temper')">
-          </ion-icon>
-        </ion-item>
-      </ion-list>
-
-      <div class="button-center">
-        <ion-button slot="end" class="validation-button"
-                    (click)="submit()">{{ 'ANIMAL_CREATE.SUBMIT' | translate }}</ion-button>
-      </div>
-    </form>
-  </div>
+            <div class="button-center">
+                <ion-button slot="end" class="validation-button"
+                            (click)="submit()">{{ 'ANIMAL_CREATE.SUBMIT' | translate }}
+                </ion-button>
+            </div>
+        </form>
+    </div>
 </ion-content>

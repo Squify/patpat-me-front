@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{ 'MEET.TITLE' | translate }}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngIf="metUsers.length > 0">
+        <ion-item *ngFor="let user of metUsers">
+            <!-- Event -->
+            <ion-col>
+                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length <= 1" [routerLink]="'../../user/'+ user.id">
+                    {{ 'MEET.ONE_EVENT' | translate }} :
+                    <ul class="remove-margin" *ngFor="let event of user.events">
+                        <li><b>{{ event }}</b></li>
+                    </ul>
+                </ion-row>
+                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length > 1" [routerLink]="'../../user/'+ user.id">
+                    {{ 'MEET.MULTI_EVENT_EVENT' | translate }} :
+                    <ul class="remove-margin" *ngFor="let event of user.events">
+                        <li><b>{{ event }}</b></li>
+                    </ul>
+                </ion-row>
+                <!-- End event -->
+
+                <!-- User informations -->
+                <ion-row class="align-center">
+                    <ion-col size="11" class="flex-row align-center" [routerLink]="'../../user/'+ user.id">
+                        <ion-avatar>
+                            <img src="{{ user.profile_pic_path }}">
+                        </ion-avatar>
+                        <div class="flex-column align-start">
+                            {{ user.pseudo }}
+                            <div *ngIf="user.gender">
+                                <ion-icon class="information-icon" mode="md" name="male-female-outline"></ion-icon>
+                                {{ user.gender.name }}
+                            </div>
+                        </div>
+                    </ion-col>
+                    <ion-col size="1">
+                        <ion-icon size="large"
+                                  (click)="user.isFriend ? confirmDelete(user.id) : confirmAdd(user.id)"
+                                  name="{{ user.isFriend ? 'heart-dislike-circle-outline' : 'heart-circle-outline' }}">
+                        </ion-icon>
+                    </ion-col>
+                </ion-row>
+                <!-- End user informations -->
+            </ion-col>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="metUsers.length <= 0">
+        <ion-item>
+            {{ 'MEET.ANY_USER' | translate }}
+        </ion-item>
+    </ion-list>
+</ion-content>

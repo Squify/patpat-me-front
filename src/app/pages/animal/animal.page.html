@@ -4,7 +4,7 @@
             <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>{{ 'ANIMAL.TITLE' | translate }}</ion-title>
-        <ion-buttons slot="end">
+        <ion-buttons slot="end" *ngIf="animal && this.isOwner()">
             <ion-button fill="clear" [routerLink]="'edit-animal'">
                 <ion-icon name="pencil-outline" slot="end"></ion-icon>
             </ion-button>
@@ -14,21 +14,25 @@
 
 <ion-content>
     <div class="form-container" *ngIf="animal">
-        <ion-grid class="padding0">
-            <ion-row>
-                <ion-col class="banner">
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <div class="flex-column-center">
+            <ion-avatar slot="center">
+                <img src="{{ animal.image_path }}">
+            </ion-avatar>
+        </div>
+
         <ion-list class="noRoundedBorder">
             <ion-item>
                 <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
                 {{ animal.name }}
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="animal.birthday">
                 <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon>
                 {{ animal.birthday | date: 'dd/MM/yyyy' }}
+            </ion-item>
+            <ion-item *ngIf="!animal.birthday">
+                <ion-icon mode="md" slot="start" name="calendar-outline"></ion-icon>
+                {{ 'PROFILE.N/A' | translate }}
             </ion-item>
 
             <ion-item>
@@ -36,9 +40,14 @@
                 {{ animal.type.name }}
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="animal.breed">
                 <ion-icon mode="md" slot="start" name="paw"></ion-icon>
                 {{ animal.breed.name }}
+            </ion-item>
+
+            <ion-item *ngIf="!animal.breed">
+                <ion-icon mode="md" slot="start" name="paw"></ion-icon>
+                {{ 'PROFILE.N/A' | translate }}
             </ion-item>
 
             <ion-item>
@@ -51,10 +60,13 @@
                 <div *ngFor="let temper of animal.tempers">
                     {{ 'TEMPER.' + temper.name | translate }} ;
                 </div>
+                <div *ngIf="animal.tempers.length == 0">
+                    {{ 'PROFILE.N/A' | translate }}
+                </div>
             </ion-item>
         </ion-list>
 
-        <div class="button-center">
+        <div class="button-center" *ngIf="this.isOwner()">
             <ion-button slot="end" class="validation-button" (click)="deleteAlert()">
                 {{ 'ANIMAL.DELETE' | translate }}
             </ion-button>

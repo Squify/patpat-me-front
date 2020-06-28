@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Credentials} from '../../interfaces/user/credentials';
 import {User} from '../../interfaces/user/user';
-import {AuthenticationService} from '../../services/authentication.service';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UserService} from '../../services/user/user.service';
+import { LanguageService } from '../../services/language/language.service';
 
 @Component({
     selector: 'app-login',
@@ -28,13 +29,17 @@ export class LoginPage implements OnInit {
     emailInputError: boolean;
     passwordInputError: boolean;
 
+    passwordIcon = 'eye-outline';
+    passwordInputType= 'password';
+
     constructor(
         public loginFormBuilder: FormBuilder,
         private authService: AuthenticationService,
         private userService: UserService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        public toastController: ToastController
+        public toastController: ToastController,
+        private languageService: LanguageService
     ) {
 
         this.buildForm();
@@ -72,6 +77,17 @@ export class LoginPage implements OnInit {
 
         this.loginForm.controls.email.reset();
         this.loginForm.controls.password.reset();
+    }
+
+    changePasswordView(): void {
+        if (this.passwordInputType === 'password') {
+            this.passwordInputType = 'input';
+            this.passwordIcon = 'eye-off-outline';
+        }
+        else if (this.passwordInputType === 'input') {
+            this.passwordInputType = 'password';
+            this.passwordIcon = 'eye-outline';
+        }
     }
 
     buildForm(): void {
@@ -118,6 +134,7 @@ export class LoginPage implements OnInit {
 
         // set authenticated person in service
         this.userService.setPerson(user);
+        this.languageService.changeLanguage(user.language.name);
         this.router.navigateByUrl('');
     }
 

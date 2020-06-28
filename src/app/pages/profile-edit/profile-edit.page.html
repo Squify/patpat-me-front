@@ -1,112 +1,140 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ 'PROFILE_EDIT.TITLE' | translate }}</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ 'PROFILE_EDIT.TITLE' | translate }}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid *ngIf="user">
-    <ion-row>
-      <form *ngIf="editPersonForm" [formGroup]="editPersonForm" (keyup.enter)="submit()">
-        <ion-list>
-          <ion-item mode="md">
-            <ion-label position="floating">{{ 'PROFILE_EDIT.PSEUDO' | translate }}</ion-label>
-            <ion-input type="text" [value]="user.pseudo" [disabled]="true">
-            </ion-input>
-            <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end">
-            </ion-icon>
-          </ion-item>
+    <ion-grid *ngIf="user">
+        <ion-row>
+            <form *ngIf="editPersonForm" [formGroup]="editPersonForm" (keyup.enter)="submit()">
+                <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'">
+                    <div *ngFor="let path of picPaths">
+                        <ion-avatar (click)="getPicPath(path)"
+                                    [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
+                            <img src="{{ path }}">
+                        </ion-avatar>
+                    </div>
+                </div>
 
-          <ion-item mode="md">
-            <ion-label position="floating">{{ 'PROFILE_EDIT.PASSWORD' | translate }}</ion-label>
-            <ion-input [type]="'password'" formControlName="password" maxlength="32">
-            </ion-input>
-            <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
-            <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
-              name="alert-circle-outline" class="ion-align-self-end error-message"
-              (click)="presentToast('password')"></ion-icon>
-          </ion-item>
+                <ion-list>
+                    <ion-item mode="md">
+                        <ion-select interface="popover" formControlName="fk_id_language" (ionChange)="changeLanguage(this.editPersonForm.value.fk_id_language)"
+                                    [value]="user.language ? user.language.name : 'FR'">
+                            <ion-select-option *ngFor="let language of languages" value="{{ language.name }}">
+                                {{ 'LANGUAGE.' + language.name | translate }}
+                            </ion-select-option>
+                        </ion-select>
+                        <ion-icon mode="md" slot="start" name="globe-outline" class="ion-align-self-end">
+                        </ion-icon>
+                    </ion-item>
 
-          <ion-item mode="md">
-            <ion-label position="floating">{{ 'PROFILE_EDIT.EMAIL' | translate }}</ion-label>
-            <ion-input type="text" formControlName="email" [value]="user.email">
-            </ion-input>
-            <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end"></ion-icon>
-            <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
-              class="ion-align-self-end error-message" (click)="presentToast('email')"></ion-icon>
-          </ion-item>
-          <ion-row>
-            <ion-col col-6>
-              <ion-item mode="md">
-                <ion-label position="floating">{{ 'PROFILE_EDIT.FIRSTNAME' | translate }}</ion-label>
-                <ion-input type="text" [value]="user.firstname" [disabled]="true">
-                </ion-input>
-                <ion-icon mode="md" slot="start" name="finger-print-outline"
-                  class="ion-align-self-end"></ion-icon>
-              </ion-item>
-            </ion-col>
-            <ion-col col-6>
-              <ion-item mode="md">
-                <ion-label position="floating">{{ 'PROFILE_EDIT.LASTNAME' | translate }}</ion-label>
-                <ion-input type="text" [value]="user.lastname" [disabled]="true">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+                    <ion-item mode="md">
+                        <ion-label position="floating">{{ 'PROFILE_EDIT.PSEUDO' | translate }}</ion-label>
+                        <ion-input type="text" [value]="user.pseudo" [disabled]="true">
+                        </ion-input>
+                        <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end">
+                        </ion-icon>
+                    </ion-item>
 
-          <ion-item mode="md">
-            <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
-              placeholder="{{ 'PROFILE_EDIT.GENDER' | translate }}" [value]="user.gender.name">
-              <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
-                {{ gender.name }}
-              </ion-select-option>
-            </ion-select>
-            <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end">
-            </ion-icon>
-          </ion-item>
+                    <ion-item mode="md">
+                        <ion-label position="floating">{{ 'PROFILE_EDIT.PASSWORD' | translate }}</ion-label>
+                        <ion-input [type]="passwordInputType" formControlName="password" maxlength="32">
+                        </ion-input>
+                        <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
+                        <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
+                                  name="alert-circle-outline" class="ion-align-self-end error-message"
+                                  (click)="presentToast('password')">
+                        </ion-icon>
+                        <ion-icon (click)="changePasswordView()" mode="md" slot="end"
+                                  name="{{ passwordIcon }}" class="ion-align-self-end"></ion-icon>
+                    </ion-item>
 
-          <ion-item mode="md">
-            <ion-label position="floating">{{ 'PROFILE_EDIT.PHONE' | translate }}</ion-label>
-            <ion-input type="tel" formControlName="phone" [value]="user.phone">
-            </ion-input>
-            <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end"></ion-icon>
-            <ion-icon *ngIf="phoneInputError" mode="md" slot="end" name="alert-circle-outline"
-              class="ion-align-self-end error-message" (click)="presentToast('phone')"></ion-icon>
-          </ion-item>
+                    <ion-item mode="md">
+                        <ion-label position="floating">{{ 'PROFILE_EDIT.EMAIL' | translate }}</ion-label>
+                        <ion-input type="text" formControlName="email" [value]="user.email">
+                        </ion-input>
+                        <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end"></ion-icon>
+                        <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
+                                  class="ion-align-self-end error-message" (click)="presentToast('email')"></ion-icon>
+                    </ion-item>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-item mode="md">
+                                <ion-label position="floating">{{ 'PROFILE_EDIT.FIRSTNAME' | translate }}</ion-label>
+                                <ion-input type="text" [value]="user.firstname" [disabled]="true">
+                                </ion-input>
+                                <ion-icon mode="md" slot="start" name="finger-print-outline"
+                                          class="ion-align-self-end"></ion-icon>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-item mode="md">
+                                <ion-label position="floating">{{ 'PROFILE_EDIT.LASTNAME' | translate }}</ion-label>
+                                <ion-input type="text" [value]="user.lastname" [disabled]="true">
+                                </ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
 
-          <ion-item>
-            <ion-label position="floating">{{ 'PROFILE_EDIT.BIRTHDAY' | translate }}</ion-label>
-            <ion-datetime [disabled]="true" [value]="user.birthday"
-                          display-format="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" mode="md"
-                          placeholder="{{ 'PROFILE_EDIT.SELECT_DATE' | translate }}">
-            </ion-datetime>
-            <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">
-            </ion-icon>
-          </ion-item>
+                    <ion-item mode="md">
+                        <ion-select interface="popover" formControlName="fk_id_gender"
+                                    placeholder="{{ 'PROFILE_EDIT.GENDER' | translate }}"
+                                    [value]="user.gender ? user.gender.name : null">
+                            <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
+                                {{ gender.name }}
+                            </ion-select-option>
+                        </ion-select>
+                        <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end">
+                        </ion-icon>
+                    </ion-item>
 
-        </ion-list>
-        <div class="checkbox">
-          <ion-checkbox formControlName="push_notification" [checked]="user.push_notification"></ion-checkbox>
-          <ion-label>{{ 'PROFILE_EDIT.PUSH' | translate }}</ion-label>
+                    <ion-item mode="md">
+                        <ion-label position="floating">{{ 'PROFILE_EDIT.PHONE' | translate }}</ion-label>
+                        <ion-input type="tel" formControlName="phone" [value]="user.phone">
+                        </ion-input>
+                        <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end"></ion-icon>
+                        <ion-icon *ngIf="phoneInputError" mode="md" slot="end" name="alert-circle-outline"
+                                  class="ion-align-self-end error-message" (click)="presentToast('phone')"></ion-icon>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label position="floating">{{ 'PROFILE_EDIT.BIRTHDAY' | translate }}</ion-label>
+                        <ion-datetime formControlName="birthday" display-format="DD MMMM YYYY"
+                                      pickerFormat="DD MMMM YYYY" mode="md"
+                                      placeholder="{{ 'PROFILE_EDIT.SELECT_DATE' | translate }}">
+                        </ion-datetime>
+                        <ion-icon mode="md" slot="start" name="gift" class="ion-align-self-end">
+                        </ion-icon>
+                    </ion-item>
+                </ion-list>
+
+                <ion-col class="checkbox-part">
+                    <ion-row>
+                        <ion-checkbox formControlName="display_real_name"
+                                      [checked]="user.display_real_name"></ion-checkbox>
+                        <ion-label>{{ 'PROFILE_EDIT.DISPLAY_NAME' | translate }}</ion-label>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-checkbox formControlName="display_email" [checked]="user.display_email"></ion-checkbox>
+                        <ion-label>{{ 'PROFILE_EDIT.DISPLAY_MAIL' | translate }}</ion-label>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-checkbox formControlName="display_phone" [checked]="user.display_phone"></ion-checkbox>
+                        <ion-label>{{ 'PROFILE_EDIT.DISPLAY_PHONE' | translate }}</ion-label>
+                    </ion-row>
+                </ion-col>
+            </form>
+        </ion-row>
+
+        <div class="button-center">
+            <ion-button slot="end" class="validation-button" (click)="submit()">{{ 'PROFILE_EDIT.SUBMIT' | translate }}
+            </ion-button>
         </div>
-
-        <div class="checkbox">
-          <ion-checkbox formControlName="active_localisation" [checked]="user.active_localisation"></ion-checkbox>
-          <ion-label>{{ 'PROFILE_EDIT.GEOLOC' | translate }}</ion-label>
-        </div>
-
-        <div class="checkbox">
-          <ion-checkbox formControlName="display_real_name" [checked]="user.display_real_name"></ion-checkbox>
-          <ion-label>{{ 'PROFILE_EDIT.DISPLAY_NAME' | translate }}</ion-label>
-        </div>
-      </form>
-    </ion-row>
-
-    <div class="button-center">
-      <ion-button slot="end" class="validation-button" (click)="submit()">{{ 'PROFILE_EDIT.SUBMIT' | translate }}</ion-button>
-    </div>
-  </ion-grid>
+    </ion-grid>
 </ion-content>

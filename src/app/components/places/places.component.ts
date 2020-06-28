@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
 import places from "places.js";
-import { GeolocationService } from "../../services/geolocation.service";
+import { GeolocationService } from "../../services/geolocation/geolocation.service";
 
 @Component({
     selector: "app-places",

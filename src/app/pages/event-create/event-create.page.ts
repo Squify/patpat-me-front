@@ -7,7 +7,8 @@ import { EventService } from '../../services/event/event.service';
 import { EventType } from '../../interfaces/event/event-type';
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from "@angular/router";
-import { GeolocationService } from "../../services/geolocation.service";
+import { GeolocationService } from "../../services/geolocation/geolocation.service";
+import { UpdateService } from "../../services/update/update.service";
 
 @Component({
     selector: 'app-event-create',
@@ -35,12 +36,16 @@ export class EventCreatePage implements OnInit {
     dateError: boolean;
     typeError: boolean;
 
+    minDate: string;
+    maxDate: string;
+
     constructor(
         public toastController: ToastController,
         private eventService: EventService,
         public translate: TranslateService,
         public router: Router,
-        private geolocationService: GeolocationService
+        private geolocationService: GeolocationService,
+        public updateService: UpdateService
     ) {
         this.geolocationService.myMethod$.subscribe((data) => {
                 this.data = data; // And he have data here too!
@@ -49,9 +54,27 @@ export class EventCreatePage implements OnInit {
         );
 
         this.buildForm();
+        this.getMinDate();
+        this.getMaxDate();
     }
 
     ngOnInit() {
+    }
+
+    getMinDate() {
+        const today = new Date();
+        if (today.getMonth()+1 < 10)
+            this.minDate = today.getFullYear() + '-' + 0 + (today.getMonth()+1) + '-' + (today.getDate() + 1) + 'T00:00:00+02:00';
+        else
+            this.minDate = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + (today.getDate() + 1) + 'T00:00:00+02:00';
+    }
+
+    getMaxDate() {
+        const today = new Date();
+        if (today.getMonth()+1 < 10)
+            this.maxDate =  (today.getFullYear() + 10)+'-'+0+(today.getMonth()+1)+'-'+today.getDate()+'T'+23+':'+59+':'+59;
+        else
+            this.maxDate = (today.getFullYear() + 10)+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T'+23+':'+59+':'+59;
     }
 
     buildForm(): void {
@@ -137,6 +160,7 @@ export class EventCreatePage implements OnInit {
         this.eventService.createEvent(this.createEventInterface).subscribe(
             _ => {
                 this.createEventForm.reset();
+                this.updateService.publishSomeData('createEvent')
                 this.router.navigateByUrl('');
             },
             error => this.processError(error))

@@ -14,7 +14,7 @@
 <!-- Filter hidden view -->
 <ion-menu side="end" menuId="first" contentId="main">
     <ion-header>
-        <ion-toolbar color="primary">
+        <ion-toolbar>
             <ion-title>{{ 'EVENTS.FILTER' | translate }}</ion-title>
         </ion-toolbar>
     </ion-header>
@@ -43,9 +43,9 @@
     </ion-fab>
 
     <!-- Event part -->
-    <ion-grid class="event-grid">
+    <ion-grid class="padding0">
         <ion-row>
-            <ion-col class="event-content">
+            <ion-col class="padding0">
                 <ion-list *ngIf="events.length > 0">
                     <ion-item *ngFor="let event of events | eventFilter: filterArgs">
                         <!-- List of the events here -->
@@ -86,8 +86,9 @@
                                 </ion-col>
                             </ion-row>
                             <ion-button [routerLink]="'event/'+ event.id" fill="clear" size="small">
-                                <ion-icon name="arrow-forward-circle-outline"></ion-icon>{{ 'EVENTS.MORE_DETAILS' | translate }}
-<!--                                > {{ 'EVENTS.MORE_DETAILS' | translate }}-->
+                                <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                                {{ 'EVENTS.MORE_DETAILS' | translate }}
+                                <!--                                > {{ 'EVENTS.MORE_DETAILS' | translate }}-->
                             </ion-button>
                         </ion-col>
                         <!-- List of the events here -->
