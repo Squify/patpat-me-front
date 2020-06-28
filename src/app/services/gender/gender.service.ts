@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {UserGender} from '../../interfaces/user/user-gender';
-import {environment} from '../../../environments/environment';
-import {log} from 'util';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { UserGender } from '../../interfaces/user/user-gender';
+import { environment } from '../../../environments/environment';
 import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
 
 @Injectable({

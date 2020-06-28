@@ -64,7 +64,7 @@
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
+                    <ion-select interface="popover" formControlName="fk_id_gender"
                                 placeholder="{{ 'ANIMAL_EDIT.GENDER' | translate }}">
                         <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
                             {{ gender.name }}

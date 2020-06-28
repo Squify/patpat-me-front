@@ -1,0 +1,232 @@
+{
+  "ACCOUNT_CREATE": {
+    "ALREADY_ACCOUNT": "Already have an account?",
+    "BIRTHDAY": "Birthday date",
+    "CONNECTION": "Connect!",
+    "DISPLAY_MAIL": "Show email address",
+    "DISPLAY_NAME": "Show real name",
+    "DISPLAY_PHONE": "Show phone number",
+    "EMAIL": "E-mail address",
+    "FIRSTNAME": "First name",
+    "GENDER": "Select a genre",
+    "LASTNAME": "Name",
+    "PASSWORD": "Password",
+    "PHONE": "Telephone number",
+    "PSEUDO": "Nickname",
+    "SELECT_DATE": "Please select a date",
+    "SUBMIT": "Validate the form",
+    "TITLE": "Registration on the application"
+  },
+  "ANIMAL": {
+    "DELETE": "Remove the animal",
+    "TITLE": "My animal"
+  },
+  "ANIMAL_CREATE": {
+    "BIRTHDAY": "Birthday date",
+    "BREED": "Select the breed",
+    "GENDER": "Select the genre",
+    "NAME": "Name",
+    "SELECT_DATE": "Please select a date",
+    "SUBMIT": "Validate the form",
+    "TEMPER": "Select the character traits",
+    "TITLE": "Add an animal",
+    "TYPE": "Select the type of animal"
+  },
+  "ANIMAL_EDIT": {
+    "BIRTHDAY": "Birthday date",
+    "BREED": "Select the breed",
+    "GENDER": "Select the genre",
+    "NAME": "Name",
+    "SELECT_DATE": "Please select a date",
+    "SUBMIT": "Update",
+    "TEMPER": "Select the character traits",
+    "TITLE": "Update your animal",
+    "TYPE": "Select the type of animal"
+  },
+  "CONNECTION": {
+    "ANY_ACCOUNT": "No account yet?",
+    "CONNECTION": "Connect",
+    "CREATE": "Create one!",
+    "EMAIL": "E-mail address",
+    "PASSWORD": "Password",
+    "TITLE": "Connection"
+  },
+  "ERRORS": {
+    "ANIMAL": {
+      "BIRTHDAY": "Please enter a birthday.",
+      "BREED": "Please enter the breed of the animal.",
+      "GENDER": "Please enter the kind of animal.",
+      "NAME": "Please enter a valid name.",
+      "TEMPER": "Please enter the temperament of the animal.",
+      "TYPE": "Please enter the type of animal."
+    },
+    "BACK_INPUT": "The request is invalid, check the information entered.",
+    "BACK_SERVER": "A server error has occurred",
+    "BACK_UNKNOWN": "An unknown error has occurred",
+    "DEFAULT": "The form is wrong! Click on the circles for more information.",
+    "EMAIL": "Please enter a valid email address.",
+    "EMAIL_ALREADY_USED": "The email address entered is already in use.",
+    "EVENT": {
+      "DATE": "Please enter a date.",
+      "DESCRIPTION": "Please enter a valid description.",
+      "LOCATION": "Please enter a valid location.",
+      "NAME": "Please enter a valid name for the event.",
+      "NAME_ALREADY_USED": "The name entered is already in use.",
+      "TYPE": "Please enter a type for the event."
+    },
+    "FIRSTNAME": "Please enter a valid first name.",
+    "LASTNAME": "Please enter a valid name.",
+    "PASSWORD": "Please enter a valid and secure password.",
+    "PHONE": "Please enter a valid phone number.",
+    "PSEUDO": "Please enter a valid username.",
+    "PSEUDO_ALREADY_USED": "The nickname entered is already in use.",
+    "USER_IS_OWNER": "You are the host of this event, you are already attending this event."
+  },
+  "EVENT": {
+    "DATE": "Date",
+    "DESCRIPTION": "Description",
+    "INFO": "Information",
+    "LOCATION": "Location",
+    "MAPS": "See in maps",
+    "OWNER_MESSAGE": "This user created the event",
+    "PARTICIPANTS": "Participants",
+    "TITLE": "Event",
+    "TYPE": "Type / Keywords"
+  },
+  "EVENT_CREATE": {
+    "DATE": "Date",
+    "DESCRIPTION": "Description",
+    "LOCATION": "Location",
+    "NAME": "Name",
+    "SELECT_DATE": "Please select a date",
+    "SUBMIT": "Validate the form",
+    "TITLE": "Event creation",
+    "TYPE": "Select a type",
+    "WARNING": {
+      "TEXT": "By creating an event, you agree to be present on the day of the event. Remember to correctly indicate the location of the meeting (in description if this is not possible in the \"location\" field).",
+      "TITLE": "Information on creating an event"
+    }
+  },
+  "EVENT_EDIT": {
+    "TITLE": "Edit my event",
+    "WARNING": {
+      "TEXT": "By editing an event you agree to be present on the day of the event. Remember to correctly indicate the location of the meeting (in description if this is not possible in the \"location\" fields).",
+      "TITLE": "Information on editing an event"
+    }
+  },
+  "EVENTS": {
+    "ANY_EVENT": "No event near you.",
+    "FILTER": "Filter events",
+    "MORE_DETAILS": "More details",
+    "TITLE": "Events"
+  },
+  "FRIENDS": {
+    "ANY_FRIENDS": "You have no friends yet, go to the meetings page",
+    "TITLE": "Friends"
+  },
+  "LANGUAGE": {
+    "EN": "English",
+    "FR": "French"
+  },
+  "MEET": {
+    "ANY_USER": "You have no encounters to discover",
+    "MULTI_EVENT_EVENT": "Met at events",
+    "ONE_EVENT": "Met at the event",
+    "TITLE": "Meetings"
+  },
+  "PROFILE": {
+    "ACTIVATED": "Activated",
+    "ADD_ANIMAL": "Add an animal",
+    "ANIMALS": "Animals",
+    "ANY_ANIMAL": "You haven't added an animal yet, click the button at the bottom of the page to add one.",
+    "ANY_DISPLAY": "You are not showing any information to your friends",
+    "ANY_INFORMATIONS": "No information to display.",
+    "DEACTIVATED": "Disabled",
+    "DISPLAY_EMAIL": "Your email address",
+    "DISPLAY_NAME": "Your first and last name",
+    "DISPLAY_PHONE": "Your phone number",
+    "FRIENDS_VIEW": "Your friends can see the following information",
+    "INFORMATION": "Information",
+    "LOGOUT": "Logout",
+    "N / A": "Not specified",
+    "TITLE": "Profile"
+  },
+  "PROFILE_EDIT": {
+    "BIRTHDAY": "Birthday date",
+    "DISPLAY_MAIL": "Show email address",
+    "DISPLAY_NAME": "Show real name",
+    "DISPLAY_PHONE": "Show phone number",
+    "EMAIL": "E-mail address",
+    "FIRSTNAME": "First name",
+    "GENDER": "Select a genre",
+    "LASTNAME": "Name",
+    "PASSWORD": "Password",
+    "PHONE": "Telephone number",
+    "PSEUDO": "Nickname",
+    "SELECT_DATE": "Please select a date",
+    "SUBMIT": "Validate the form",
+    "TITLE": "Profile modification"
+  },
+  "TABBAR": {
+    "EVENTS": "Events",
+    "MEET": "Meetings",
+    "FRIENDS": "Friends",
+    "PROFILE": "Profile"
+  },
+  "TEMPER": {
+    "AGGRESSIVE": "Aggressive",
+    "ANGRY": "Angry",
+    "ANXIOUS": "Anxious",
+    "ASOCIAL": "Asocial",
+    "ATTENTIVE": "Attentive",
+    "AWKWARD": "Awkward",
+    "BOOSTED": "Boosted",
+    "BRAVE": "Brave",
+    "CALM": "Calm",
+    "COMPETITOR": "Competitor",
+    "CURIOUS": "Curious",
+    "DELICATE": "Delicate",
+    "DISCIPLINED": "Disciplined",
+    "DISTRACTED": "Distracted",
+    "EXPLORER": "Explorer",
+    "FAITHFUL": "Faithful",
+    "FEARFUL": "Fearful",
+    "FOLLOWER": "Follower",
+    "FIERY": "Fougueux",
+    "FUN": "Fun",
+    "GATHERER": "Gaffeur",
+    "GOURMAND": "Gourmand",
+    "IMPATIENT": "Impatient",
+    "IMPUDENT": "Impudent",
+    "INTELLIGENT": "Intelligent",
+    "JEALOUS": "Jealous",
+    "LAZY": "Lazy",
+    "LEADER": "Leader",
+    "NERVOUS": "Nervous",
+    "OBSERVER": "Observer",
+    "PLAYER": "Player",
+    "RESERVED": "Reserved",
+    "SHY": "Shy",
+    "SOFT": "Soft",
+    "SUSCEPTIBLE": "Susceptible",
+    "SUSPICIOUS": "Distrustful",
+    "TALKATIVE": "Talkative"
+  },
+  "USER_PROFILE": {
+    "ANIMALS": "Animals",
+    "ANY_ANIMAL": "The user has not added an animal yet",
+    "ANY_INFORMATIONS": "No information to display.",
+    "INFORMATION": "Information",
+    "N / A": "Not specified",
+    "PSEUDO": "Nickname",
+    "TITLE": "User profile"
+  },
+  "ALERT": {
+    "CONFIRMATION": "Confirmation",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "REMOVE_FRIENDS": "Are you sure you want to remove this friend?",
+    "ADD_FRIENDS": "Are you sure you want to add this person as a friend? They will have access to the information you have decided to display",
+    "REMOVE_ANIMAL": "Are you sure you want to remove this animal?"
+  }
+}

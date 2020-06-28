@@ -1,4 +1,5 @@
 import { UserGender } from './user-gender';
+import { Language } from './language';
 
 export interface User {
     id: number;
@@ -13,5 +14,6 @@ export interface User {
     display_phone: boolean;
     display_real_name: boolean;
     gender: UserGender;
+    language: Language;
     friends: User[];
 }

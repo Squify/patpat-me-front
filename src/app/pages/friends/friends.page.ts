@@ -67,15 +67,15 @@ export class FriendsPage implements OnInit {
 
     async confirmChange(userId: number) {
         const alert = await this.alertController.create({
-            header: 'Confirmation',
-            message: 'Etes-vous sûr de vouloir retirer cet ami ?',
+            header: this.translate.instant('ALERT.CONFIRMATION'),
+            message: this.translate.instant('ALERT.REMOVE_FRIENDS'),
             buttons: [
                 {
-                    text: 'Annuler',
+                    text: this.translate.instant('ALERT.CANCEL'),
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: 'Confirmer',
+                    text: this.translate.instant('ALERT.CONFIRM'),
                     handler: () => {
                         this.changeRelation(userId);
                     }

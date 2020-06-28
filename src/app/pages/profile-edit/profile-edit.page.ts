@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AccountEdit } from '../../interfaces/user/account-edit';
 import { UpdateService } from '../../services/update/update.service';
+import { Language } from '../../interfaces/user/language';
+import { LanguageService } from '../../services/language/language.service';
 
 @Component({
     selector: 'app-profile-edit',
@@ -22,6 +24,7 @@ export class ProfileEditPage implements OnInit {
     user: User;
 
     genders: UserGender[] = [];
+    languages: Language[] = [];
 
     picPaths: string[] = [];
     selectedPic: string;
@@ -45,6 +48,7 @@ export class ProfileEditPage implements OnInit {
     constructor(
         private userService: UserService,
         private genderService: GenderService,
+        private languageService: LanguageService,
         public toastController: ToastController,
         private router: Router,
         public updateService: UpdateService,
@@ -55,6 +59,7 @@ export class ProfileEditPage implements OnInit {
     ngOnInit() {
         this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
         this.getGenders();
+        this.getLanguages();
         this.buildForm();
     }
 
@@ -91,6 +96,22 @@ export class ProfileEditPage implements OnInit {
         );
     }
 
+    getLanguages(): void {
+        this.languageService.getLanguage().subscribe(
+            val => {
+                val.forEach((language) => {
+                        const languageToAdd: UserGender = {name: language.name};
+                        this.languages.push(languageToAdd);
+                    }
+                );
+            }
+        );
+    }
+
+    changeLanguage(language) {
+        this.languageService.changeLanguage(language);
+    }
+
     buildForm(): void {
 
         this.selectedPic = this.user.profile_pic_path;
@@ -125,6 +146,12 @@ export class ProfileEditPage implements OnInit {
             display_real_name: new FormControl({value: this.user.display_real_name, disabled: false}),
 
             fk_id_gender: new FormControl({value: this.user.gender ? this.user.gender.name : null, disabled: false}),
+
+            fk_id_language: new FormControl({value: this.user.language ? this.user.language.name : 'FR', disabled: false}, {
+                validators: [
+                    Validators.required,
+                ]
+            }),
         });
     }
 
@@ -175,6 +202,7 @@ export class ProfileEditPage implements OnInit {
             display_phone: this.editPersonForm.value.display_phone,
             display_real_name: this.editPersonForm.value.display_real_name,
             gender: gender,
+            language: this.editPersonForm.value.fk_id_language,
         };
 
         this.userService.updateUser(this.accountEditInterface).subscribe(

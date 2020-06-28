@@ -1,4 +1,5 @@
 import { UserGender } from './user-gender';
+import { Language } from './language';
 
 export interface MetUser {
     id: number;
@@ -12,6 +13,7 @@ export interface MetUser {
     display_phone: boolean;
     display_real_name: boolean;
     gender: UserGender;
+    language: Language;
     events: string[];
     isFriend: boolean;
 }

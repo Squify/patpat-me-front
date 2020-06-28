@@ -11,6 +11,8 @@ import { User } from '../../interfaces/user/user';
 import { Router } from '@angular/router';
 import { Credentials } from '../../interfaces/user/credentials';
 import { TranslateService } from "@ngx-translate/core";
+import { LanguageService } from '../../services/language/language.service';
+import { Language } from '../../interfaces/user/language';
 
 @Component({
     selector: 'app-account-create',
@@ -22,6 +24,7 @@ export class AccountCreatePage implements OnInit {
     accountCreateInterface: AccountCreate;
     createPersonForm: FormGroup;
     genders: UserGender[] = [];
+    languages: Language[] = [];
     credentials: Credentials;
 
     // Errors
@@ -43,6 +46,7 @@ export class AccountCreatePage implements OnInit {
     constructor(
         private userService: UserService,
         private genderService: GenderService,
+        private languageService: LanguageService,
         private authService: AuthenticationService,
         private router: Router,
         public toastController: ToastController,
@@ -50,6 +54,8 @@ export class AccountCreatePage implements OnInit {
     ) {
 
         this.getGenders();
+        this.getLanguages();
+        this.changeLanguage('FR');
         this.buildForm();
     }
 
@@ -119,6 +125,12 @@ export class AccountCreatePage implements OnInit {
             display_real_name: new FormControl(false),
 
             fk_id_gender: new FormControl(''),
+
+            fk_id_language: new FormControl('', {
+                validators: [
+                    Validators.required
+                ]
+            }),
         });
     }
 
@@ -132,6 +144,22 @@ export class AccountCreatePage implements OnInit {
                 );
             }
         );
+    }
+
+    getLanguages(): void {
+        this.languageService.getLanguage().subscribe(
+            val => {
+                val.forEach((language) => {
+                        const languageToAdd: UserGender = {name: language.name};
+                        this.languages.push(languageToAdd);
+                    }
+                );
+            }
+        );
+    }
+
+    changeLanguage(language) {
+        this.languageService.changeLanguage(language);
     }
 
     setAllErrorsToFalse(): void {
@@ -170,6 +198,7 @@ export class AccountCreatePage implements OnInit {
             display_phone: this.createPersonForm.value.display_phone,
             display_real_name: this.createPersonForm.value.display_real_name,
             gender: this.createPersonForm.value.fk_id_gender,
+            language: this.createPersonForm.value.fk_id_language,
         };
 
         this.userService.createUser(this.accountCreateInterface).subscribe(
