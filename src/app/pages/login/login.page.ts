@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UserService} from '../../services/user/user.service';
+import { LanguageService } from '../../services/language/language.service';
 
 @Component({
     selector: 'app-login',
@@ -37,7 +38,8 @@ export class LoginPage implements OnInit {
         private userService: UserService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        public toastController: ToastController
+        public toastController: ToastController,
+        private languageService: LanguageService
     ) {
 
         this.buildForm();
@@ -132,6 +134,7 @@ export class LoginPage implements OnInit {
 
         // set authenticated person in service
         this.userService.setPerson(user);
+        this.languageService.changeLanguage(user.language.name);
         this.router.navigateByUrl('');
     }
 

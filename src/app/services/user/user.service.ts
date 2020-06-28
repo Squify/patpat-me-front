@@ -5,9 +5,8 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../../interfaces/user/user';
 import { catchError, share } from 'rxjs/operators';
-import { AccountEdit } from "../../interfaces/user/account-edit";
-import { Animal } from "../../interfaces/animal/animal";
-import { EventInterface } from '../../interfaces/event/event-interface';
+import { AccountEdit } from '../../interfaces/user/account-edit';
+import { Animal } from '../../interfaces/animal/animal';
 import { Friend } from '../../interfaces/user/friend';
 
 

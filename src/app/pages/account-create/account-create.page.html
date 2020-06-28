@@ -11,6 +11,17 @@
 
             <ion-list>
                 <ion-item mode="md">
+                    <ion-select interface="popover" (ionChange)="changeLanguage(this.createPersonForm.value.fk_id_language)"
+                                formControlName="fk_id_language" value="{{ 'FR' }}">
+                        <ion-select-option *ngFor="let language of languages" value="{{ language.name }}">
+                            {{ 'LANGUAGE.' + language.name | translate }}
+                        </ion-select-option>
+                    </ion-select>
+                    <ion-icon mode="md" slot="start" name="globe-outline" class="ion-align-self-end">
+                    </ion-icon>
+                </ion-item>
+
+                <ion-item mode="md">
                     <ion-label position="floating">{{ 'ACCOUNT_CREATE.PSEUDO' | translate }}</ion-label>
                     <ion-input type="text" formControlName="pseudo">
                     </ion-input>
@@ -69,7 +80,7 @@
                 </ion-row>
 
                 <ion-item mode="md">
-                    <ion-select interface="popover" id="select-gender" formControlName="fk_id_gender"
+                    <ion-select interface="popover" formControlName="fk_id_gender"
                                 placeholder="{{ 'ACCOUNT_CREATE.GENDER' | translate }}">
                         <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
                             {{ gender.name }}

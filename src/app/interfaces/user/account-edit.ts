@@ -8,4 +8,5 @@ export interface AccountEdit {
     display_phone: boolean;
     display_real_name: boolean;
     gender: string;
+    language: string;
 }

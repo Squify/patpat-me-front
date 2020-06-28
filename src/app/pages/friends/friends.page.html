@@ -8,10 +8,10 @@
 
 <ion-content>
     <ion-list *ngIf="friends.length > 0">
-        <ion-item *ngFor="let friend of friends" [routerLink]="'../../user/'+ friend.user.id">
+        <ion-item *ngFor="let friend of friends">
             <ion-col>
                 <ion-row class="align-center">
-                    <ion-col size="11" class="flex-row align-center">
+                    <ion-col size="11" class="flex-row align-center" [routerLink]="'../../user/'+ friend.user.id">
                         <ion-avatar>
                             <img src="{{ friend.user.profile_pic_path }}">
                         </ion-avatar>

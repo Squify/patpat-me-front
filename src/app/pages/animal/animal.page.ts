@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
 import { UpdateService } from "../../services/update/update.service";
 import { User } from '../../interfaces/user/user';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-animal',
@@ -41,6 +42,7 @@ export class AnimalPage implements OnInit {
         private userService: UserService,
         public alertController: AlertController,
         public updateService: UpdateService,
+        public translate: TranslateService,
     ) {
     }
 
@@ -162,15 +164,15 @@ export class AnimalPage implements OnInit {
 
     async deleteAlert() {
         const alert = await this.alertController.create({
-            header: 'Confirmation',
-            message: 'Etes-vous sûr de vouloir retirer cet animal ?',
+            header: this.translate.instant('ALERT.CONFIRMATION'),
+            message: this.translate.instant('ALERT.REMOVE_ANIMAL'),
             buttons: [
                 {
-                    text: 'Annuler',
+                    text: this.translate.instant('ALERT.CANCEL'),
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: 'Confirmer',
+                    text: this.translate.instant('ALERT.CONFIRM'),
                     handler: () => {
                         this.deleteAnimal();
                     }
