@@ -9,6 +9,7 @@
     "EMAIL": "E-mail address",
     "FIRSTNAME": "First name",
     "GENDER": "Select a genre",
+    "LANGUAGE": "Select a language",
     "LASTNAME": "Name",
     "PASSWORD": "Password",
     "PHONE": "Telephone number",
@@ -17,9 +18,28 @@
     "SUBMIT": "Validate the form",
     "TITLE": "Registration on the application"
   },
+  "ALERT": {
+    "ADD_FRIENDS": "Are you sure you want to add this person as a friend? They will have access to the information you have decided to display",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "CONFIRMATION": "Confirmation",
+    "REMOVE_ANIMAL": "Are you sure you want to remove this animal?",
+    "REMOVE_FRIENDS": "Are you sure you want to remove this friend?"
+  },
   "ANIMAL": {
     "DELETE": "Remove the animal",
-    "TITLE": "My animal"
+    "TITLE": "Animal Page",
+    "AGE": {
+      "NEWBORN": "New born",
+      "DAY": "day",
+      "DAYS": "days",
+      "WEEK": "week",
+      "WEEKS": "weeks",
+      "MONTH": "month",
+      "YEAR": "year",
+      "YEARS": "years",
+      "N/A": "Non specified"
+    }
   },
   "ANIMAL_CREATE": {
     "BIRTHDAY": "Birthday date",
@@ -57,30 +77,38 @@
       "BREED": "Please enter the breed of the animal.",
       "GENDER": "Please enter the kind of animal.",
       "NAME": "Please enter a valid name.",
+      "OWNER": "You cannot modify an animal that is not yours.",
       "TEMPER": "Please enter the temperament of the animal.",
       "TYPE": "Please enter the type of animal."
     },
-    "BACK_INPUT": "The request is invalid, check the information entered.",
-    "BACK_SERVER": "A server error has occurred",
-    "BACK_UNKNOWN": "An unknown error has occurred",
-    "DEFAULT": "The form is wrong! Click on the circles for more information.",
-    "EMAIL": "Please enter a valid email address.",
-    "EMAIL_ALREADY_USED": "The email address entered is already in use.",
+    "DEFAULT": {
+      "BACK_INPUT": "The request is invalid, check the information entered.",
+      "BACK_SERVER": "A server error has occurred",
+      "BACK_UNKNOWN": "An unknown error has occurred",
+      "DEFAULT": "The form is wrong! Click on the circles for more information."
+    },
     "EVENT": {
       "DATE": "Please enter a date.",
       "DESCRIPTION": "Please enter a valid description.",
       "LOCATION": "Please enter a valid location.",
       "NAME": "Please enter a valid name for the event.",
       "NAME_ALREADY_USED": "The name entered is already in use.",
-      "TYPE": "Please enter a type for the event."
+      "TYPE": "Please enter a type for the event.",
+      "USER_IS_OWNER": "You are the host of this event, you are already attending this event."
     },
-    "FIRSTNAME": "Please enter a valid first name.",
-    "LASTNAME": "Please enter a valid name.",
-    "PASSWORD": "Please enter a valid and secure password.",
-    "PHONE": "Please enter a valid phone number.",
-    "PSEUDO": "Please enter a valid username.",
-    "PSEUDO_ALREADY_USED": "The nickname entered is already in use.",
-    "USER_IS_OWNER": "You are the host of this event, you are already attending this event."
+    "LOGIN": {
+      "CREDENTIALS": "The identifiers entered are not correct"
+    },
+    "USER": {
+      "EMAIL": "Please enter a valid email address.",
+      "EMAIL_ALREADY_USED": "The email address entered is already in use.",
+      "FIRSTNAME": "Please enter a valid first name.",
+      "LASTNAME": "Please enter a valid name.",
+      "PASSWORD": "Please enter a valid and secure password.",
+      "PHONE": "Please enter a valid phone number.",
+      "PSEUDO": "Please enter a valid username.",
+      "PSEUDO_ALREADY_USED": "The nickname entered is already in use."
+    }
   },
   "EVENT": {
     "DATE": "Date",
@@ -91,7 +119,7 @@
     "OWNER_MESSAGE": "This user created the event",
     "PARTICIPANTS": "Participants",
     "TITLE": "Event",
-    "TYPE": "Type / Keywords"
+    "TYPE": "Event type"
   },
   "EVENT_CREATE": {
     "DATE": "Date",
@@ -146,9 +174,9 @@
     "DISPLAY_NAME": "Your first and last name",
     "DISPLAY_PHONE": "Your phone number",
     "FRIENDS_VIEW": "Your friends can see the following information",
-    "INFORMATION": "Information",
+    "INFORMATIONS": "Informations",
     "LOGOUT": "Logout",
-    "N / A": "Not specified",
+    "N/A": "Not specified",
     "TITLE": "Profile"
   },
   "PROFILE_EDIT": {
@@ -169,8 +197,8 @@
   },
   "TABBAR": {
     "EVENTS": "Events",
-    "MEET": "Meetings",
     "FRIENDS": "Friends",
+    "MEET": "Meet",
     "PROFILE": "Profile"
   },
   "TEMPER": {
@@ -191,8 +219,8 @@
     "EXPLORER": "Explorer",
     "FAITHFUL": "Faithful",
     "FEARFUL": "Fearful",
-    "FOLLOWER": "Follower",
     "FIERY": "Fougueux",
+    "FOLLOWER": "Follower",
     "FUN": "Fun",
     "GATHERER": "Gaffeur",
     "GOURMAND": "Gourmand",
@@ -216,17 +244,9 @@
     "ANIMALS": "Animals",
     "ANY_ANIMAL": "The user has not added an animal yet",
     "ANY_INFORMATIONS": "No information to display.",
-    "INFORMATION": "Information",
-    "N / A": "Not specified",
+    "INFORMATIONS": "Informations",
+    "N/A": "Not specified",
     "PSEUDO": "Nickname",
     "TITLE": "User profile"
-  },
-  "ALERT": {
-    "CONFIRMATION": "Confirmation",
-    "CANCEL": "Cancel",
-    "CONFIRM": "Confirm",
-    "REMOVE_FRIENDS": "Are you sure you want to remove this friend?",
-    "ADD_FRIENDS": "Are you sure you want to add this person as a friend? They will have access to the information you have decided to display",
-    "REMOVE_ANIMAL": "Are you sure you want to remove this animal?"
   }
 }

@@ -18,8 +18,9 @@
                         <div class="flex-column align-start">
                             <div>
                                 <b>{{ friend.user.pseudo }}</b>
-                                <ion-label
-                                        *ngIf="friend.user.display_real_name && friend.friendOf">{{ friend.user.firstname}} {{ friend.user.lastname}}</ion-label>
+                                <ion-label *ngIf="friend.user.display_real_name && friend.friendOf">
+                                    {{ friend.user.first_name}} {{ friend.user.last_name}}
+                                </ion-label>
                             </div>
                             <div *ngIf="friend.user.display_phone && friend.user.phone && friend.friendOf">
                                 <ion-icon class="information-icon" mode="md" name="call"></ion-icon>

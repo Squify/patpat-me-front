@@ -9,10 +9,11 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { Temper } from 'src/app/interfaces/animal/temper';
 import { Breed } from 'src/app/interfaces/animal/breed';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Platform, ToastController } from '@ionic/angular';
-import { TranslateService } from "@ngx-translate/core";
-import { Router } from "@angular/router";
-import { UpdateService } from "../../services/update/update.service";
+import { Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { UpdateService } from '../../services/update/update.service';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-create-animal',
@@ -23,12 +24,13 @@ export class AnimalCreatePage implements OnInit {
 
     createAnimalInterface: CreateAnimal;
     createAnimalForm: FormGroup;
-    genders: AnimalGender[] = [];
-    types: AnimalType[] = [];
     isTypeSelected: boolean;
+
     breeds: Breed[] = [];
     breedsToDisplay: Breed[] = [];
+    genders: AnimalGender[] = [];
     tempers: Temper[] = [];
+    types: AnimalType[] = [];
 
     // Errors
     unknownError: boolean;
@@ -41,45 +43,26 @@ export class AnimalCreatePage implements OnInit {
     temperError: boolean;
     genderError: boolean;
 
-    dogPicPaths: string[] = [];
     catPicPaths: string[] = [];
+    dogPicPaths: string[] = [];
     selectedPic: string;
 
     constructor(
-        private genderService: GenderService,
-        private typeService: TypeService,
+        public platform: Platform,
+        private router: Router,
         private animalService: AnimalService,
-        public toastController: ToastController,
-        public translate: TranslateService,
-        public router: Router,
-        public updateService: UpdateService,
-        public platform: Platform
+        public errorService: ErrorService,
+        private genderService: GenderService,
+        private translate: TranslateService,
+        private typeService: TypeService,
+        private updateService: UpdateService,
     ) {
     }
 
     ngOnInit() {
 
         this.buildForm();
-        this.getGenders();
-        this.getTypes();
-        this.getTemper();
-        this.getBreed();
-    }
-
-    loadCatPics(): void {
-        this.selectedPic = null;
-        for (let i = 1; i <= 8; i++) {
-            this.catPicPaths.push('/assets/images/cat_pic/cat_' + i + '.png')
-        }
-        this.catPicPaths.push('/assets/images/animal_default.png')
-    }
-
-    loadDogPics(): void {
-        this.selectedPic = null;
-        for (let i = 1; i <= 8; i++) {
-            this.dogPicPaths.push('/assets/images/dog_pic/dog_' + i + '.png')
-        }
-        this.dogPicPaths.push('/assets/images/animal_default.png')
+        this.getAttributes();
     }
 
     getPicPath(path): void {
@@ -88,8 +71,9 @@ export class AnimalCreatePage implements OnInit {
 
     buildForm(): void {
 
-        this.loadCatPics();
-        this.loadDogPics();
+        this.dogPicPaths = this.animalService.loadDogPics();
+        this.catPicPaths = this.animalService.loadCatPics();
+
         this.isTypeSelected = false;
 
         // Create account form
@@ -100,22 +84,22 @@ export class AnimalCreatePage implements OnInit {
                 ]
             }),
             birthday: new FormControl(''),
-            fk_id_temper: new FormControl('', {
+            temper: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-            fk_id_gender: new FormControl('', {
+            gender: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-            fk_id_type: new FormControl('', {
+            type: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-            fk_id_breed: new FormControl(''),
+            breed: new FormControl(''),
 
         });
     }
@@ -123,10 +107,14 @@ export class AnimalCreatePage implements OnInit {
     typeChange(): void {
         this.isTypeSelected = true;
 
-        if (this.createAnimalForm.value.fk_id_type == 'Chien')
-            this.loadDogPics();
-        if (this.createAnimalForm.value.fk_id_type == 'Chat')
-            this.loadCatPics();
+        if (this.createAnimalForm.value.fk_id_type == 'Chien') {
+            this.selectedPic = null;
+            this.dogPicPaths = this.animalService.loadDogPics();
+        }
+        if (this.createAnimalForm.value.fk_id_type == 'Chat') {
+            this.selectedPic = null;
+            this.catPicPaths = this.animalService.loadCatPics();
+        }
 
         this.types.forEach((type) => {
             if (type.name === this.createAnimalForm.value.fk_id_type) {
@@ -135,62 +123,28 @@ export class AnimalCreatePage implements OnInit {
         });
     }
 
-    getGenders(): void {
+    getAttributes(): void {
+
         this.genderService.getAnimalGender().subscribe(
-            val => {
-                val.forEach((gender) => {
-                        const genderToAdd: AnimalGender = {name: gender.name};
-                        this.genders.push(genderToAdd);
-                    }
-                );
-            }
+            val => this.genders = val,
+            error => this.processError(error)
         );
-    }
 
-    getTypes(): void {
         this.typeService.getAnimalType().subscribe(
-            val => {
-                val.forEach((type) => {
-                        const typeToAdd: AnimalType = {
-                            id: type.id,
-                            name: type.name
-                        };
-                        this.types.push(typeToAdd);
-                    }
-                );
-            }
+            val => this.types = val,
+            error => this.processError(error)
         );
-    }
 
-    getBreed(): void {
         this.animalService.getAnimalBreed().subscribe(
-            val => {
-                val.forEach((breed) => {
-                        const breedToAdd: Breed = {
-                            name: breed.name,
-                            type: breed.type
-                        };
-                        this.breeds.push(breedToAdd);
-                    }
-                );
-            }
+            val => this.breeds = val,
+            error => this.processError(error)
         );
 
         this.breedsToDisplay = this.breeds;
-    }
 
-    getTemper(): void {
         this.animalService.getAnimalTemper().subscribe(
-            val => {
-                val.forEach((temper) => {
-                        const tempersToAdd: Temper = {
-                            id: temper.id,
-                            name: temper.name
-                        };
-                        this.tempers.push(tempersToAdd);
-                    }
-                );
-            }
+            val => this.tempers = val,
+            error => this.processError(error)
         );
     }
 
@@ -210,7 +164,7 @@ export class AnimalCreatePage implements OnInit {
         if (this.formIsValid()) {
             this.createAnimal();
         } else {
-            this.presentToast('general');
+            this.errorService.presentToast('default');
         }
     }
 
@@ -218,10 +172,10 @@ export class AnimalCreatePage implements OnInit {
         this.createAnimalInterface = {
             name: this.createAnimalForm.value.name,
             birthday: this.createAnimalForm.value.birthday,
-            tempers: this.createAnimalForm.value.fk_id_temper,
-            gender: this.createAnimalForm.value.fk_id_gender,
-            type: this.createAnimalForm.value.fk_id_type,
-            breed: this.createAnimalForm.value.fk_id_breed,
+            tempers: this.createAnimalForm.value.temper,
+            gender: this.createAnimalForm.value.gender,
+            type: this.createAnimalForm.value.type,
+            breed: this.createAnimalForm.value.breed,
             image_path: this.selectedPic
         };
 
@@ -247,16 +201,16 @@ export class AnimalCreatePage implements OnInit {
         if (this.createAnimalForm.controls.birthday.errors) {
             this.birthdayError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_type.errors) {
+        if (this.createAnimalForm.controls.type.errors) {
             this.typeError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_gender.errors) {
+        if (this.createAnimalForm.controls.gender.errors) {
             this.genderError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_temper.errors) {
+        if (this.createAnimalForm.controls.temper.errors) {
             this.temperError = true;
         }
-        if (this.createAnimalForm.controls.fk_id_breed.errors) {
+        if (this.createAnimalForm.controls.breed.errors) {
             this.breedError = true;
         }
     }
@@ -266,88 +220,20 @@ export class AnimalCreatePage implements OnInit {
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
-                    this.presentToast('back_input');
+                    this.errorService.presentToast('back_input');
                     break;
                 case 500:
                     this.serverError = true;
-                    this.presentToast('back_server');
+                    this.errorService.presentToast('back_server');
                     break;
                 default:
                     this.unknownError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
             }
         } else {
             this.unknownError = true;
-            this.presentToast('back_unknown');
+            this.errorService.presentToast('back_unknown');
         }
     }
-
-    async presentToast(error: string) {
-        let toast: HTMLIonToastElement;
-        switch (error) {
-            case 'name':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.ANIMAL.NAME'),
-                    duration: 2000
-                });
-                break;
-            case 'birthday':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.ANIMAL.BIRTHDAY'),
-                    duration: 2000
-                });
-                break;
-            case 'fk_id_type':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.ANIMAL.TYPE'),
-                    duration: 2000
-                });
-                break;
-            case 'fk_id_genre':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.ANIMAL.GENDER'),
-                    duration: 2000
-                });
-                break;
-            case 'fk_id_breed':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.ANIMAL.BREED'),
-                    duration: 2000
-                });
-                break;
-            case 'fk_id_temper':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.ANIMAL.TEMPER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_input':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_INPUT'),
-                    duration: 2000
-                });
-                break;
-            case 'back_server':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_SERVER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_unknown':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
-                    duration: 2000
-                });
-                break;
-            default:
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.DEFAULT'),
-                    duration: 3000
-                });
-                break;
-        }
-        toast.present();
-    }
-
 }

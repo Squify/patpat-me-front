@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/user/user';
 import { MeetService } from '../../services/meet/meet.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user/user.service';
 import { UpdateService } from '../../services/update/update.service';
 import { Friend } from '../../interfaces/user/friend';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-friends',
@@ -24,12 +25,12 @@ export class FriendsPage implements OnInit {
     inputsError: boolean;
 
     constructor(
+        private alertController: AlertController,
+        private translate: TranslateService,
+        private errorService: ErrorService,
         private meetService: MeetService,
-        public toastController: ToastController,
-        public translate: TranslateService,
+        private updateService: UpdateService,
         private userService: UserService,
-        public updateService: UpdateService,
-        public alertController: AlertController,
     ) {
     }
 
@@ -102,45 +103,20 @@ export class FriendsPage implements OnInit {
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
                 case 500:
                     this.serverError = true;
-                    this.presentToast('back_server');
+                    this.errorService.presentToast('back_server');
                     break;
                 default:
                     this.unknownError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
             }
         } else {
             this.unknownError = true;
-            this.presentToast('back_unknown');
+            this.errorService.presentToast('back_unknown');
         }
-    }
-
-    async presentToast(error: string) {
-        let toast: HTMLIonToastElement;
-        switch (error) {
-            case 'back_server':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_SERVER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_unknown':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
-                    duration: 2000
-                });
-                break;
-            default:
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.DEFAULT'),
-                    duration: 3000
-                });
-                break;
-        }
-        toast.present();
     }
 }

@@ -1,8 +1,8 @@
-import { Breed } from "./breed";
-import { AnimalGender } from "./animal-gender";
-import { AnimalType } from "./animal-type";
-import { Temper } from "./temper";
-import { User } from "../user/user";
+import { Breed } from './breed';
+import { AnimalGender } from './animal-gender';
+import { AnimalType } from './animal-type';
+import { Temper } from './temper';
+import { User } from '../user/user';
 
 export interface Animal {
     id: number;

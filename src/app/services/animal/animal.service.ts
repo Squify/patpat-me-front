@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CreateAnimal } from 'src/app/interfaces/animal/create-animal';
 import { UpdateAnimal } from 'src/app/interfaces/animal/update-animal';
-import { Animal } from "../../interfaces/animal/animal";
+import { Animal } from '../../interfaces/animal/animal';
 
 @Injectable({
     providedIn: 'root'
@@ -41,6 +41,22 @@ export class AnimalService {
 
     deleteAnimal(animalId: number) {
         const params: HttpParams = new HttpParams().set('animalId', animalId.toString());
-        return this.http.delete<any>(environment.BACKEND_URL+'/api/animal/delete',{params})
+        return this.http.delete<any>(environment.BACKEND_URL + '/api/animal/delete', {params})
+    }
+
+    loadCatPics(): string[] {
+        let catPicPaths = [];
+        for (let i = 1; i <= 8; i++) {
+            catPicPaths.push('/assets/images/cat_pic/cat_' + i + '.png')
+        }
+        return catPicPaths;
+    }
+
+    loadDogPics(): string[] {
+        let dogPicPaths = [];
+        for (let i = 1; i <= 8; i++) {
+            dogPicPaths.push('/assets/images/dog_pic/dog_' + i + '.png')
+        }
+        return dogPicPaths;
     }
 }

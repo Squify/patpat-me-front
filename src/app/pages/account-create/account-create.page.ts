@@ -5,14 +5,15 @@ import { UserService } from '../../services/user/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserGender } from '../../interfaces/user/user-gender';
 import { GenderService } from '../../services/gender/gender.service';
-import { ToastController } from '@ionic/angular';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { User } from '../../interfaces/user/user';
 import { Router } from '@angular/router';
 import { Credentials } from '../../interfaces/user/credentials';
-import { TranslateService } from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language/language.service';
 import { Language } from '../../interfaces/user/language';
+import { ErrorService } from '../../services/error/error.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-account-create',
@@ -36,25 +37,24 @@ export class AccountCreatePage implements OnInit {
     passwordInputError: boolean;
     passwordSecurityError: boolean;
     pseudoInputError: boolean;
-    lastnameInputError: boolean;
-    firstnameInputError: boolean;
+    lastNameInputError: boolean;
+    firstNameInputError: boolean;
     phoneInputError: boolean;
 
     passwordIcon = 'eye-outline';
-    passwordInputType= 'password';
+    passwordInputType = 'password';
 
     constructor(
-        private userService: UserService,
+        private router: Router,
+        public translate: TranslateService,
+        private authService: AuthenticationService,
+        public errorService: ErrorService,
         private genderService: GenderService,
         private languageService: LanguageService,
-        private authService: AuthenticationService,
-        private router: Router,
-        public toastController: ToastController,
-        public translate: TranslateService
+        private userService: UserService,
     ) {
 
-        this.getGenders();
-        this.getLanguages();
+        this.getAttributes();
         this.changeLanguage('FR');
         this.buildForm();
     }
@@ -66,8 +66,7 @@ export class AccountCreatePage implements OnInit {
         if (this.passwordInputType === 'password') {
             this.passwordInputType = 'input';
             this.passwordIcon = 'eye-off-outline';
-        }
-        else if (this.passwordInputType === 'input') {
+        } else if (this.passwordInputType === 'input') {
             this.passwordInputType = 'password';
             this.passwordIcon = 'eye-outline';
         }
@@ -76,14 +75,12 @@ export class AccountCreatePage implements OnInit {
     buildForm(): void {
 
         this.createPersonForm = new FormGroup({
-
             email: new FormControl('', {
                 validators: [
                     Validators.required,
                     Validators.pattern(/^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/)
                 ]
             }),
-
             password: new FormControl('', {
                 validators: [
                     Validators.required,
@@ -91,42 +88,32 @@ export class AccountCreatePage implements OnInit {
                     Validators.maxLength(32),
                 ]
             }),
-
             pseudo: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             lastname: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             firstname: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
             }),
-
             phone: new FormControl('', {
                 validators: [
                     Validators.pattern(/(^|\s+)(0[0-9]|\+33[\s.\-]?[0-9])([\s.\-]?[0-9]{2}){4}/)
                 ]
             }),
-
             birthday: new FormControl(''),
-
             display_email: new FormControl(false),
-
             display_phone: new FormControl(false),
-
             display_real_name: new FormControl(false),
-
-            fk_id_gender: new FormControl(''),
-
-            fk_id_language: new FormControl('', {
+            gender: new FormControl(''),
+            language: new FormControl('', {
                 validators: [
                     Validators.required
                 ]
@@ -134,27 +121,16 @@ export class AccountCreatePage implements OnInit {
         });
     }
 
-    getGenders(): void {
-        this.genderService.getUserGender().subscribe(
-            val => {
-                val.forEach((gender) => {
-                        const genderToAdd: UserGender = {name: gender.name};
-                        this.genders.push(genderToAdd);
-                    }
-                );
-            }
-        );
-    }
+    getAttributes(): void {
 
-    getLanguages(): void {
+        this.genderService.getUserGender().subscribe(
+            val => this.genders = val,
+            error => this.processError(error)
+        );
+
         this.languageService.getLanguage().subscribe(
-            val => {
-                val.forEach((language) => {
-                        const languageToAdd: UserGender = {name: language.name};
-                        this.languages.push(languageToAdd);
-                    }
-                );
-            }
+            val => this.languages = val,
+            error => this.processError(error)
         );
     }
 
@@ -171,8 +147,8 @@ export class AccountCreatePage implements OnInit {
         this.passwordInputError = false;
         this.passwordSecurityError = false;
         this.pseudoInputError = false;
-        this.lastnameInputError = false;
-        this.firstnameInputError = false;
+        this.lastNameInputError = false;
+        this.firstNameInputError = false;
         this.phoneInputError = false;
     }
 
@@ -180,7 +156,7 @@ export class AccountCreatePage implements OnInit {
         if (this.formIsValid()) {
             this.createAccount();
         } else {
-            this.presentToast('general');
+            this.errorService.presentToast('default');
         }
     }
 
@@ -189,16 +165,16 @@ export class AccountCreatePage implements OnInit {
             email: this.createPersonForm.value.email,
             password: this.createPersonForm.value.password,
             pseudo: this.createPersonForm.value.pseudo,
-            profile_pic_path: '/assets/images/profile_pic/profile_default.png',
-            firstname: this.createPersonForm.value.firstname,
-            lastname: this.createPersonForm.value.lastname,
+            profile_pic_path: environment.default_profile_pic,
+            first_name: this.createPersonForm.value.firstname,
+            last_name: this.createPersonForm.value.lastname,
             phone: this.createPersonForm.value.phone,
             birthday: this.createPersonForm.value.birthday,
             display_email: this.createPersonForm.value.display_email,
             display_phone: this.createPersonForm.value.display_phone,
             display_real_name: this.createPersonForm.value.display_real_name,
-            gender: this.createPersonForm.value.fk_id_gender,
-            language: this.createPersonForm.value.fk_id_language,
+            gender: this.createPersonForm.value.gender,
+            language: this.createPersonForm.value.language,
         };
 
         this.userService.createUser(this.accountCreateInterface).subscribe(
@@ -227,10 +203,10 @@ export class AccountCreatePage implements OnInit {
     }
 
     formIsValid(): boolean {
+
         this.setAllErrorsToFalse();
         this.checkInputsError();
         this.checkPasswordSecurity();
-
         return !this.createPersonForm.invalid;
     }
 
@@ -245,10 +221,10 @@ export class AccountCreatePage implements OnInit {
             this.pseudoInputError = true;
         }
         if (this.createPersonForm.controls.lastname.errors) {
-            this.lastnameInputError = true;
+            this.lastNameInputError = true;
         }
         if (this.createPersonForm.controls.firstname.errors) {
-            this.firstnameInputError = true;
+            this.firstNameInputError = true;
         }
         if (this.createPersonForm.controls.phone.errors) {
             this.phoneInputError = true;
@@ -277,86 +253,28 @@ export class AccountCreatePage implements OnInit {
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
-                    this.presentToast('back_input');
+                    this.errorService.presentToast('back_input');
                     break;
                 case 409:
                     this.inputsError = true;
-                    this.presentToast('back_pseudo_used');
+                    this.errorService.presentToast('back_pseudo_used');
                     break;
                 case 417:
                     this.emailAlreadyUsed = true;
-                    this.presentToast('back_email_used');
+                    this.errorService.presentToast('back_email_used');
                     break;
                 case 500:
                     this.serverError = true;
-                    this.presentToast('back_server');
+                    this.errorService.presentToast('back_server');
                     break;
                 default:
                     this.unknownError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
             }
         } else {
             this.unknownError = true;
-            this.presentToast('back_unknown');
+            this.errorService.presentToast('back_unknown');
         }
     }
-
-    async presentToast(error: string) {
-        let toast: HTMLIonToastElement;
-        switch (error) {
-            case 'password':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.PASSWORD'),
-                    duration: 2000
-                });
-                break;
-            case 'email':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.EMAIL'),
-                    duration: 2000
-                });
-                break;
-            case 'phone':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.PHONE'),
-                    duration: 2000
-                });
-                break;
-            case 'back_input':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_INPUT'),
-                    duration: 2000
-                });
-                break;
-            case 'back_email_used':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.EMAIL_ALREADY_USED'),
-                    duration: 2000
-                });
-                break;
-            case 'back_server':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_SERVER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_unknown':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
-                    duration: 2000
-                });
-                break;
-            default:
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.DEFAULT'),
-                    duration: 3000
-                });
-                break;
-
-        }
-
-        toast.present();
-    }
-
 }

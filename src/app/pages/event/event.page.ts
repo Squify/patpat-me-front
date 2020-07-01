@@ -5,9 +5,9 @@ import { EventType } from '../../interfaces/event/event-type';
 import { UserService } from '../../services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UpdateService } from '../../services/update/update.service';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-event',
@@ -30,14 +30,14 @@ export class EventPage implements OnInit {
     participationIcon = '';
 
     constructor(
-        private eventService: EventService,
-        private ngZone: NgZone,
-        private userService: UserService,
-        public router: Router,
         private activatedRoute: ActivatedRoute,
-        public toastController: ToastController,
+        private ngZone: NgZone,
+        private router: Router,
         public translate: TranslateService,
-        public updateService: UpdateService
+        public errorService: ErrorService,
+        private eventService: EventService,
+        public updateService: UpdateService,
+        private userService: UserService,
     ) {
     }
 
@@ -59,7 +59,7 @@ export class EventPage implements OnInit {
     }
 
     openMaps() {
-        window.open('https://maps.google.com/?q=' + this.event.localisation)
+        window.open('https://maps.google.com/?q=' + this.event.location)
     }
 
     getEvent(): void {
@@ -69,7 +69,7 @@ export class EventPage implements OnInit {
                 this.event = value;
                 this.isMember();
             },
-            e => this.processError(e)
+            error => this.processError(error)
         );
     }
 
@@ -80,7 +80,7 @@ export class EventPage implements OnInit {
                 this.getEvent();
                 this.updateService.publishSomeData('updateEvent');
             },
-            e => this.processError(e)
+            error => this.processError(error)
         );
         this.ngZone.run(() => this.getEvent())
     }
@@ -99,16 +99,8 @@ export class EventPage implements OnInit {
 
     getTypes(): void {
         this.eventService.getEventType().subscribe(
-            val => {
-                val.forEach((type) => {
-                        const typeToAdd: EventType = {
-                            id: type.id,
-                            name: type.name
-                        };
-                        this.types.push(typeToAdd);
-                    }
-                );
-            }
+            val => this.types = val,
+            error => this.processError(error)
         );
     }
 
@@ -129,67 +121,24 @@ export class EventPage implements OnInit {
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
-                    this.presentToast('back_input');
+                    this.errorService.presentToast('back_input');
                     break;
                 case 417:
                     this.userIsOwnerError = true;
-                    this.presentToast('back_userIsOwner');
+                    this.errorService.presentToast('event_back_userIsOwner');
                     break;
                 case 500:
                     this.serverError = true;
-                    this.presentToast('back_server');
+                    this.errorService.presentToast('back_server');
                     break;
                 default:
                     this.unknownError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
             }
         } else {
             this.unknownError = true;
-            this.presentToast('back_unknown');
+            this.errorService.presentToast('back_unknown');
         }
-    }
-
-    async presentToast(error: string) {
-        let toast: HTMLIonToastElement;
-        switch (error) {
-            case 'owner':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('EVENT.OWNER_MESSAGE'),
-                    duration: 2000
-                });
-                break;
-            case 'back_input':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_INPUT'),
-                    duration: 2000
-                });
-                break;
-            case 'back_userIsOwner':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.USER_IS_OWNER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_server':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_SERVER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_unknown':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
-                    duration: 2000
-                });
-                break;
-            default:
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.DEFAULT'),
-                    duration: 3000
-                });
-                break;
-        }
-        toast.present();
     }
 }

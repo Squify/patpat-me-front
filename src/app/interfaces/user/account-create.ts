@@ -3,8 +3,8 @@ export interface AccountCreate {
     password: string;
     pseudo: string;
     profile_pic_path: string;
-    firstname: string;
-    lastname: string;
+    first_name: string;
+    last_name: string;
     phone: string;
     birthday: string;
     display_email: boolean;

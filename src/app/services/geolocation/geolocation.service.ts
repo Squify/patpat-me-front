@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from "rxjs";
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GeolocationService {
-    myMethod$: Observable<any>;
-    private myMethodSubject = new Subject<any>();
+    getData: Observable<any>;
+    private dataSubject = new Subject<any>();
 
     constructor() {
-        this.myMethod$ = this.myMethodSubject.asObservable();
+        this.getData = this.dataSubject.asObservable();
     }
 
-    myMethod(data) {
-        // we can do stuff with data if we want
-        this.myMethodSubject.next(data);
+    sendData(data) {
+        this.dataSubject.next(data);
     }
 }

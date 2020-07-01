@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, NgZone, OnDestroy, Output, ViewChild } from '@angular/core';
-import places from "places.js";
-import { GeolocationService } from "../../services/geolocation/geolocation.service";
+import { GeolocationService } from '../../services/geolocation/geolocation.service';
+import places from 'places.js';
 
 @Component({
-    selector: "app-places",
+    selector: 'app-places',
     templateUrl: './places.component.html',
     styleUrls: ['./places.component.scss'],
 })
@@ -11,13 +11,13 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
     private instance = null;
     public data: string;
 
-    @ViewChild("input", null) input;
+    @ViewChild('input', null) input;
     @Output() onChange? = new EventEmitter();
     @Input() defaultLocation: string;
 
     constructor(
-        private geolocationService: GeolocationService,
         private ngZone: NgZone,
+        private geolocationService: GeolocationService,
     ) {
     }
 
@@ -34,6 +34,6 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
     }
 
     sendValue() {
-        this.geolocationService.myMethod(this.input.nativeElement.value);
+        this.geolocationService.sendData(this.input.nativeElement.value);
     }
 }
