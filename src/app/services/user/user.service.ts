@@ -55,4 +55,13 @@ export class UserService {
         const params: HttpParams = new HttpParams().set('userId', userId.toString());
         return this.http.get<Friend>(environment.BACKEND_URL + '/api/user', {params});
     }
+
+    loadProfilePics(): string[] {
+        let picPaths = [];
+        picPaths.push(environment.default_profile_pic)
+        for (let i = 1; i <= 24; i++) {
+            picPaths.push('/assets/images/profile_pic/profile_' + i + '.png')
+        }
+        return picPaths;
+    }
 }

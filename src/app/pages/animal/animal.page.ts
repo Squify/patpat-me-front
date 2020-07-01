@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 import { Animal } from 'src/app/interfaces/animal/animal';
 import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
 import { AnimalType } from 'src/app/interfaces/animal/animal-type';
@@ -10,9 +10,11 @@ import { AnimalService } from 'src/app/services/animal/animal.service';
 import { GenderService } from 'src/app/services/gender/gender.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
-import { UpdateService } from "../../services/update/update.service";
+import { UpdateService } from '../../services/update/update.service';
 import { User } from '../../interfaces/user/user';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-animal',
@@ -22,27 +24,21 @@ import { TranslateService } from '@ngx-translate/core';
 export class AnimalPage implements OnInit {
 
     connectedUser: User;
-
     animalId: number;
     animal: Animal;
 
-    genders: AnimalGender[] = [];
-    types: AnimalType[] = [];
-    breeds: Breed[] = [];
-    breedsToDisplay: Breed[] = [];
-    tempers: Temper[] = [];
-
     constructor(
-        public router: Router,
-        private activatedRoute: ActivatedRoute,
         private ngZone: NgZone,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private translate: TranslateService,
+        private alertController: AlertController,
+        private animalService: AnimalService,
+        private errorService: ErrorService,
         private genderService: GenderService,
         private typeService: TypeService,
-        private animalService: AnimalService,
+        private updateService: UpdateService,
         private userService: UserService,
-        public alertController: AlertController,
-        public updateService: UpdateService,
-        public translate: TranslateService,
     ) {
     }
 
@@ -54,10 +50,6 @@ export class AnimalPage implements OnInit {
 
         this.getConnectedUser();
         this.getAnimal();
-        this.getGenders();
-        this.getTypes();
-        this.getTemper();
-        this.getBreed();
 
         this.updateService.getObservable().subscribe((data) => {
             switch (data) {
@@ -73,16 +65,15 @@ export class AnimalPage implements OnInit {
     getAnimal(): void {
 
         this.animalService.getAnimalById(this.animalId).subscribe(
-            value => {
-                this.animal = value;
-            },
+            value => this.animal = value,
+            error => this.processError(error)
         );
     }
 
     getConnectedUser(): void {
         this.userService.getRemoteUser().subscribe(
-            user => this.connectedUser = user
-            // e => this.processError(e)
+            user => this.connectedUser = user,
+            error => this.processError(error)
         )
     }
 
@@ -91,73 +82,13 @@ export class AnimalPage implements OnInit {
         return this.animal.owner.id == this.connectedUser.id;
     }
 
-    getGenders(): void {
-        this.genderService.getAnimalGender().subscribe(
-            val => {
-                val.forEach((gender) => {
-                        const genderToAdd: AnimalGender = {
-                            name: gender.name
-                        };
-                        this.genders.push(genderToAdd);
-                    }
-                );
-            }
-        );
-    }
-
-    getTypes(): void {
-        this.typeService.getAnimalType().subscribe(
-            val => {
-                val.forEach((type) => {
-                        const typeToAdd: AnimalType = {
-                            id: type.id,
-                            name: type.name
-                        };
-                        this.types.push(typeToAdd);
-                    }
-                );
-            }
-        );
-    }
-
-    getBreed(): void {
-        this.animalService.getAnimalBreed().subscribe(
-            val => {
-                val.forEach((breed) => {
-                        const breedToAdd: Breed = {
-                            name: breed.name,
-                            type: breed.type
-                        };
-                        this.breeds.push(breedToAdd);
-                    }
-                );
-            }
-        );
-
-        this.breedsToDisplay = this.breeds;
-    }
-
-    getTemper(): void {
-        this.animalService.getAnimalTemper().subscribe(
-            val => {
-                val.forEach((temper) => {
-                        const tempersToAdd: Temper = {
-                            id: temper.id,
-                            name: temper.name
-                        };
-                        this.tempers.push(tempersToAdd);
-                    }
-                );
-            }
-        );
-    }
-
     deleteAnimal(): void {
         this.animalService.deleteAnimal(this.animalId).subscribe(
             _ => {
                 this.updateService.publishSomeData('updateAnimal')
                 this.router.navigateByUrl('/tabs/profile')
-            }
+            },
+            error => this.processError(error)
         );
     }
 
@@ -184,4 +115,24 @@ export class AnimalPage implements OnInit {
         await alert.onDidDismiss();
     }
 
+    processError(error: HttpErrorResponse) {
+        if (error) {
+            switch (error.status) {
+                case 400:
+                    this.errorService.presentToast('back_input');
+                    break;
+                case 417:
+                    this.errorService.presentToast('animal_back_user');
+                    break;
+                case 500:
+                    this.errorService.presentToast('back_server');
+                    break;
+                default:
+                    this.errorService.presentToast('back_unknown');
+                    break;
+            }
+        } else {
+            this.errorService.presentToast('back_unknown');
+        }
+    }
 }

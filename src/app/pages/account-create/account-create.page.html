@@ -11,8 +11,10 @@
 
             <ion-list>
                 <ion-item mode="md">
-                    <ion-select interface="popover" (ionChange)="changeLanguage(this.createPersonForm.value.fk_id_language)"
-                                formControlName="fk_id_language" value="{{ 'FR' }}">
+                    <ion-select interface="popover"
+                                (ionChange)="changeLanguage(this.createPersonForm.value.language)"
+                                formControlName="language"
+                                placeholder="{{ 'ACCOUNT_CREATE.LANGUAGE' | translate }}">
                         <ion-select-option *ngFor="let language of languages" value="{{ language.name }}">
                             {{ 'LANGUAGE.' + language.name | translate }}
                         </ion-select-option>
@@ -28,7 +30,8 @@
                     <ion-icon mode="md" slot="start" name="person" class="ion-align-self-end">
                     </ion-icon>
                     <ion-icon *ngIf="pseudoInputError" mode="md" slot="end" name="alert-circle-outline"
-                        class="ion-align-self-end error-message" (click)="presentToast('pseudo')">
+                              class="ion-align-self-end error-message"
+                              (click)="errorService.presentToast('user_pseudo')">
                     </ion-icon>
                 </ion-item>
 
@@ -38,8 +41,8 @@
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
                     <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
-                        name="alert-circle-outline" class="ion-align-self-end error-message"
-                        (click)="presentToast('password')"></ion-icon>
+                              name="alert-circle-outline" class="ion-align-self-end error-message"
+                              (click)="errorService.presentToast('user_password')"></ion-icon>
                     <ion-icon (click)="changePasswordView()" mode="md" slot="end"
                               name="{{ passwordIcon }}" class="ion-align-self-end"></ion-icon>
                 </ion-item>
@@ -50,7 +53,8 @@
                     </ion-input>
                     <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end"></ion-icon>
                     <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
-                        class="ion-align-self-end error-message" (click)="presentToast('email')">
+                              class="ion-align-self-end error-message"
+                              (click)="errorService.presentToast('user_email')">
                     </ion-icon>
                 </ion-item>
 
@@ -61,10 +65,10 @@
                             <ion-input type="text" formControlName="lastname">
                             </ion-input>
                             <ion-icon mode="md" slot="start" name="finger-print-outline"
-                                class="ion-align-self-end"></ion-icon>
-                            <ion-icon *ngIf="lastnameInputError" mode="md" slot="end" name="alert-circle-outline"
-                                class="ion-align-self-end error-message"
-                                (click)="presentToast('lastname')"></ion-icon>
+                                      class="ion-align-self-end"></ion-icon>
+                            <ion-icon *ngIf="lastNameInputError" mode="md" slot="end" name="alert-circle-outline"
+                                      class="ion-align-self-end error-message"
+                                      (click)="errorService.presentToast('user_lastname')"></ion-icon>
                         </ion-item>
                     </ion-col>
                     <ion-col col-6>
@@ -72,22 +76,22 @@
                             <ion-label position="floating">{{ 'ACCOUNT_CREATE.FIRSTNAME' | translate }}</ion-label>
                             <ion-input type="text" formControlName="firstname">
                             </ion-input>
-                            <ion-icon *ngIf="firstnameInputError" mode="md" slot="end" name="alert-circle-outline"
-                                class="ion-align-self-end error-message"
-                                (click)="presentToast('firstname')"></ion-icon>
+                            <ion-icon *ngIf="firstNameInputError" mode="md" slot="end" name="alert-circle-outline"
+                                      class="ion-align-self-end error-message"
+                                      (click)="errorService.presentToast('user_firstname')"></ion-icon>
                         </ion-item>
                     </ion-col>
                 </ion-row>
 
                 <ion-item mode="md">
-                    <ion-select interface="popover" formControlName="fk_id_gender"
+                    <ion-select interface="popover" formControlName="gender"
                                 placeholder="{{ 'ACCOUNT_CREATE.GENDER' | translate }}">
                         <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
                             {{ gender.name }}
                         </ion-select-option>
                     </ion-select>
                     <ion-icon mode="md" slot="start" name="male-female-outline"
-                        class="ion-align-self-end"></ion-icon>
+                              class="ion-align-self-end"></ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
@@ -97,7 +101,8 @@
                     <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end">
                     </ion-icon>
                     <ion-icon *ngIf="phoneInputError" mode="md" slot="end" name="alert-circle-outline"
-                        class="ion-align-self-end error-message" (click)="presentToast('phone')">
+                              class="ion-align-self-end error-message"
+                              (click)="errorService.presentToast('user_phone')">
                     </ion-icon>
                 </ion-item>
 
@@ -129,11 +134,13 @@
         </form>
 
         <div class="button-center">
-            <ion-button slot="end" class="validation-button" (click)="submit()">{{ 'ACCOUNT_CREATE.SUBMIT' | translate }}</ion-button>
+            <ion-button slot="end" class="validation-button"
+                        (click)="submit()">{{ 'ACCOUNT_CREATE.SUBMIT' | translate }}</ion-button>
         </div>
 
         <div class="button-center">
-            <p>{{ 'ACCOUNT_CREATE.ALREADY_ACCOUNT' | translate }}<a [routerLink]="'/login'">{{ 'ACCOUNT_CREATE.CONNEXION' | translate }}</a></p>
+            <p>{{ 'ACCOUNT_CREATE.ALREADY_ACCOUNT' | translate }}<a
+                    [routerLink]="'/login'">{{ 'ACCOUNT_CREATE.CONNEXION' | translate }}</a></p>
         </div>
     </div>
 </ion-content>

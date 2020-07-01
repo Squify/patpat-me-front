@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { EventFilterPipe } from './event/event-filter.pipe';
 
 @NgModule({
-  declarations: [EventFilterPipe],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    EventFilterPipe
-  ]
+    declarations: [EventFilterPipe],
+    imports: [
+        CommonModule
+    ],
+    exports: [
+        EventFilterPipe
+    ]
 })
-export class SharedPipeModule { }
+export class SharedPipeModule {
+}

@@ -1,19 +1,18 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {RouteReuseStrategy} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouteReuseStrategy } from '@angular/router';
 
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import {CustomHttpInterceptor} from './interceptors/custom-http-interceptor';
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import { PlacesComponent } from "./components/places/places.component";
-import { NgAisModule } from "angular-instantsearch";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { CustomHttpInterceptor } from './interceptors/custom-http-interceptor';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgAisModule } from 'angular-instantsearch';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {

@@ -12,9 +12,7 @@
         <ion-card-header>
             <ion-card-title>{{ 'EVENT_EDIT.WARNING.TITLE' | translate }}</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-            {{ 'EVENT_EDIT.WARNING.TEXT' | translate }}
-        </ion-card-content>
+        <ion-card-content [innerHTML]="translate.instant('EVENT_EDIT.WARNING.TEXT')"></ion-card-content>
     </ion-card>
 
     <div class="form-container">
@@ -22,51 +20,46 @@
 
             <ion-item mode="md">
                 <ion-label position="floating">{{ 'EVENT_CREATE.NAME' | translate }}</ion-label>
-                <ion-input type="text" [disabled]="true" [value]="event.name">
-                </ion-input>
+                <ion-input type="text" [disabled]="true" [value]="event.name"></ion-input>
                 <ion-icon mode="md" slot="start" name="information-circle-outline"
                           class="ion-align-self-end"></ion-icon>
             </ion-item>
 
             <ion-item mode="md">
                 <ion-label position="floating">{{ 'EVENT_CREATE.DESCRIPTION' | translate }}</ion-label>
-                <ion-input type="text" formControlName="description">
-                </ion-input>
-                <ion-icon mode="md" slot="start" name="menu-outline"
-                          class="ion-align-self-end"></ion-icon>
+                <ion-input type="text" formControlName="description"></ion-input>
+                <ion-icon mode="md" slot="start" name="menu-outline" class="ion-align-self-end"></ion-icon>
                 <ion-icon mode="md" *ngIf="descriptionError" slot="end" name="alert-circle-outline"
                           class="ion-align-self-end error-message"
-                          (click)="presentToast('description')"></ion-icon>
+                          (click)="errorService.presentToast('event_description')"></ion-icon>
             </ion-item>
 
             <div id="geolocation-input">
                 <ion-icon mode="md" slot="start" name="location-outline" id="geolocation-icon"
                           class="ion-align-self-center"></ion-icon>
-                <app-places defaultLocation="{{ this.event.localisation }}" style="width: calc(100%);"></app-places>
-                <ion-icon mode="md" *ngIf="localisationError" slot="end" name="alert-circle-outline"
+                <app-places defaultLocation="{{ this.event.location }}" style="width: calc(100%);"></app-places>
+                <ion-icon mode="md" *ngIf="locationError" slot="end" name="alert-circle-outline"
                           class="ion-align-self-center error-message"
-                          (click)="presentToast('localisation')"></ion-icon>
+                          (click)="errorService.presentToast('event_location')"></ion-icon>
             </div>
 
             <ion-item mode="md">
                 <ion-label position="floating">{{ 'EVENT_CREATE.DATE' | translate }}</ion-label>
                 <ion-datetime formControlName="date" display-format="DD MMMM YYYY HH:mm"
-                              pickerFormat="DD MMMM YYYY HH:mm" mode="md" min="{{ this.minDate }}" max="{{ this.maxDate }}"
+                              pickerFormat="DD MMMM YYYY HH:mm" mode="md" min="{{ this.minDate }}"
+                              max="{{ this.maxDate }}"
                               placeholder="{{ 'EVENT_CREATE.SELECT_DATE' | translate }}">
                 </ion-datetime>
-                <ion-icon mode="md" slot="start" name="calendar-outline"
-                          class="ion-align-self-end"></ion-icon>
+                <ion-icon mode="md" slot="start" name="calendar-outline" class="ion-align-self-end"></ion-icon>
                 <ion-icon mode="md" *ngIf="dateError" slot="end" name="alert-circle-outline"
                           class="ion-align-self-end error-message"
-                          (click)="presentToast('date')"></ion-icon>
+                          (click)="errorService.presentToast('event_date')"></ion-icon>
             </ion-item>
 
             <ion-item mode="md">
-                <ion-input placeholder="{{ 'EVENT_CREATE.TYPE' | translate }}"
-                           [disabled]="true" [value]="event.type.name">
-                </ion-input>
-                <ion-icon mode="md" slot="start" name="paw-outline"
-                          class="ion-align-self-end"></ion-icon>
+                <ion-input placeholder="{{ 'EVENT_CREATE.TYPE' | translate }}" [disabled]="true"
+                           [value]="event.type.name"></ion-input>
+                <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end"></ion-icon>
             </ion-item>
 
             <div class="button-center">

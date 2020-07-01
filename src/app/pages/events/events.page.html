@@ -20,16 +20,10 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <!-- Type of event
-            <ion-item>Type d'événement</ion-item>
-            -->
             <ion-item *ngFor="let filter of filters">
                 <ion-label>{{ filter.label }}</ion-label>
                 <ion-checkbox [(ngModel)]="filter.value" (ionChange)="updateArgs()"></ion-checkbox>
             </ion-item>
-            <!-- Order by
-            <ion-item>Filtres généraux</ion-item>
-            -->
         </ion-list>
     </ion-content>
 </ion-menu>
@@ -78,17 +72,16 @@
                                 </ion-col>
                                 <ion-col size="12">
                                     <ion-icon name="location-outline"></ion-icon>
-                                    {{ event.localisation }}
+                                    {{ event.location }}
                                 </ion-col>
                                 <ion-col size="12">
                                     <ion-icon name="calendar-outline"></ion-icon>
-                                    {{ event.date | date: 'dd/MM/yyyy à HH:mm' }}
+                                    {{ event.date | date: 'dd/MM/yyyy - HH:mm' }}
                                 </ion-col>
                             </ion-row>
                             <ion-button [routerLink]="'event/'+ event.id" fill="clear" size="small">
                                 <ion-icon name="arrow-forward-circle-outline"></ion-icon>
                                 {{ 'EVENTS.MORE_DETAILS' | translate }}
-                                <!--                                > {{ 'EVENTS.MORE_DETAILS' | translate }}-->
                             </ion-button>
                         </ion-col>
                         <!-- List of the events here -->

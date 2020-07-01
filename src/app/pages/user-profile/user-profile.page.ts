@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Friend } from '../../interfaces/user/friend';
 import { User } from '../../interfaces/user/user';
-import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { DateService } from '../../services/date/date.service';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-user-profile',
@@ -28,12 +28,12 @@ export class UserProfilePage implements OnInit {
     selectedSegment = 'informationSegment';
 
     constructor(
-        private userService: UserService,
-        private authService: AuthenticationService,
-        private router: Router,
         private activatedRoute: ActivatedRoute,
-        public toastController: ToastController,
-        public translate: TranslateService,
+        private router: Router,
+        private errorService: ErrorService,
+        public dateService: DateService,
+        private translate: TranslateService,
+        private userService: UserService,
     ) {
     }
 
@@ -52,7 +52,7 @@ export class UserProfilePage implements OnInit {
     getConnectedUser(): void {
         this.userService.getRemoteUser().subscribe(
             user => this.connectedUser = user,
-            e => this.processError(e)
+            error => this.processError(error)
         )
     }
 
@@ -66,50 +66,8 @@ export class UserProfilePage implements OnInit {
         });
     }
 
-    segmentChanged(ev: any) {
-        this.selectedSegment = ev.detail.value;
-    }
-
-    calculateAge(birthday) { // birthday is a date
-
-        if (birthday) {
-            const date = birthday.split('-', 2);
-            const dateMonth: number = date[1];
-            const dateYear: number = date[0];
-
-            const today = new Date().toLocaleString().split('/', 3);
-            const todayMonth: number = +today[1];
-            const todayYear: number = +today[2].split(' ', 1)[0];
-
-            var age = 0;
-
-            if (todayYear > dateYear) {
-                if (todayMonth <= dateMonth) {
-                    age = todayYear - dateYear;
-                    if (age == 1) {
-                        return age + ' an';
-                    } else if (age > 1) {
-                        return age + ' ans';
-                    }
-                } else {
-                    age = todayYear - dateYear + 1;
-                    return age + ' ans';
-                }
-            } else if (todayYear <= dateYear) {
-                if (todayMonth <= dateMonth) {
-                    age = todayMonth - dateMonth;
-                    if (age >= 1) {
-                        return age + ' mois';
-                    } else if (age == 0) {
-                        return 'Quelques semaines';
-                    }
-                } else {
-                    age = todayMonth - dateMonth;
-                    return age + ' mois';
-                }
-            }
-        }
-        return 'Non renseigné';
+    segmentChanged(segmentName: any) {
+        this.selectedSegment = segmentName.detail.value;
     }
 
     processError(error: HttpErrorResponse) {
@@ -117,45 +75,20 @@ export class UserProfilePage implements OnInit {
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
                 case 500:
                     this.serverError = true;
-                    this.presentToast('back_server');
+                    this.errorService.presentToast('back_server');
                     break;
                 default:
                     this.unknownError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
             }
         } else {
             this.unknownError = true;
-            this.presentToast('back_unknown');
+            this.errorService.presentToast('back_unknown');
         }
-    }
-
-    async presentToast(error: string) {
-        let toast: HTMLIonToastElement;
-        switch (error) {
-            case 'back_server':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_SERVER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_unknown':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
-                    duration: 2000
-                });
-                break;
-            default:
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.DEFAULT'),
-                    duration: 3000
-                });
-                break;
-        }
-        toast.present();
     }
 }
