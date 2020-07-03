@@ -11,7 +11,7 @@
         <ion-item *ngFor="let friend of friends">
             <ion-col>
                 <ion-row class="align-center">
-                    <ion-col size="11" class="flex-row align-center" [routerLink]="'../../user/'+ friend.id">
+                    <ion-col size="11" class="flex-row align-center" [routerLink]="'user/'+ friend.id">
                         <ion-avatar>
                             <img src="{{ friend.profile_pic_path }}">
                         </ion-avatar>
