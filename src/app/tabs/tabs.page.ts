@@ -32,7 +32,9 @@ export class TabsPage {
     }
 
     getSelectedTab(): void {
+
         this.activeTabName = this.tabs.getSelected();
+
         switch (this.activeTabName) {
             case 'events':
                 this.meetIsSelected = false;
