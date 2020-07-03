@@ -62,6 +62,7 @@ export class FriendsPage implements OnInit {
     getFriends(): void {
         this.userService.getUserFriends().subscribe(
             friends => {
+                this.friends = [];
                 friends.forEach(friend => {
                     let friendToAdd: FriendInList = {
                         id: friend.id,
