@@ -53,16 +53,18 @@ export class FriendsPage implements OnInit {
             user => {
                 this.connectedUser = user;
                 this.friends = [];
+
                 this.connectedUser.friends.forEach(user => {
                     let friendToAdd: Friend = {user: user, animals: null, friendOf: false};
-                    if (user.friends.length > 0) {
+                    if (user.friends && user.friends.length > 0) {
                         friendToAdd.friendOf = !!user.friends.find(element => element.id === this.connectedUser.id);
                     }
                     this.friends.push(friendToAdd);
                 })
+
                 this.friends.sort((a, b) => a.user.pseudo.localeCompare(b.user.pseudo));
             },
-            e => this.processError(e)
+            error => this.processError(error)
         )
     }
 

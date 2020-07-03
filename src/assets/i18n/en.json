@@ -63,9 +63,9 @@
     "TITLE": "Update your animal",
     "TYPE": "Select the type of animal"
   },
-  "CONNECTION": {
+  "CONNEXION": {
     "ANY_ACCOUNT": "No account yet?",
-    "CONNECTION": "Connect",
+    "CONNEXION": "Connect",
     "CREATE": "Create one!",
     "EMAIL": "E-mail address",
     "PASSWORD": "Password",
@@ -113,7 +113,7 @@
   "EVENT": {
     "DATE": "Date",
     "DESCRIPTION": "Description",
-    "INFO": "Information",
+    "INFO": "Informations",
     "LOCATION": "Location",
     "MAPS": "See in maps",
     "OWNER_MESSAGE": "This user created the event",
@@ -160,7 +160,7 @@
     "ANY_USER": "You have no encounters to discover",
     "MULTI_EVENT_EVENT": "Met at events",
     "ONE_EVENT": "Met at the event",
-    "TITLE": "Meetings"
+    "TITLE": "Meet"
   },
   "PROFILE": {
     "ACTIVATED": "Activated",
@@ -248,5 +248,13 @@
     "N/A": "Not specified",
     "PSEUDO": "Nickname",
     "TITLE": "User profile"
+  },
+  "EVENT_TYPE": {
+    "WALK": "Walk",
+    "RAMBLE": "Ramble",
+    "PLAY": "Meeting to play",
+    "COMPETITION": "Friendly contest",
+    "PICNIC": "Picnic",
+    "SEA": "Sea trip"
   }
 }

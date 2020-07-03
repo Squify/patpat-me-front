@@ -15,8 +15,8 @@
                     <img src="{{ user.user.profile_pic_path }}">
                 </ion-avatar>
                 <span *ngIf="user.friendOf">
-                    {{ user.user.first_name }}
-                    {{ user.user.last_name | uppercase }}
+                    {{ user.user.firstname }}
+                    {{ user.user.lastname | uppercase }}
                 </span>
             </h3>
             <p class="remove-margin" style="margin-bottom: 15px">

@@ -60,7 +60,7 @@ export class UserProfilePage implements OnInit {
         this.userService.getUserInformationsById(userId).subscribe(result => {
             this.user = {user: result.user, animals: result.animals, friendOf: false}
             this.user.animals.sort((a, b) => a.name.localeCompare(b.name));
-            if (this.connectedUser.friends.length > 0) {
+            if (this.user.user.friends.length > 0) {
                 this.user.friendOf = !!this.user.user.friends.find(element => element.id === this.connectedUser.id);
             }
         });

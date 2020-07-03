@@ -6,8 +6,8 @@ export interface MetUser {
     email: string;
     pseudo: string;
     profile_pic_path: string;
-    first_name: string;
-    last_name: string;
+    firstname: string;
+    lastname: string;
     phone: string;
     display_email: boolean;
     display_phone: boolean;

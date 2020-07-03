@@ -26,8 +26,7 @@
                 <ion-avatar>
                     <img src="{{ user.profile_pic_path }}">
                 </ion-avatar>
-                {{ user.first_name }}
-                {{ user.last_name | uppercase }}
+                {{ user.firstname }} {{ user.lastname | uppercase }}
             </h3>
             <p class="remove-margin" style="margin-bottom: 15px">
                 <b>{{ 'PROFILE_EDIT.PSEUDO' | translate }} :</b> {{ user.pseudo }}

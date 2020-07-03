@@ -68,7 +68,7 @@
                 <ion-select interface="popover" id="select-type" formControlName="type"
                             placeholder="{{ 'EVENT_CREATE.TYPE' | translate }}">
                     <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
-                        {{ type.name }}
+                        {{ 'EVENT_TYPE.' + type.name | translate }}
                     </ion-select-option>
                 </ion-select>
                 <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end"></ion-icon>
