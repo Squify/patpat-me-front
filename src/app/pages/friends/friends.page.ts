@@ -8,6 +8,7 @@ import { UserService } from '../../services/user/user.service';
 import { UpdateService } from '../../services/update/update.service';
 import { Friend } from '../../interfaces/user/friend';
 import { ErrorService } from '../../services/error/error.service';
+import { FriendInList } from '../../interfaces/user/friend-in-list';
 
 @Component({
     selector: 'app-friends',
@@ -16,7 +17,7 @@ import { ErrorService } from '../../services/error/error.service';
 })
 export class FriendsPage implements OnInit {
 
-    friends: Friend[] = [];
+    friends: FriendInList[] = [];
     connectedUser: User;
 
     // Errors
@@ -52,17 +53,34 @@ export class FriendsPage implements OnInit {
         this.userService.getRemoteUser().subscribe(
             user => {
                 this.connectedUser = user;
-                this.friends = [];
+                this.getFriends()
+            },
+            error => this.processError(error)
+        )
+    }
 
-                this.connectedUser.friends.forEach(user => {
-                    let friendToAdd: Friend = {user: user, animals: null, friendOf: false};
-                    if (user.friends && user.friends.length > 0) {
-                        friendToAdd.friendOf = !!user.friends.find(element => element.id === this.connectedUser.id);
+    getFriends(): void {
+        this.userService.getUserFriends().subscribe(
+            friends => {
+                friends.forEach(friend => {
+                    let friendToAdd: FriendInList = {
+                        id: friend.id,
+                        email: friend.email,
+                        pseudo: friend.pseudo,
+                        profile_pic_path: friend.profile_pic_path,
+                        firstname: friend.firstname,
+                        lastname: friend.lastname,
+                        display_real_name: friend.display_real_name,
+                        friends: friend.friends,
+                        animals: null,
+                        friendOf: false
+                    };
+                    if (friend.friends && friend.friends.length > 0) {
+                        friendToAdd.friendOf = !!friend.friends.find(friendId => friendId === this.connectedUser.id);
                     }
                     this.friends.push(friendToAdd);
                 })
-
-                this.friends.sort((a, b) => a.user.pseudo.localeCompare(b.user.pseudo));
+                this.friends.sort((a, b) => a.pseudo.localeCompare(b.pseudo));
             },
             error => this.processError(error)
         )

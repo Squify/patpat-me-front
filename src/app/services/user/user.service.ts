@@ -56,6 +56,11 @@ export class UserService {
         return this.http.get<Friend>(environment.BACKEND_URL + '/api/user', {params});
     }
 
+    getUserFriends(): Observable<any> {
+
+        return this.http.get<any>(environment.BACKEND_URL + '/api/user/friends');
+    }
+
     loadProfilePics(): string[] {
         let picPaths = [];
         picPaths.push(environment.default_profile_pic)
