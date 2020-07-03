@@ -45,17 +45,17 @@
                         <!-- List of the events here -->
                         <ion-col>
                             <ion-row [ngSwitch]="this.event.type.name">
-                                <ion-col *ngSwitchCase="'Promenade'" id="balade-banner">
+                                <ion-col *ngSwitchCase="'WALK'" id="balade-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Randonnée'" id="rando-banner">
+                                <ion-col *ngSwitchCase="'RAMBLE'" id="rando-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Rencontre pour jouer'" id="jouer-banner">
+                                <ion-col *ngSwitchCase="'PLAY'" id="jouer-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Concours amical'" id="concours-banner">
+                                <ion-col *ngSwitchCase="'COMPETITION'" id="concours-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Pique nique'" id="picnic-banner">
+                                <ion-col *ngSwitchCase="'PICNIC'" id="picnic-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Sortie en mer'" id="plage-banner">
+                                <ion-col *ngSwitchCase="'SEA'" id="plage-banner">
                                 </ion-col>
                                 <ion-col *ngSwitchDefault id="default-banner">
                                 </ion-col>
