@@ -58,7 +58,7 @@
 
             <ion-item mode="md">
                 <ion-input placeholder="{{ 'EVENT_CREATE.TYPE' | translate }}" [disabled]="true"
-                           [value]="event.type.name"></ion-input>
+                           [value]="'EVENT_TYPE.' + event.type.name | translate"></ion-input>
                 <ion-icon mode="md" slot="start" name="paw-outline" class="ion-align-self-end"></ion-icon>
             </ion-item>
 
