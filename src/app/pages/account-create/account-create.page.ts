@@ -197,6 +197,7 @@ export class AccountCreatePage implements OnInit {
 
     processLoginSuccess(user: User): void {
 
+        this.createPersonForm.reset();
         // set authenticated person in service
         this.userService.setPerson(user);
         this.router.navigateByUrl('');
