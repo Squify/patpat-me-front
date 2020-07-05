@@ -131,14 +131,14 @@
     "TITLE": "Création d'évènement",
     "TYPE": "Sélectionnez un type",
     "WARNING": {
-      "TEXT": "En créant un événement vous vous engagez à être présent.e le jour du déroulement.<br>Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champs \"localisation\").<br>Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
+      "TEXT": "En créant un événement, vous vous engagez à être présent(e) le jour du déroulement. Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champ \"localisation\"). Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
       "TITLE": "Informations sur la création d'un évènement"
     }
   },
   "EVENT_EDIT": {
     "TITLE": "Editer mon événement",
     "WARNING": {
-      "TEXT": "En éditant un événement vous vous engagez à être présent.e le jour du déroulement.<br>Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champs \"localisation\").<br>Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
+      "TEXT": "En éditant un événement vous vous engagez à être présent(e) le jour du déroulement. Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champ \"localisation\"). Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
       "TITLE": "Informations sur l'édition d'un évènement"
     }
   },
@@ -149,7 +149,7 @@
     "TITLE": "Événements"
   },
   "FRIENDS": {
-    "ANY_FRIENDS": "Vous n'avez pas encore d'amis, rendez vous sur la page des rencontres",
+    "ANY_FRIENDS": "Vous n'avez pas encore d'amis, rendez vous sur la page des rencontres.",
     "TITLE": "Amis"
   },
   "LANGUAGE": {
@@ -167,7 +167,7 @@
     "ADD_ANIMAL": "Ajouter un animal",
     "ANIMALS": "Animaux",
     "ANY_ANIMAL": "Vous n'avez pas encore ajouté d'animal, cliquez sur le bouton en bas de page pour en ajouter un.",
-    "ANY_DISPLAY": "Vous n'affichez aucune information à vos amis",
+    "ANY_DISPLAY": "Vous n'affichez aucune information à vos amis.",
     "ANY_INFORMATIONS": "Aucune information a afficher.",
     "DEACTIVATED": "Désactivé",
     "DISPLAY_EMAIL": "Votre adresse e-mail",
