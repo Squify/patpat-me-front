@@ -94,8 +94,15 @@ ion-select {
   min-width: 100%;
 }
 
+// Small change
+
 ion-list.md.list-md.hydrated {
   background: #FEE8C7;
+}
+
+div#geolocation-input {
+  background-color: #FEE8C7;
+  color: #72480F;
 }
 
 .button-center {
