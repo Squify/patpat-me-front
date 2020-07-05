@@ -99,6 +99,14 @@ ion-select {
   justify-content: space-around;
 }
 
+.bottom-link {
+   position: absolute;
+   bottom: 5px;
+   right: 10%;
+   left: 10%;
+   text-align: center;
+ }
+
 .warning-card {
   --background: #fbf2e5;
 }

@@ -256,5 +256,8 @@
     "COMPETITION": "Concours amical",
     "PICNIC": "Pique-nique",
     "SEA": "Sortie en mer"
+  },
+  "LEGALS": {
+    "TITLE": "Mentions légales"
   }
 }
