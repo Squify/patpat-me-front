@@ -127,29 +127,13 @@ const routes: Routes = [
                                 loadChildren: () => import('../pages/animal-edit/animal-edit.module').then(m => m.AnimalEditModule)
                             },
                         ]
-                    }
+                    },
+                    {
+                        path: 'legals',
+                        loadChildren: () => import('../pages/legals/legals.module').then( m => m.LegalsPageModule)
+                    },
                 ]
             },
-            // {
-            //     path: 'user/:id',
-            //     children: [
-            //         {
-            //             path: '',
-            //             loadChildren: () =>
-            //                 import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
-            //         },
-            //         {
-            //             path: 'animal/:id',
-            //             children: [
-            //                 {
-            //                     path: '',
-            //                     loadChildren: () =>
-            //                         import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
-            //                 },
-            //             ]
-            //         }
-            //     ]
-            // },
             {
                 path: '',
                 redirectTo: '/tabs/events',

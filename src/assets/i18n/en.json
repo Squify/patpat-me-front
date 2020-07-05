@@ -256,5 +256,8 @@
     "COMPETITION": "Friendly contest",
     "PICNIC": "Picnic",
     "SEA": "Sea trip"
+  },
+  "LEGALS": {
+    "TITLE": "Legal Notice"
   }
 }
