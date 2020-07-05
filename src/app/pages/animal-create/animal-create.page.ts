@@ -117,7 +117,7 @@ export class AnimalCreatePage implements OnInit {
         }
 
         this.types.forEach((type) => {
-            if (type.name === this.createAnimalForm.value.fk_id_type) {
+            if (type.name === this.createAnimalForm.value.type) {
                 this.breedsToDisplay = this.breeds.filter(breed => breed.type.id === type.id);
             }
         });
