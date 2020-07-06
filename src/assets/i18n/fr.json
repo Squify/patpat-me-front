@@ -131,14 +131,14 @@
     "TITLE": "Création d'évènement",
     "TYPE": "Sélectionnez un type",
     "WARNING": {
-      "TEXT": "En créant un événement, vous vous engagez à être présent(e) le jour du déroulement. Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champ \"localisation\"). Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
+      "TEXT": "En créant un événement, vous vous engagez à être présent(e) le jour du déroulement.<br>Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champ \"localisation\"). Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
       "TITLE": "Informations sur la création d'un évènement"
     }
   },
   "EVENT_EDIT": {
     "TITLE": "Editer mon événement",
     "WARNING": {
-      "TEXT": "En éditant un événement vous vous engagez à être présent(e) le jour du déroulement. Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champ \"localisation\"). Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
+      "TEXT": "En éditant un événement vous vous engagez à être présent(e) le jour du déroulement.<br>Pensez à indiquer correctement l'emplacement du rassemblement (en description si ce n'est pas possible dans le champ \"localisation\"). Vous vous devez de rester courtois dans la description et de respecter les autres utilisateurs. Si ce n'est pas le cas l'équipe PatPat Me s'occupera de retirer l'événement.",
       "TITLE": "Informations sur l'édition d'un évènement"
     }
   },
