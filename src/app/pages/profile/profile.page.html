@@ -48,7 +48,8 @@
                 <ion-list>
                     <ion-item>
                         <ion-icon class="information-icon" mode="md" name="man-outline"></ion-icon>
-                        <ion-label *ngIf="user.display_phone || user.display_email || user.display_real_name">
+                        <ion-label class="break-lines"
+                                   *ngIf="user.display_phone || user.display_email || user.display_real_name">
                             {{ 'PROFILE.FRIENDS_VIEW' | translate }} :
                             <ul>
                                 <li *ngIf="user.display_real_name">{{ 'PROFILE.DISPLAY_NAME' | translate }}</li>
@@ -56,33 +57,34 @@
                                 <li *ngIf="user.display_phone">{{ 'PROFILE.DISPLAY_PHONE' | translate }}</li>
                             </ul>
                         </ion-label>
-                        <ion-label *ngIf="!user.display_phone && !user.display_email && !user.display_real_name">
+                        <ion-label class="break-lines"
+                                   *ngIf="!user.display_phone && !user.display_email && !user.display_real_name">
                             {{ 'PROFILE.ANY_DISPLAY' | translate }}
                         </ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon class="information-icon" mode="md" name="at"></ion-icon>
-                        <ion-label>{{ user.email | lowercase }} </ion-label>
+                        <ion-label class="break-lines">{{ user.email | lowercase }}</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon class="information-icon" mode="md" name="call"></ion-icon>
-                        <ion-label *ngIf="user.phone">{{ user.phone }}</ion-label>
-                        <ion-label *ngIf="!user.phone">{{ 'PROFILE.N/A' | translate }}</ion-label>
+                        <ion-label class="break-lines" *ngIf="user.phone">{{ user.phone }}</ion-label>
+                        <ion-label class="break-lines" *ngIf="!user.phone">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon class="information-icon" mode="md" name="gift"></ion-icon>
-                        <ion-label *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy' }}</ion-label>
-                        <ion-label *ngIf="!user.birthday">{{ 'PROFILE.N/A' | translate }}</ion-label>
+                        <ion-label class="break-lines" *ngIf="user.birthday">{{ user.birthday | date: 'dd/MM/yyyy' }}</ion-label>
+                        <ion-label class="break-lines" *ngIf="!user.birthday">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-icon class="information-icon" mode="md" name="male-female-outline">
                         </ion-icon>
-                        <ion-label *ngIf="user.gender">{{ user.gender.name }}</ion-label>
-                        <ion-label *ngIf="!user.gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
+                        <ion-label class="break-lines" *ngIf="user.gender">{{ user.gender.name }}</ion-label>
+                        <ion-label class="break-lines" *ngIf="!user.gender">{{ 'PROFILE.N/A' | translate }}</ion-label>
                     </ion-item>
                 </ion-list>
             </ion-card>
