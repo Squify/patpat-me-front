@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import {User} from '../interfaces/user/user';
-import {UserService} from '../services/user/user.service';
+import { User } from '../interfaces/user/user';
+import { UserService } from '../services/user/user.service';
 
 
 @Injectable({
@@ -10,7 +10,8 @@ import {UserService} from '../services/user/user.service';
 })
 export class LoggedInPersonResolver implements Resolve<User> {
 
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService) {
+    }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
         return this.userService.getRemoteUser();

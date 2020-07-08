@@ -11,28 +11,21 @@
         <ion-item *ngFor="let friend of friends">
             <ion-col>
                 <ion-row class="align-center">
-                    <ion-col size="11" class="flex-row align-center" [routerLink]="'../../user/'+ friend.user.id">
+                    <ion-col size="11" class="flex-row align-center" [routerLink]="'user/'+ friend.id">
                         <ion-avatar>
-                            <img src="{{ friend.user.profile_pic_path }}">
+                            <img src="{{ friend.profile_pic_path }}">
                         </ion-avatar>
                         <div class="flex-column align-start">
                             <div>
-                                <b>{{ friend.user.pseudo }}</b>
-                                <ion-label
-                                        *ngIf="friend.user.display_real_name && friend.friendOf">{{ friend.user.firstname}} {{ friend.user.lastname}}</ion-label>
-                            </div>
-                            <div *ngIf="friend.user.display_phone && friend.user.phone && friend.friendOf">
-                                <ion-icon class="information-icon" mode="md" name="call"></ion-icon>
-                                {{ friend.user.phone }}
-                            </div>
-                            <div *ngIf="friend.user.display_email && friend.user.email && friend.friendOf">
-                                <ion-icon class="information-icon" mode="md" name="at"></ion-icon>
-                                {{ friend.user.email }}
+                                <b>{{ friend.pseudo }}</b>
+                                <ion-label *ngIf="friend.display_real_name && friend.friendOf">
+                                    {{ friend.firstname}} {{ friend.lastname}}
+                                </ion-label>
                             </div>
                         </div>
                     </ion-col>
                     <ion-col size="1">
-                        <ion-icon (click)="confirmChange(friend.user.id)" size="large"
+                        <ion-icon (click)="confirmChange(friend.id)" size="large"
                                   name="heart-dislike-circle-outline"></ion-icon>
                     </ion-col>
                 </ion-row>

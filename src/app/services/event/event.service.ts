@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
-import {EventCreate} from '../../interfaces/event/event-create';
-import {EventType} from '../../interfaces/event/event-type';
-import {EventInterface} from "../../interfaces/event/event-interface";
-import { EventEdit } from "../../interfaces/event/event-edit";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { EventCreate } from '../../interfaces/event/event-create';
+import { EventType } from '../../interfaces/event/event-type';
+import { EventInterface } from '../../interfaces/event/event-interface';
+import { EventEdit } from '../../interfaces/event/event-edit';
 
 @Injectable({
     providedIn: 'root'

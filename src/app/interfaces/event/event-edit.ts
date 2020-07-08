@@ -1,6 +1,6 @@
 export interface EventEdit {
     id: number;
     description: string;
-    localisation: string;
+    location: string;
     date: string;
 }

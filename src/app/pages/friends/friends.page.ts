@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/user/user';
 import { MeetService } from '../../services/meet/meet.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user/user.service';
 import { UpdateService } from '../../services/update/update.service';
 import { Friend } from '../../interfaces/user/friend';
+import { ErrorService } from '../../services/error/error.service';
+import { FriendInList } from '../../interfaces/user/friend-in-list';
 
 @Component({
     selector: 'app-friends',
@@ -15,7 +17,7 @@ import { Friend } from '../../interfaces/user/friend';
 })
 export class FriendsPage implements OnInit {
 
-    friends: Friend[] = [];
+    friends: FriendInList[] = [];
     connectedUser: User;
 
     // Errors
@@ -24,12 +26,12 @@ export class FriendsPage implements OnInit {
     inputsError: boolean;
 
     constructor(
+        private alertController: AlertController,
+        private translate: TranslateService,
+        private errorService: ErrorService,
         private meetService: MeetService,
-        public toastController: ToastController,
-        public translate: TranslateService,
+        private updateService: UpdateService,
         private userService: UserService,
-        public updateService: UpdateService,
-        public alertController: AlertController,
     ) {
     }
 
@@ -51,17 +53,37 @@ export class FriendsPage implements OnInit {
         this.userService.getRemoteUser().subscribe(
             user => {
                 this.connectedUser = user;
+                this.getFriends()
+            },
+            error => this.processError(error)
+        )
+    }
+
+    getFriends(): void {
+        this.userService.getUserFriends().subscribe(
+            friends => {
                 this.friends = [];
-                this.connectedUser.friends.forEach(user => {
-                    let friendToAdd: Friend = {user: user, animals: null, friendOf: false};
-                    if (user.friends.length > 0) {
-                        friendToAdd.friendOf = !!user.friends.find(element => element.id === this.connectedUser.id);
+                friends.forEach(friend => {
+                    let friendToAdd: FriendInList = {
+                        id: friend.id,
+                        email: friend.email,
+                        pseudo: friend.pseudo,
+                        profile_pic_path: friend.profile_pic_path,
+                        firstname: friend.firstname,
+                        lastname: friend.lastname,
+                        display_real_name: friend.display_real_name,
+                        friends: friend.friends,
+                        animals: null,
+                        friendOf: false
+                    };
+                    if (friend.friends && friend.friends.length > 0) {
+                        friendToAdd.friendOf = !!friend.friends.find(friendId => friendId === this.connectedUser.id);
                     }
                     this.friends.push(friendToAdd);
                 })
-                this.friends.sort((a, b) => a.user.pseudo.localeCompare(b.user.pseudo));
+                this.friends.sort((a, b) => a.pseudo.localeCompare(b.pseudo));
             },
-            e => this.processError(e)
+            error => this.processError(error)
         )
     }
 
@@ -102,45 +124,20 @@ export class FriendsPage implements OnInit {
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
                 case 500:
                     this.serverError = true;
-                    this.presentToast('back_server');
+                    this.errorService.presentToast('back_server');
                     break;
                 default:
                     this.unknownError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
             }
         } else {
             this.unknownError = true;
-            this.presentToast('back_unknown');
+            this.errorService.presentToast('back_unknown');
         }
-    }
-
-    async presentToast(error: string) {
-        let toast: HTMLIonToastElement;
-        switch (error) {
-            case 'back_server':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_SERVER'),
-                    duration: 2000
-                });
-                break;
-            case 'back_unknown':
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.BACK_UNKNOWN'),
-                    duration: 2000
-                });
-                break;
-            default:
-                toast = await this.toastController.create({
-                    message: this.translate.instant('ERRORS.DEFAULT'),
-                    duration: 3000
-                });
-                break;
-        }
-        toast.present();
     }
 }

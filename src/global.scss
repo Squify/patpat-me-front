@@ -20,7 +20,6 @@
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
@@ -95,10 +94,29 @@ ion-select {
   min-width: 100%;
 }
 
+// Small change
+
+ion-list.md.list-md.hydrated {
+  background: #FEE8C7;
+}
+
+div#geolocation-input {
+  background-color: #FEE8C7;
+  color: #72480F;
+}
+
 .button-center {
   display: flex;
   justify-content: space-around;
 }
+
+.bottom-link {
+   position: absolute;
+   bottom: 5px;
+   right: 10%;
+   left: 10%;
+   text-align: center;
+ }
 
 .warning-card {
   --background: #fbf2e5;
