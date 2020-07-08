@@ -22,7 +22,9 @@
 
                 <ion-list>
                     <ion-item mode="md">
-                        <ion-select interface="popover" formControlName="fk_id_language" (ionChange)="changeLanguage(this.editPersonForm.value.fk_id_language)"
+                        <ion-select interface="popover" formControlName="language"
+                                    (ionChange)="changeLanguage(this.editPersonForm.value.language)"
+                                    placeholder="{{ 'ACCOUNT_CREATE.LANGUAGE' | translate }}"
                                     [value]="user.language ? user.language.name : 'FR'">
                             <ion-select-option *ngFor="let language of languages" value="{{ language.name }}">
                                 {{ 'LANGUAGE.' + language.name | translate }}
@@ -47,7 +49,7 @@
                         <ion-icon mode="md" slot="start" name="key" class="ion-align-self-end"></ion-icon>
                         <ion-icon *ngIf="passwordInputError || passwordSecurityError" mode="md" slot="end"
                                   name="alert-circle-outline" class="ion-align-self-end error-message"
-                                  (click)="presentToast('password')">
+                                  (click)="errorService.presentToast('user_password')">
                         </ion-icon>
                         <ion-icon (click)="changePasswordView()" mode="md" slot="end"
                                   name="{{ passwordIcon }}" class="ion-align-self-end"></ion-icon>
@@ -59,7 +61,7 @@
                         </ion-input>
                         <ion-icon mode="md" slot="start" name="at" class="ion-align-self-end"></ion-icon>
                         <ion-icon *ngIf="emailInputError" mode="md" slot="end" name="alert-circle-outline"
-                                  class="ion-align-self-end error-message" (click)="presentToast('email')"></ion-icon>
+                                  class="ion-align-self-end error-message" (click)="errorService.presentToast('user_email')"></ion-icon>
                     </ion-item>
                     <ion-row>
                         <ion-col size="6">
@@ -81,7 +83,7 @@
                     </ion-row>
 
                     <ion-item mode="md">
-                        <ion-select interface="popover" formControlName="fk_id_gender"
+                        <ion-select interface="popover" formControlName="gender"
                                     placeholder="{{ 'PROFILE_EDIT.GENDER' | translate }}"
                                     [value]="user.gender ? user.gender.name : null">
                             <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
@@ -98,7 +100,7 @@
                         </ion-input>
                         <ion-icon mode="md" slot="start" name="call" class="ion-align-self-end"></ion-icon>
                         <ion-icon *ngIf="phoneInputError" mode="md" slot="end" name="alert-circle-outline"
-                                  class="ion-align-self-end error-message" (click)="presentToast('phone')"></ion-icon>
+                                  class="ion-align-self-end error-message" (click)="errorService.presentToast('user_phone')"></ion-icon>
                     </ion-item>
 
                     <ion-item>

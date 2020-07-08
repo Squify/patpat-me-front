@@ -5,13 +5,14 @@ import { Subscription } from 'rxjs';
 import { GenderService } from '../../services/gender/gender.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserGender } from '../../interfaces/user/user-gender';
-import { Platform, ToastController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AccountEdit } from '../../interfaces/user/account-edit';
 import { UpdateService } from '../../services/update/update.service';
 import { Language } from '../../interfaces/user/language';
 import { LanguageService } from '../../services/language/language.service';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-profile-edit',
@@ -46,20 +47,19 @@ export class ProfileEditPage implements OnInit {
     passwordInputType = 'password';
 
     constructor(
-        private userService: UserService,
+        public platform: Platform,
+        private router: Router,
+        public errorService: ErrorService,
         private genderService: GenderService,
         private languageService: LanguageService,
-        public toastController: ToastController,
-        private router: Router,
-        public updateService: UpdateService,
-        public platform: Platform
+        private updateService: UpdateService,
+        private userService: UserService,
     ) {
     }
 
     ngOnInit() {
         this.subscriptionUser = this.userService.getUser().subscribe(user => this.user = user);
-        this.getGenders();
-        this.getLanguages();
+        this.getAttributes();
         this.buildForm();
     }
 
@@ -73,39 +73,24 @@ export class ProfileEditPage implements OnInit {
         }
     }
 
-    loadProfilePics(): void {
-        this.picPaths.push('/assets/images/profile_pic/profile_default.png')
-        for (let i = 1; i <= 24; i++) {
-            this.picPaths.push('/assets/images/profile_pic/profile_' + i + '.png')
-        }
-    }
-
     getPicPath(path): void {
         this.selectedPic = path;
     }
 
-    getGenders(): void {
-        this.genderService.getUserGender().subscribe(
-            val => {
-                val.forEach((gender) => {
-                        const genderToAdd: UserGender = {name: gender.name};
-                        this.genders.push(genderToAdd);
-                    }
-                );
-            }
-        );
-    }
+    getAttributes(): void {
 
-    getLanguages(): void {
-        this.languageService.getLanguage().subscribe(
-            val => {
-                val.forEach((language) => {
-                        const languageToAdd: UserGender = {name: language.name};
-                        this.languages.push(languageToAdd);
-                    }
-                );
-            }
+        this.genderService.getUserGender().subscribe(
+            val => this.genders = val,
+            error => this.processError(error)
         );
+
+        this.languageService.getLanguage().subscribe(
+            val => this.languages = val,
+            error => this.processError(error)
+        );
+
+        this.selectedPic = this.user.profile_pic_path;
+        this.picPaths = this.userService.loadProfilePics();
     }
 
     changeLanguage(language) {
@@ -114,40 +99,32 @@ export class ProfileEditPage implements OnInit {
 
     buildForm(): void {
 
-        this.selectedPic = this.user.profile_pic_path;
-        this.loadProfilePics();
         this.editPersonForm = new FormGroup({
-
             email: new FormControl({value: this.user.email, disabled: false}, {
                 validators: [
                     Validators.pattern(/^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/)
                 ]
             }),
-
             password: new FormControl('', {
                 validators: [
                     Validators.minLength(8),
                     Validators.maxLength(32),
                 ]
             }),
-
             phone: new FormControl({value: this.user.phone, disabled: false}, {
                 validators: [
                     Validators.pattern(/(^|\s+)(0[0-9]|\+33[\s.\-]?[0-9])([\s.\-]?[0-9]{2}){4}/)
                 ]
             }),
-
             birthday: new FormControl({value: this.user.birthday, disabled: !!this.user.birthday}),
-
             display_email: new FormControl({value: this.user.display_email, disabled: false}),
-
             display_phone: new FormControl({value: this.user.display_phone, disabled: false}),
-
             display_real_name: new FormControl({value: this.user.display_real_name, disabled: false}),
-
-            fk_id_gender: new FormControl({value: this.user.gender ? this.user.gender.name : null, disabled: false}),
-
-            fk_id_language: new FormControl({value: this.user.language ? this.user.language.name : 'FR', disabled: false}, {
+            gender: new FormControl({value: this.user.gender ? this.user.gender.name : null, disabled: false}),
+            language: new FormControl({
+                value: this.user.language ? this.user.language.name : 'FR',
+                disabled: false
+            }, {
                 validators: [
                     Validators.required,
                 ]
@@ -159,7 +136,7 @@ export class ProfileEditPage implements OnInit {
         if (this.formIsValid()) {
             this.updateAccount();
         } else {
-            this.presentToast('general');
+            this.errorService.presentToast('default');
         }
     }
 
@@ -174,14 +151,12 @@ export class ProfileEditPage implements OnInit {
     updateAccount(): void {
 
         let birthday = this.user.birthday;
-        if (!this.user.birthday) {
-            if (this.editPersonForm.value.birthday) {
-                this.editPersonForm.value.birthday = this.editPersonForm.value.birthday.replace('+0000', '+02:00');
-                birthday = this.editPersonForm.value.birthday;
-            }
+        if (this.editPersonForm.value.birthday) {
+            birthday = this.editPersonForm.value.birthday;
         }
         if ((this.user.birthday == null) && (this.editPersonForm.value.birthday == null))
             birthday = '';
+        let dateInLocalTimezone = new Date(birthday).toISOString();
 
         let gender = '';
         if (this.user.gender)
@@ -197,12 +172,12 @@ export class ProfileEditPage implements OnInit {
             password: this.editPersonForm.value.password,
             profile_pic_path: this.selectedPic,
             phone: this.editPersonForm.value.phone,
-            birthday: birthday,
+            birthday: dateInLocalTimezone,
             display_email: this.editPersonForm.value.display_email,
             display_phone: this.editPersonForm.value.display_phone,
             display_real_name: this.editPersonForm.value.display_real_name,
             gender: gender,
-            language: this.editPersonForm.value.fk_id_language,
+            language: this.editPersonForm.value.language,
         };
 
         this.userService.updateUser(this.accountEditInterface).subscribe(
@@ -210,8 +185,8 @@ export class ProfileEditPage implements OnInit {
                 this.updateService.publishSomeData('updateProfile')
                 this.router.navigateByUrl('/tabs/profile')
             },
-            error => this.processError(error))
-        ;
+            error => this.processError(error)
+        );
     }
 
     processError(error: HttpErrorResponse) {
@@ -219,24 +194,24 @@ export class ProfileEditPage implements OnInit {
             switch (error.status) {
                 case 400:
                     this.inputsError = true;
-                    this.presentToast('back_input');
+                    this.errorService.presentToast('back_input');
                     break;
                 case 417:
                     this.emailAlreadyUsed = true;
-                    this.presentToast('back_email_used');
+                    this.errorService.presentToast('user_back_email_used');
                     break;
                 case 500:
                     this.serverError = true;
-                    this.presentToast('back_server');
+                    this.errorService.presentToast('back_server');
                     break;
                 default:
                     this.unknownError = true;
-                    this.presentToast('back_unknown');
+                    this.errorService.presentToast('back_unknown');
                     break;
             }
         } else {
             this.unknownError = true;
-            this.presentToast('back_unknown');
+            this.errorService.presentToast('back_unknown');
         }
     }
 
@@ -275,62 +250,5 @@ export class ProfileEditPage implements OnInit {
         }
 
         return false;
-    }
-
-    async presentToast(error: string) {
-        let toast: HTMLIonToastElement;
-        switch (error) {
-            case 'password':
-                toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un mot de passe valide et sécurisé.',
-                    duration: 2000
-                });
-                break;
-            case 'email':
-                toast = await this.toastController.create({
-                    message: 'Veuillez renseigner une adresse email valide.',
-                    duration: 2000
-                });
-                break;
-            case 'phone':
-                toast = await this.toastController.create({
-                    message: 'Veuillez renseigner un numéro de téléphone valide.',
-                    duration: 2000
-                });
-                break;
-            case 'back_input':
-                toast = await this.toastController.create({
-                    message: 'La requête est invalide, vérifiez les informations saisies.',
-                    duration: 2000
-                });
-                break;
-            case 'back_email_used':
-                toast = await this.toastController.create({
-                    message: 'L\'adresse email saisie est déjà utilisée.',
-                    duration: 2000
-                });
-                break;
-            case 'back_server':
-                toast = await this.toastController.create({
-                    message: 'Une erreur serveur est survenue.',
-                    duration: 2000
-                });
-                break;
-            case 'back_unknown':
-                toast = await this.toastController.create({
-                    message: 'Une erreur inconnue est survenue.',
-                    duration: 2000
-                });
-                break;
-            default:
-                toast = await this.toastController.create({
-                    message: 'Le formulaire est erroné ! Cliquez sur les ronds pour plus d\'infos.',
-                    duration: 3000
-                });
-                break;
-
-        }
-
-        toast.present();
     }
 }

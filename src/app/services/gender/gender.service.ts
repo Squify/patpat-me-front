@@ -9,8 +9,6 @@ import { AnimalGender } from 'src/app/interfaces/animal/animal-gender';
     providedIn: 'root'
 })
 export class GenderService {
-    genders: UserGender[];
-    animalGenders: AnimalGender[];
 
     constructor(
         private http: HttpClient

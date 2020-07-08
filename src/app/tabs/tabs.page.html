@@ -1,25 +1,27 @@
-<ion-tabs>
+<ion-tabs #myTabs (ionTabsDidChange)="getSelectedTab()">
+    <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="events">
+            <ion-icon *ngIf="!eventsIsSelected" name="{{ eventsIcon }}"></ion-icon>
+            <ion-icon *ngIf="eventsIsSelected" name="{{ eventsIconSelected }}"></ion-icon>
+            <ion-label>{{ 'TABBAR.EVENTS' | translate }}</ion-label>
+        </ion-tab-button>
 
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="events">
-      <ion-icon name="home-outline"></ion-icon>
-      <ion-label>{{ 'TABBAR.EVENTS' | translate }}</ion-label>
-    </ion-tab-button>
+        <ion-tab-button tab="meet">
+            <ion-icon *ngIf="!meetIsSelected" name="{{ meetIcon }}"></ion-icon>
+            <ion-icon *ngIf="meetIsSelected" name="{{ meetIconSelected }}"></ion-icon>
+            <ion-label>{{ 'TABBAR.MEET' | translate }}</ion-label>
+        </ion-tab-button>
 
-    <ion-tab-button tab="meet">
-      <ion-icon name="people-outline"></ion-icon>
-      <ion-label>{{ 'TABBAR.MEET' | translate }}</ion-label>
-    </ion-tab-button>
+        <ion-tab-button tab="friends">
+            <ion-icon *ngIf="!friendsIsSelected" name="{{ friendsIcon }}"></ion-icon>
+            <ion-icon *ngIf="friendsIsSelected" name="{{ friendsIconSelected }}"></ion-icon>
+            <ion-label>{{ 'TABBAR.FRIENDS' | translate }}</ion-label>
+        </ion-tab-button>
 
-    <ion-tab-button tab="friends">
-      <ion-icon name="heart-outline"></ion-icon>
-      <ion-label>{{ 'TABBAR.FRIENDS' | translate }}</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="profile">
-      <ion-icon name="person-outline"></ion-icon>
-      <ion-label>{{ 'TABBAR.PROFILE' | translate }}</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-
+        <ion-tab-button tab="profile">
+            <ion-icon *ngIf="!profileIsSelected" name="{{ profileIcon }}"></ion-icon>
+            <ion-icon *ngIf="profileIsSelected" name="{{ profileIconSelected }}"></ion-icon>
+            <ion-label>{{ 'TABBAR.PROFILE' | translate }}</ion-label>
+        </ion-tab-button>
+    </ion-tab-bar>
 </ion-tabs>

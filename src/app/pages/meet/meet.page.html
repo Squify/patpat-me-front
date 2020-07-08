@@ -11,13 +11,13 @@
         <ion-item *ngFor="let user of metUsers">
             <!-- Event -->
             <ion-col>
-                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length <= 1" [routerLink]="'../../user/'+ user.id">
+                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length <= 1" [routerLink]="'user/'+ user.id">
                     {{ 'MEET.ONE_EVENT' | translate }} :
                     <ul class="remove-margin" *ngFor="let event of user.events">
                         <li><b>{{ event }}</b></li>
                     </ul>
                 </ion-row>
-                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length > 1" [routerLink]="'../../user/'+ user.id">
+                <ion-row class="flex-column align-start event-name" *ngIf="user.events.length > 1" [routerLink]="'user/'+ user.id">
                     {{ 'MEET.MULTI_EVENT_EVENT' | translate }} :
                     <ul class="remove-margin" *ngFor="let event of user.events">
                         <li><b>{{ event }}</b></li>
@@ -27,7 +27,7 @@
 
                 <!-- User informations -->
                 <ion-row class="align-center">
-                    <ion-col size="11" class="flex-row align-center" [routerLink]="'../../user/'+ user.id">
+                    <ion-col size="11" class="flex-row align-center" [routerLink]="'user/'+ user.id">
                         <ion-avatar>
                             <img src="{{ user.profile_pic_path }}">
                         </ion-avatar>

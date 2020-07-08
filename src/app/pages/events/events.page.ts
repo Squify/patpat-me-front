@@ -1,8 +1,10 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { EventService } from "../../services/event/event.service";
-import { EventInterface } from "../../interfaces/event/event-interface";
-import { UpdateService } from "../../services/update/update.service";
+import { EventService } from '../../services/event/event.service';
+import { EventInterface } from '../../interfaces/event/event-interface';
+import { UpdateService } from '../../services/update/update.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-events',
@@ -15,15 +17,21 @@ export class EventsPage {
     filters = [];
     filterArgs = [];
 
+    // Errors
+    unknownError: boolean;
+    serverError: boolean;
+    inputsError: boolean;
+
     constructor(
         private menu: MenuController,
         private eventService: EventService,
-        private ngZone: NgZone,
-        public updateService: UpdateService,
+        private errorService: ErrorService,
+        private updateService: UpdateService,
     ) {
     }
 
     ngOnInit() {
+
         this.getEvents();
         this.getTypes();
 
@@ -45,22 +53,8 @@ export class EventsPage {
 
         this.events = [];
         this.eventService.getEvents().subscribe(
-            val => {
-                val.forEach((event) => {
-                        const eventToAdd: EventInterface = {
-                            id: event.id,
-                            name: event.name,
-                            description: event.description,
-                            localisation: event.localisation,
-                            date: event.date,
-                            type: event.type,
-                            owner: event.owner,
-                            members: event.members,
-                        };
-                        this.events.push(eventToAdd);
-                    }
-                );
-            }
+            val => this.events = val,
+            // error => this.processError(error)
         );
     }
 
@@ -92,5 +86,27 @@ export class EventsPage {
                 );
             }
         );
+    }
+
+    processError(error: HttpErrorResponse) {
+        if (error) {
+            switch (error.status) {
+                case 400:
+                    this.inputsError = true;
+                    this.errorService.presentToast('back_input');
+                    break;
+                case 500:
+                    this.serverError = true;
+                    this.errorService.presentToast('back_server');
+                    break;
+                default:
+                    this.unknownError = true;
+                    this.errorService.presentToast('back_unknown');
+                    break;
+            }
+        } else {
+            this.unknownError = true;
+            this.errorService.presentToast('back_unknown');
+        }
     }
 }

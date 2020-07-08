@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { User } from '../../interfaces/user/user';
 import { UserService } from '../../services/user/user.service';
+import { LanguageService } from '../../services/language/language.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +12,9 @@ import { UserService } from '../../services/user/user.service';
 export class AuthGuard implements CanActivate {
 
     constructor(
+        readonly router: Router,
+        readonly languageService: LanguageService,
         readonly userService: UserService,
-        readonly router: Router
     ) {
     }
 
@@ -25,10 +27,7 @@ export class AuthGuard implements CanActivate {
                 if (user) {
                     this.userService.setPerson(user);
 
-                    // if (user.language) {
-                    //     this.translate.setDefaultLang(user.language);
-                    //     this.translate.use(user.language);
-                    // }
+                    this.languageService.changeLanguage(user.language);
 
                     return true;
 

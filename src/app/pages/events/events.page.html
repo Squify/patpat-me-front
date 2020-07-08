@@ -20,16 +20,10 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <!-- Type of event
-            <ion-item>Type d'événement</ion-item>
-            -->
             <ion-item *ngFor="let filter of filters">
-                <ion-label>{{ filter.label }}</ion-label>
+                <ion-label>{{ 'EVENT_TYPE.' + filter.label | translate }}</ion-label>
                 <ion-checkbox [(ngModel)]="filter.value" (ionChange)="updateArgs()"></ion-checkbox>
             </ion-item>
-            <!-- Order by
-            <ion-item>Filtres généraux</ion-item>
-            -->
         </ion-list>
     </ion-content>
 </ion-menu>
@@ -51,17 +45,17 @@
                         <!-- List of the events here -->
                         <ion-col>
                             <ion-row [ngSwitch]="this.event.type.name">
-                                <ion-col *ngSwitchCase="'Promenade'" id="balade-banner">
+                                <ion-col *ngSwitchCase="'WALK'" id="balade-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Randonnée'" id="rando-banner">
+                                <ion-col *ngSwitchCase="'RAMBLE'" id="rando-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Rencontre pour jouer'" id="jouer-banner">
+                                <ion-col *ngSwitchCase="'PLAY'" id="jouer-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Concours amical'" id="concours-banner">
+                                <ion-col *ngSwitchCase="'COMPETITION'" id="concours-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Pique nique'" id="picnic-banner">
+                                <ion-col *ngSwitchCase="'PICNIC'" id="picnic-banner">
                                 </ion-col>
-                                <ion-col *ngSwitchCase="'Sortie en mer'" id="plage-banner">
+                                <ion-col *ngSwitchCase="'SEA'" id="plage-banner">
                                 </ion-col>
                                 <ion-col *ngSwitchDefault id="default-banner">
                                 </ion-col>
@@ -74,21 +68,20 @@
                             <ion-row>
                                 <ion-col size="12">
                                     <ion-icon name="paw-outline"></ion-icon>
-                                    {{ event.type.name }}
+                                    {{ 'EVENT_TYPE.' + event.type.name | translate }}
                                 </ion-col>
                                 <ion-col size="12">
                                     <ion-icon name="location-outline"></ion-icon>
-                                    {{ event.localisation }}
+                                    {{ event.location }}
                                 </ion-col>
                                 <ion-col size="12">
                                     <ion-icon name="calendar-outline"></ion-icon>
-                                    {{ event.date | date: 'dd/MM/yyyy à HH:mm' }}
+                                    {{ event.date | date: 'dd/MM/yyyy - HH:mm' }}
                                 </ion-col>
                             </ion-row>
                             <ion-button [routerLink]="'event/'+ event.id" fill="clear" size="small">
                                 <ion-icon name="arrow-forward-circle-outline"></ion-icon>
                                 {{ 'EVENTS.MORE_DETAILS' | translate }}
-                                <!--                                > {{ 'EVENTS.MORE_DETAILS' | translate }}-->
                             </ion-button>
                         </ion-col>
                         <!-- List of the events here -->

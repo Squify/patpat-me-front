@@ -45,7 +45,27 @@ const routes: Routes = [
                         path: '',
                         loadChildren: () =>
                             import('../pages/meet/meet.module').then(m => m.MeetPageModule)
-                    }
+                    },
+                    {
+                        path: 'user/:id',
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+                            },
+                            {
+                                path: 'animal/:id',
+                                children: [
+                                    {
+                                        path: '',
+                                        loadChildren: () =>
+                                            import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
+                                    },
+                                ]
+                            }
+                        ]
+                    },
                 ]
             },
             {
@@ -55,7 +75,27 @@ const routes: Routes = [
                         path: '',
                         loadChildren: () =>
                             import('../pages/friends/friends.module').then(m => m.FriendsPageModule)
-                    }
+                    },
+                    {
+                        path: 'user/:id',
+                        children: [
+                            {
+                                path: '',
+                                loadChildren: () =>
+                                    import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+                            },
+                            {
+                                path: 'animal/:id',
+                                children: [
+                                    {
+                                        path: '',
+                                        loadChildren: () =>
+                                            import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
+                                    },
+                                ]
+                            }
+                        ]
+                    },
                 ]
             },
             {
@@ -87,27 +127,11 @@ const routes: Routes = [
                                 loadChildren: () => import('../pages/animal-edit/animal-edit.module').then(m => m.AnimalEditModule)
                             },
                         ]
-                    }
-                ]
-            },
-            {
-                path: 'user/:id',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () =>
-                            import('../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
                     },
                     {
-                        path: 'animal/:id',
-                        children: [
-                            {
-                                path: '',
-                                loadChildren: () =>
-                                    import('../pages/animal/animal.module').then(m => m.AnimalPageModule)
-                            },
-                        ]
-                    }
+                        path: 'legals',
+                        loadChildren: () => import('../pages/legals/legals.module').then( m => m.LegalsPageModule)
+                    },
                 ]
             },
             {

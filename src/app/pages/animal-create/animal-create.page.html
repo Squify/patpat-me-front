@@ -19,7 +19,7 @@
                     <ion-icon mode="md" slot="start" name="person-outline"></ion-icon>
                     <ion-icon *ngIf="nameInputError" mode="md" slot="end" name="alert-circle-outline"
                               class="error-message"
-                              (click)="presentToast('name')">
+                              (click)="errorService.presentToast('animal_name')">
                     </ion-icon>
                 </ion-item>
 
@@ -32,12 +32,12 @@
                     <ion-icon mode="md" slot="start" name="gift"></ion-icon>
                     <ion-icon *ngIf="birthdayError" mode="md" slot="end" name="alert-circle-outline"
                               class="error-message"
-                              (click)="presentToast('birthday')">
+                              (click)="errorService.presentToast('animal_birthday')">
                     </ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-select interface="popover" id="select-type" formControlName="fk_id_type"
+                    <ion-select interface="popover" id="select-type" formControlName="type"
                                 placeholder="{{ 'ANIMAL_CREATE.TYPE' | translate }}" (ionChange)="typeChange()">
                         <ion-select-option *ngFor="let type of types" value="{{ type.name }}">
                             {{ type.name }}
@@ -45,12 +45,12 @@
                     </ion-select>
                     <ion-icon mode="md" slot="start" name="paw-outline"></ion-icon>
                     <ion-icon *ngIf="typeError" mode="md" slot="end" name="alert-circle-outline" class="error-message"
-                              (click)="presentToast('fk_id_type')">
+                              (click)="errorService.presentToast('animal_type')">
                     </ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-select interface="popover" id="select-breed" formControlName="fk_id_breed"
+                    <ion-select interface="popover" id="select-breed" formControlName="breed"
                                 placeholder="{{ 'ANIMAL_CREATE.BREED' | translate }}" disabled="{{ !isTypeSelected }}">
                         <ion-select-option *ngFor="let breed of breedsToDisplay" value="{{ breed.name }}">
                             {{ breed.name }}
@@ -59,12 +59,13 @@
                     <ion-icon mode="md" slot="start" name="trail-sign-outline" class="ion-align-self-end">
                     </ion-icon>
                     <ion-icon *ngIf="breedError" mode="md" slot="end" name="alert-circle-outline"
-                              class="ion-align-self-end error-message" (click)="presentToast('fk_id_breed')">
+                              class="ion-align-self-end error-message"
+                              (click)="errorService.presentToast('animal_breed')">
                     </ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-select interface="popover" formControlName="fk_id_gender"
+                    <ion-select interface="popover" formControlName="gender"
                                 placeholder="{{ 'ANIMAL_CREATE.GENDER' | translate }}">
                         <ion-select-option *ngFor="let gender of genders" value="{{ gender.name }}">
                             {{ gender.name }}
@@ -73,12 +74,13 @@
                     <ion-icon mode="md" slot="start" name="male-female-outline" class="ion-align-self-end">
                     </ion-icon>
                     <ion-icon *ngIf="genderError" mode="md" slot="end" name="alert-circle-outline"
-                              class="ion-align-self-end error-message" (click)="presentToast('fk_id_gender')">
+                              class="ion-align-self-end error-message"
+                              (click)="errorService.presentToast('animal_gender')">
                     </ion-icon>
                 </ion-item>
 
                 <ion-item mode="md">
-                    <ion-select interface="popover" id="select-temper" formControlName="fk_id_temper"
+                    <ion-select interface="popover" id="select-temper" formControlName="temper"
                                 placeholder="{{ 'ANIMAL_CREATE.TEMPER' | translate }}" multiple="true">
                         <ion-select-option *ngFor="let temper of tempers" value="{{ temper.name }}">
                             {{ 'TEMPER.' + temper.name | translate }}
@@ -87,21 +89,26 @@
                     <ion-icon mode="md" slot="start" name="american-football-outline" class="ion-align-self-end">
                     </ion-icon>
                     <ion-icon *ngIf="temperError" mode="md" slot="end" name="alert-circle-outline"
-                              class="ion-align-self-end error-message" (click)="presentToast('fk_id_temper')">
+                              class="ion-align-self-end error-message"
+                              (click)="errorService.presentToast('animal_temper')">
                     </ion-icon>
                 </ion-item>
             </ion-list>
 
-            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'" *ngIf="this.createAnimalForm.value.fk_id_type == 'Chat'">
+            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'"
+                 *ngIf="this.createAnimalForm.value.type == 'Chat'">
                 <div *ngFor="let path of catPicPaths">
-                    <ion-avatar (click)="getPicPath(path)" [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
+                    <ion-avatar (click)="getPicPath(path)"
+                                [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
                         <img src="{{ path }}">
                     </ion-avatar>
                 </div>
             </div>
-            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'" *ngIf="this.createAnimalForm.value.fk_id_type == 'Chien'">
+            <div class="scrolling-wrapper" [style.width]="this.platform.width() + 'px'"
+                 *ngIf="this.createAnimalForm.value.type == 'Chien'">
                 <div *ngFor="let path of dogPicPaths">
-                    <ion-avatar (click)="getPicPath(path)" [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
+                    <ion-avatar (click)="getPicPath(path)"
+                                [style.border]="path === selectedPic ? '2px solid #D3C6AD' : ''">
                         <img src="{{ path }}">
                     </ion-avatar>
                 </div>

@@ -1,12 +1,14 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from 'src/app/interfaces/user/user';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Animal } from "../../interfaces/animal/animal";
-import { UpdateService } from "../../services/update/update.service";
+import { Animal } from '../../interfaces/animal/animal';
+import { UpdateService } from '../../services/update/update.service';
+import { DateService } from '../../services/date/date.service';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
     selector: 'app-profile',
@@ -20,11 +22,17 @@ export class ProfilePage implements OnInit, OnDestroy {
     subscriptionUser: Subscription;
     selectedSegment = 'informationSegment';
 
+    // Errors
+    unknownError: boolean;
+    serverError: boolean;
+
     constructor(
-        private userService: UserService,
-        private authService: AuthenticationService,
         private router: Router,
-        public updateService: UpdateService,
+        private authService: AuthenticationService,
+        public dateService: DateService,
+        private errorService: ErrorService,
+        private updateService: UpdateService,
+        private userService: UserService,
     ) {
     }
 
@@ -54,17 +62,19 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     getUserDetail(): void {
-        this.subscriptionUser = this.userService.getRemoteUser().subscribe(user => this.user = user);
+        this.subscriptionUser = this.userService.getRemoteUser().subscribe(
+            user => this.user = user,
+            error => this.processError(error)
+        );
     }
 
     getUserAnimals(): void {
 
         this.animals = [];
-        this.userService.getUserAnimals().subscribe(animals => {
-            animals.forEach(animal => {
-                this.animals.push(animal);
-            })
-        });
+        this.userService.getUserAnimals().subscribe(
+            animals => this.animals = animals,
+            error => this.processError(error)
+        );
         this.animals.sort((a, b) => a.name.localeCompare(b.name));
     }
 
@@ -73,7 +83,10 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     logout() {
-        this.authService.logout().subscribe(_ => this.processLogoutSuccess(), error => this.processError(error));
+        this.authService.logout().subscribe(
+            _ => this.processLogoutSuccess(),
+            error => this.processError(error)
+        );
     }
 
     processLogoutSuccess(): void {
@@ -85,49 +98,21 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.router.navigateByUrl('/login');
     }
 
-    processError(error: HttpErrorResponse): void {
-        // error processing here
-    }
-
-    calculateAge(birthday) { // birthday is a date
-
-        if (birthday) {
-            const date = birthday.split("-", 2);
-            const dateMonth: number = date[1];
-            const dateYear: number = date[0];
-
-            const today = new Date().toLocaleString().split("/", 3);
-            const todayMonth: number = +today[1];
-            const todayYear: number = +today[2].split(" ", 1)[0];
-
-            var age = 0;
-
-            if (todayYear > dateYear) {
-                if (todayMonth <= dateMonth) {
-                    age = todayYear - dateYear;
-                    if (age == 1) {
-                        return age + " an";
-                    } else if (age > 1) {
-                        return age + " ans";
-                    }
-                } else {
-                    age = todayYear - dateYear + 1;
-                    return age + " ans";
-                }
-            } else if (todayYear <= dateYear) {
-                if (todayMonth <= dateMonth) {
-                    age = todayMonth - dateMonth;
-                    if (age >= 1) {
-                        return age + " mois";
-                    } else if (age == 0) {
-                        return "Quelques semaines";
-                    }
-                } else {
-                    age = todayMonth - dateMonth;
-                    return age + " mois";
-                }
+    processError(error: HttpErrorResponse) {
+        if (error) {
+            switch (error.status) {
+                case 500:
+                    this.serverError = true;
+                    this.errorService.presentToast('back_server');
+                    break;
+                default:
+                    this.unknownError = true;
+                    this.errorService.presentToast('back_unknown');
+                    break;
             }
+        } else {
+            this.unknownError = true;
+            this.errorService.presentToast('back_unknown');
         }
-        return "Non renseigné";
     }
 }
