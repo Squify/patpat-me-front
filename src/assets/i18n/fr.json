@@ -71,6 +71,12 @@
     "PASSWORD": "Mot de passe",
     "TITLE": "Connexion"
   },
+  "CGU": {
+    "TITLE": "les CGU",
+    "WARNING": "En créant un compte sur PATPAT ME vous accepter :", 
+    "POLITICS":"la politique de confidencialité",
+    "AGE": "vous certifiez avoir plus de 18 ans"
+  },
   "ERRORS": {
     "ANIMAL": {
       "BIRTHDAY": "Veuillez renseigner une date d'anniversaire.",

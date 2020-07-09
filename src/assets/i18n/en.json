@@ -1,8 +1,8 @@
 {
   "ACCOUNT_CREATE": {
-    "ALREADY_ACCOUNT": "Already have an account?",
+    "ALREADY_ACCOUNT": "Already have an account ? ",
     "BIRTHDAY": "Birthday date",
-    "CONNECTION": "Connect!",
+    "CONNEXION": "Connect ! ",
     "DISPLAY_MAIL": "Show email address",
     "DISPLAY_NAME": "Show real name",
     "DISPLAY_PHONE": "Show phone number",
@@ -70,6 +70,13 @@
     "EMAIL": "E-mail address",
     "PASSWORD": "Password",
     "TITLE": "Connection"
+  },
+  "CGU": {
+    "TITLE": "GUC",
+    "WARNING": "By creating an account on you accept :",
+    "POLITICS":"privacy policy ",
+    "AGE": "you certify that you are over 18 years old"
+   
   },
   "ERRORS": {
     "ANIMAL": {
