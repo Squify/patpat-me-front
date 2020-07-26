@@ -133,6 +133,16 @@
             </div>
         </form>
 
+        <div class="button-center" style="text-align: center">
+            <p>
+                {{ 'ACCOUNT_CREATE.CGU.FIRST' | translate }}
+                <a [routerLink]="'/cgu'">{{ 'ACCOUNT_CREATE.CGU.CGU' | translate }}</a>
+                {{ 'ACCOUNT_CREATE.CGU.SECOND' | translate }}
+                <a [routerLink]="'/legals'">{{ 'ACCOUNT_CREATE.CGU.LEGALS' | translate }}</a>
+                {{ 'ACCOUNT_CREATE.CGU.THIRD' | translate }}
+            </p>
+        </div>
+
         <div class="button-center">
             <ion-button slot="end" class="validation-button"
                         (click)="submit()">{{ 'ACCOUNT_CREATE.SUBMIT' | translate }}</ion-button>

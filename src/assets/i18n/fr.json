@@ -16,7 +16,17 @@
     "PSEUDO": "Pseudo",
     "SELECT_DATE": "Veuillez sélectionner une date",
     "SUBMIT": "Valider le formulaire",
-    "TITLE": "Inscription sur l'application"
+    "TITLE": "Inscription sur l'application",
+    "CGU": {
+      "FIRST": "En créant un compte sur PatPat Me vous acceptez les",
+      "CGU": "Conditions Générales d'Utilisation et la Politique de Confidentialité",
+      "SECOND": ", les",
+      "LEGALS": "Mentions Légales",
+      "THIRD": "et certifiez avoir plus de 18 ans."
+    }
+  },
+  "CGU": {
+    "TITLE": "CGU"
   },
   "ALERT": {
     "ADD_FRIENDS": "Êtes-vous sûr de vouloir ajouter cette personne en ami ? Elle aura accès aux informations que vous avez décidé de laisser afficher",
