@@ -16,7 +16,14 @@
     "PSEUDO": "Nickname",
     "SELECT_DATE": "Please select a date",
     "SUBMIT": "Validate the form",
-    "TITLE": "Registration on the application"
+    "TITLE": "Registration on the application",
+    "CGU": {
+      "FIRST": "By creating an account on PatPat Me you accept the",
+      "CGU": "General Conditions of Use and the Privacy Policy",
+      "SECOND": ", the",
+      "LEGALS": "Legal Notices",
+      "THIRD": "and certify that you are over 18 years old."
+    }
   },
   "ALERT": {
     "ADD_FRIENDS": "Are you sure you want to add this person as a friend? They will have access to the information you have decided to display",
@@ -72,11 +79,7 @@
     "TITLE": "Connection"
   },
   "CGU": {
-    "TITLE": "GUC",
-    "WARNING": "By creating an account on you accept :",
-    "POLITICS":"privacy policy ",
-    "AGE": "you certify that you are over 18 years old"
-   
+    "TITLE": "GTC"
   },
   "ERRORS": {
     "ANIMAL": {
